@@ -19,7 +19,7 @@
         <a-icon type="file-done" />
         <span>成绩列表</span>
       </a-menu-item>
-	  <a-menu-item key="4">
+	  <a-menu-item key="4" @click="goTocrEva()">
 	    <a-icon type="form" />
 	    <span>创建评审表</span>
 	  </a-menu-item>
@@ -37,9 +37,12 @@ export default {
 	},
 	methods: {
 		toggleCollapsed() {
-		this.collapsed = !this.collapsed;
-    },
-  },
+			this.collapsed = !this.collapsed;
+		},
+		goTocrEva(){
+			this.$router.push('/');
+		}
+	},
 };
 </script>
 

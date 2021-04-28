@@ -1,37 +1,47 @@
 <template>
-  <a-layout id="components-layout-demo-evaluation-trigger">
-	<a-layout-sider v-model="collapsed" :trigger="null" collapsible id="sider1">
-	    <div class="logo">
-			<a-button type="link"
-					style="margin-bottom: 16px; margin-top: 10px;"
-					@click="() => (collapsed = !collapsed)">
-			  <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
-						&nbsp;PingLeMe
-			</a-button>
-		</div>
-	    <NormalNav></NormalNav>
-	</a-layout-sider>
-
-	<a-layout>
-		<a-layout-header style="background: #fff;font-size: medium;">
-			<div class="info">
-				<a-icon type="user" />&nbsp;用户：XXX
-				<a-divider type="vertical" />
-				<a-icon type="team" />&nbsp;团队：XXX团队
+	<a-layout id="components-layout-demo-responsive">
+		<a-layout-sider
+			breakpoint="lg"
+			collapsed-width="0"
+			@collapse="onCollapse"
+			@breakpoint="onBreakpoint"
+			id="sider1"
+		>
+			<div class="logo">
+				<a-button type="link"
+						style="margin-bottom: 16px; margin-top: 10px;"
+						@click="() => (collapsed = !collapsed)">
+							&nbsp;PingLeMe
+				</a-button>
 			</div>
-		</a-layout-header>
-		<a-layout-content :style="{ margin: '0px 0px', padding: '16px', background: '#fff', minHeight: '280px' }">
-			<a-input-search placeholder="按作业标题搜索" style="width: 200px;margin-left:0px;" @search="onSearch" />
-			<hr>
-			<a-table :columns="columns" :data-source="data"  :pagination="myPagination">
-				<a slot="name" slot-scope="text">{{ text }}</a>
-				<span slot="customTitle"><a-icon type="smile-o" /> 作业</span>
-				<span slot="action" >
-					<a-button type="link" style="margin-left:0px;" @click="goTocrEva()"><a><a-icon type="edit" /></a></a-button>
-				</span>
-			</a-table>
-		</a-layout-content>
-	</a-layout>	
+			<NormalNav></NormalNav>
+		</a-layout-sider>
+		
+		<a-layout>
+			<a-layout-header :style="{ background: '#fff', padding: 0 }">
+				<div class="info">
+					<a-icon type="user" />&nbsp;用户：XXX
+					<a-divider type="vertical" />
+					<a-icon type="team" />&nbsp;团队：XXX团队
+				</div>
+			</a-layout-header>
+			<a-layout-content :style="{ margin: '24px 16px 0' }">
+				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+					<a-input-search placeholder="按作业标题搜索" style="width: 200px;margin-left:0px;" @search="onSearch" />
+					<hr>
+					<a-table :columns="columns" :data-source="data"  :pagination="myPagination">
+						<a slot="name" slot-scope="text">{{ text }}</a>
+						<span slot="customTitle"><a-icon type="smile-o" /> 作业</span>
+						<span slot="action" >
+							<a-button type="link" style="margin-left:0px;" @click="goTocrEvaform()"><a><a-icon type="edit" /></a></a-button>
+						</span>
+					</a-table>
+				</div>
+			</a-layout-content>
+			<a-layout-footer style="textAlign: center">
+				PingLeMe ©2021 Created by Ant UED
+			</a-layout-footer>
+		</a-layout>	
   </a-layout>
 </template>
 
@@ -151,18 +161,24 @@
 		    };
 		},
 		methods:{
-			goTocrEva(){
+			goTocrEvaform(){
 				this.$router.push('/evacr')
 			},
 			onSearch(value) {
 			    console.log(value);
+			},
+			onCollapse(collapsed, type) {
+			    console.log(collapsed, type);
+			 },
+			onBreakpoint(broken) {
+			    console.log(broken);
 			},
 		}
 	}
 </script>
 
 <style>
-#components-layout-demo-evaluation-trigger .logo{
+#components-layout-demo-responsive .logo{
   height: 32px;
   background: rgba(255, 255, 255, 0);
   margin: 16px;
