@@ -142,7 +142,7 @@
 	    key: '12',
 	    name: '团12',
 	    end_time: '2021.3.10',
-	  	eva_detail:'this.$router.path'
+	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
 	  },
 	];
 	export default{
