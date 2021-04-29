@@ -10,7 +10,7 @@
 			<div class="formlogo">
 				<a-button type="link"
 						style="margin-bottom: 16px; margin-top: 10px;"
-						@click="() => (collapsed = !collapsed)">
+						>
 							&nbsp;PingLeMe
 				</a-button>
 			</div>
@@ -27,11 +27,11 @@
 					<a-icon type="book" />&nbsp;作业：作业XXX
 				</div>
 			</a-layout-header>
-			<a-layout-content :style="{ margin: '24px 16px 0' }">
-			<hr>
+			<a-layout-content :style="{ margin: ' 0',background:'white',minHeight:'360px' }">
+			<br>
 				<EvaCrForm></EvaCrForm>
 			</a-layout-content>	
-			<a-layout-footer style="textAlign: center">
+			<a-layout-footer style="textAlign: center ;background: white;font-size: small;">
 				PingLeMe ©2021 Created by Ant UED
 			</a-layout-footer>
 		</a-layout>

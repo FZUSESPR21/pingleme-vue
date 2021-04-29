@@ -6,6 +6,7 @@ import HwList from "../normal/HomeworkList.vue"
 import HwDetail from "../normal/HomeworkDetail.vue"
 import Performance from "../normal/Performance.vue"
 import PfmDetail from "../normal/PerformanceDetail.vue"
+import Login from "../Login/Login.vue"
 
 Vue.use(Router)
 
@@ -13,11 +14,16 @@ export default new Router({
 	routes:[
 		{
 			path:'/',
+			name:'Login',
+			component:Login,
+		},
+		{
+			path:'/creva',
 			name:'CrEva',
 			component:CreateEvaluation
 		},
 		{
-			path:'/evacr',
+			path:'/crevaf',
 			name:'CrEvaf',
 			component:CrEvaform
 		},

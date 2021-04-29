@@ -10,7 +10,7 @@
 			<div class="logo">
 				<a-button type="link"
 						style="margin-bottom: 16px; margin-top: 10px;"
-						@click="() => (collapsed = !collapsed)">
+						>
 							&nbsp;PingLeMe
 				</a-button>
 			</div>
@@ -25,7 +25,7 @@
 					<a-icon type="team" />&nbsp;团队：XXX团队
 				</div>
 			</a-layout-header>
-			<a-layout-content :style="{ margin: '24px 16px 0' }">
+			<a-layout-content :style="{ margin: '24px 16px 0',minHeight:'360px' }">
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
 					<a-input-search placeholder="按作业标题搜索" style="width: 200px;margin-left:0px;" @search="onSearch" />
 					<hr>
@@ -162,7 +162,7 @@
 		},
 		methods:{
 			goTocrEvaform(){
-				this.$router.push('/evacr')
+				this.$router.push('/crevaf')
 			},
 			onSearch(value) {
 			    console.log(value);

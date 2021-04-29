@@ -43,7 +43,7 @@ export default {
 			this.collapsed = !this.collapsed;
 		},
 		goTocrEva(){
-			this.$router.push('/');
+			this.$router.push('/creva');
 		},
     goToHwList() {
       this.$router.push('/hwlist');
