@@ -9,6 +9,7 @@
     "coverage": "jest --coverage"
   },
   "dependencies": {
+    "ant-design-vue": "^1.7.4",
     "core-js": "^3.6.5",
     "nyc": "^15.1.0",
     "vue": "^2.6.11",
