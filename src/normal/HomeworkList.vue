@@ -146,7 +146,7 @@
 	  },
 	];
 	export default{
-		name:'CreateEvaluation',
+		name:'HomeworkList',
 		components:{
 			NormalNav,
 		},
