@@ -46,7 +46,7 @@ export default {
 		goTocrEva(){
 			this.$router.push('/');
 		},
-    goToHwListgo() {
+    goToHwList() {
       this.$router.push('/hwlist');
     },
     goToPerformance() {
