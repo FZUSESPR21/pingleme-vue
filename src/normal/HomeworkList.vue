@@ -142,7 +142,7 @@
 	    key: '12',
 	    name: '团12',
 	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	  	eva_detail:'this.$router.path'
 	  },
 	];
 	export default{
@@ -162,7 +162,7 @@
 		},
 		methods:{
 			goToHwDetail(){
-				this.$router.push('/hwdetail')
+				this.$router.push('/hwdetail');
 			},
 			onSearch(value) {
 			    console.log(value);
