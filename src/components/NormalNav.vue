@@ -11,7 +11,7 @@
         <a-icon type="user" />
         <span>个人信息</span>
       </a-menu-item>
-      <a-menu-item key="2">
+      <a-menu-item key="2" @click="goToHwList()">
         <a-icon type="book" />
         <span>作业列表</span>
       </a-menu-item>
@@ -22,6 +22,10 @@
 	  <a-menu-item key="4" @click="goTocrEva()">
 	    <a-icon type="form" />
 	    <span>创建评审表</span>
+	  </a-menu-item>
+    <a-menu-item key="5" @click="goToPerformance()">
+	    <a-icon type="form" />
+	    <span>绩效填写</span>
 	  </a-menu-item>
     </a-menu>
   </div>
@@ -41,7 +45,13 @@ export default {
 		},
 		goTocrEva(){
 			this.$router.push('/');
-		}
+		},
+    goToHwListgo() {
+      this.$router.push('/hwlist');
+    },
+    goToPerformance() {
+      this.$router.push('/performance');
+    }
 	},
 };
 </script>
