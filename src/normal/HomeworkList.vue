@@ -162,7 +162,7 @@
 		},
 		methods:{
 			goToHwDetail(){
-				this.$router.push('/hwdetail')
+				this.$router.push('/hwdetail');
 			},
 			onSearch(value) {
 			    console.log(value);

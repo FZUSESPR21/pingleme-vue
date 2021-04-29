@@ -1,8 +1,7 @@
 <template>
   <div style="width: 200px" id="navleft">
     <a-menu
-      :default-selected-keys="['4']"
-      :default-open-keys="['sub1']"
+      :default-selected-keys="[this.$route.path.replace('/','')]"
       mode="inline"
       theme="light"
       :inline-collapsed="collapsed"
@@ -11,7 +10,7 @@
         <a-icon type="user" />
         <span>个人信息</span>
       </a-menu-item>
-      <a-menu-item key="2" @click="goToHwList()">
+      <a-menu-item key="hwlist" @click="goToHwList()">
         <a-icon type="book" />
         <span>作业列表</span>
       </a-menu-item>
@@ -19,11 +18,11 @@
         <a-icon type="file-done" />
         <span>成绩列表</span>
       </a-menu-item>
-	  <a-menu-item key="4" @click="goTocrEva()">
+	  <a-menu-item key="" @click="goTocrEva()">
 	    <a-icon type="form" />
 	    <span>创建评审表</span>
 	  </a-menu-item>
-    <a-menu-item key="5" @click="goToPerformance()">
+    <a-menu-item key="performance" @click="goToPerformance()">
 	    <a-icon type="form" />
 	    <span>绩效填写</span>
 	  </a-menu-item>
