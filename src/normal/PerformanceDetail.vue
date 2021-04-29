@@ -116,7 +116,7 @@
 	  },
 	];
 	export default{
-		name:'CreateEvaluation',
+		name:'PerformanceDetail',
 		components:{
 			NormalNav,
 		},
