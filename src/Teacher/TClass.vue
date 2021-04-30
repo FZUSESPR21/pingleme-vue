@@ -18,7 +18,10 @@
 		</a-layout-sider>
 		
 		<a-layout style="background: white;">
-			<a-layout-header :style="{ background: '#fff', padding: 0 }">
+			<a-layout-header :style="{ background: '#fff', padding: 0,'text-align':'center' }">
+				<div class="info">
+					<a-icon type="user" />&nbsp;用户：XXX
+				</div>
 			</a-layout-header>
 			<a-layout-content :style="{ margin: '24px 16px 0',minHeight:'360px' }">
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
