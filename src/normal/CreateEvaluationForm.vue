@@ -1,13 +1,13 @@
 <template>
-	<a-layout id="components-layout-demo-responsive-form">
+	<a-layout id="components-layout-demo-responsive">
 		<a-layout-sider
 			breakpoint="lg"
 			collapsed-width="0"
 			@collapse="onCollapse"
 			@breakpoint="onBreakpoint"
-			id="formsider1"
+			id="sider1"
 		>
-			<div class="formlogo">
+			<div class="logo">
 				<a-button type="link"
 						style="margin-bottom: 16px; margin-top: 10px;"
 						>
@@ -18,7 +18,7 @@
 		</a-layout-sider>
 		
 		<a-layout>
-			<a-layout-header :style="{ background: '#fff', padding: 0 }">
+			<a-layout-header :style="{ background: '#fff', padding: 0 ,'text-align':'center'}">
 				<div class="info">
 					<a-icon type="user" />&nbsp;用户：XXX
 					<a-divider type="vertical" />
@@ -28,8 +28,9 @@
 				</div>
 			</a-layout-header>
 			<a-layout-content :style="{ margin: ' 0',background:'white',minHeight:'360px' }">
-			<br>
+			<div style="text-align:center">
 				<EvaCrForm></EvaCrForm>
+			</div>
 			</a-layout-content>	
 			<a-layout-footer style="textAlign: center ;background: white;">
 				PingLeMe ©2021 Created by Ant UED
@@ -64,12 +65,12 @@
 </script>
 
 <style>
-#components-layout-demo-evaluationform-trigger .formlogo {
+#components-layout-demo-responsive .logo {
   height: 32px;
   background: rgba(255, 255, 255, 0);
   margin: 16px;
 }
-#formsider1{
+#sider1{
 	background-color: white;
 }
 </style>

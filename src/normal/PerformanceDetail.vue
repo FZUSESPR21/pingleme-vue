@@ -18,7 +18,7 @@
 		</a-layout-sider>
 		
 		<a-layout style="background: white;">
-			<a-layout-header :style="{ background: '#fff', padding: 0 }">
+			<a-layout-header :style="{ background: '#fff', padding: 0 ,'text-align':'center'}">
 				<div class="info">
 					<a-icon type="user" />&nbsp;用户：XXX
 					<a-divider type="vertical" />
