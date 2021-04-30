@@ -32,12 +32,12 @@
 						</span>
 						<span slot="action2" slot-scope="text, record" >
 							<a-button :type="record.groupcollapsed?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.groupcollapsed = !record.groupcollapsed)">
-								<a><a-icon :type="record.teamcollapsed?'pause':'step-forward'"/>{{record.groupcollapsed?'开始':'结束'}}</a>
+								<a>{{record.groupcollapsed?'开始':'结束'}}</a>
 							</a-button>
 						</span>
 						<span slot="action3" slot-scope="text, record">
 							<a-button :type="record.teamcollapsed?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.teamcollapsed = !record.teamcollapsed)">							
-								<a><a-icon :type="record.teamcollapsed?'pause':'step-forward'"/>{{record.teamcollapsed?'开始':'结束'}}</a>
+								<a>{{record.teamcollapsed?'开始':'结束'}}</a>
 							</a-button>
 						</span>
 					</a-table>
