@@ -7,6 +7,9 @@ import HwDetail from "../normal/HomeworkDetail.vue"
 import Performance from "../normal/Performance.vue"
 import PfmDetail from "../normal/PerformanceDetail.vue"
 import GrdList from "../normal/GradeList.vue"
+import AstList from "../normal/AssistantList.vue"
+import ClsInfo from "../normal/ClassInfo.vue"
+import CrtClass from "../normal/CreatClass.vue"
 
 Vue.use(Router)
 
@@ -41,10 +44,26 @@ export default new Router({
 			path:'/pfmdetail',
 			name:'PfmDetail',
 			component:PfmDetail
-		},{
+		},
+		{
 			path:'/gradelist',
 			name:'GrdList',
 			component:GrdList
+		},
+		{
+			path:'/astlist',
+			name:'AstList',
+			component:AstList
+		},
+		{
+			path:'/clsinfo',
+			name:'ClsInfo',
+			component:ClsInfo
+		},
+		{
+			path:'/crtclass',
+			name:'CrtClass',
+			component:CrtClass
 		},
 	]
 })
