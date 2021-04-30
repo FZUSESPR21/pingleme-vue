@@ -28,7 +28,7 @@
 						<a slot="name" slot-scope="text">{{ text }}</a>
 						<span slot="customTitle"><a-icon type="team" /> 班级</span>
 						<span slot="action1" >
-							<a-button type="link" style="margin-left:0px;" @click="goToClassMng()"><a><a-icon type="edit" /></a></a-button>
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/tclass/classmng')"><a><a-icon type="edit" /></a></a-button>
 						</span>
 						<span slot="action2" slot-scope="text, record" >
 							<a-button :type="record.groupcollapsed?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.groupcollapsed = !record.groupcollapsed)">
@@ -208,8 +208,8 @@
 			NormalNav,
 		},
 		methods:{
-			goToClassMng(){
-				this.$router.push('/tclass/classmng')
+			goTo(path){
+				this.$router.replace(path);
 			},
 			onSearch(value) {
 			    console.log(value);

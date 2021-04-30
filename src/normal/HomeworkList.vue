@@ -33,7 +33,7 @@
 						<a slot="name" slot-scope="text">{{ text }}</a>
 						<span slot="customTitle"><a-icon type="smile-o" /> 作业</span>
 						<span slot="action" >
-							<a-button type="link" style="margin-left:0px;" @click="goToHwDetail()"><a><a-icon type="edit" /></a></a-button>
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/hwdetail')"><a><a-icon type="edit" /></a></a-button>
 						</span>
 					</a-table>
 				</div>
@@ -161,8 +161,8 @@
 		    };
 		},
 		methods:{
-			goToHwDetail(){
-				this.$router.push('/hwdetail');
+			goTo(path){
+				this.$router.replace(path);
 			},
 			onSearch(value) {
 			    console.log(value);

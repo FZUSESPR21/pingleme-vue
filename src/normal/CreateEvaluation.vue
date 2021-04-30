@@ -33,7 +33,7 @@
 						<a slot="name" slot-scope="text">{{ text }}</a>
 						<span slot="customTitle"><a-icon type="smile-o" /> 作业</span>
 						<span slot="action" >
-							<a-button type="link" style="margin-left:0px;" @click="goTocrEvaform()"><a><a-icon type="edit" /></a></a-button>
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/creva/crevaf')"><a><a-icon type="edit" /></a></a-button>
 						</span>
 					</a-table>
 				</div>
@@ -161,8 +161,8 @@
 		    };
 		},
 		methods:{
-			goTocrEvaform(){
-				this.$router.push('/creva/crevaf')
+			goTo(path){
+				this.$router.replace(path)
 			},
 			onSearch(value) {
 			    console.log(value);
