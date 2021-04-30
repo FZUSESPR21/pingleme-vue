@@ -6,6 +6,7 @@ import HwList from "../normal/HomeworkList.vue"
 import HwDetail from "../normal/HomeworkDetail.vue"
 import Performance from "../normal/Performance.vue"
 import PfmDetail from "../normal/PerformanceDetail.vue"
+import GrdList from "../normal/GradeList.vue"
 
 Vue.use(Router)
 
@@ -40,6 +41,10 @@ export default new Router({
 			path:'/pfmdetail',
 			name:'PfmDetail',
 			component:PfmDetail
+		},{
+			path:'/gradelist',
+			name:'GrdList',
+			component:GrdList
 		},
 	]
 })

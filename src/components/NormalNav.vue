@@ -14,7 +14,7 @@
         <a-icon type="book" />
         <span>作业列表</span>
       </a-menu-item>
-      <a-menu-item key="3">
+      <a-menu-item key="gradelist" @click="goToGrdList()">
         <a-icon type="file-done" />
         <span>成绩列表</span>
       </a-menu-item>
@@ -50,7 +50,10 @@ export default {
     },
     goToPerformance() {
       this.$router.push('/performance');
-    }
+    },
+    goToGrdList() {
+      this.$router.push('/gradelist');
+    },
 	},
 };
 </script>
