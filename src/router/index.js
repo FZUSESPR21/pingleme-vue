@@ -7,6 +7,8 @@ import HwDetail from "../normal/HomeworkDetail.vue"
 import Performance from "../normal/Performance.vue"
 import PfmDetail from "../normal/PerformanceDetail.vue"
 import Login from "../Login/Login.vue"
+import TClass from "../Teacher/TClass.vue"
+import CrClass from "../Teacher/CrClass.vue"
 
 Vue.use(Router)
 
@@ -46,6 +48,16 @@ export default new Router({
 			path:'/pfmdetail',
 			name:'PfmDetail',
 			component:PfmDetail
+		},
+		{
+			path:'/tclass',
+			name:'TClass',
+			component:TClass
+		},
+		{
+			path:'/crclass',
+			name:'CrClass',
+			component:CrClass
 		},
 	]
 })
