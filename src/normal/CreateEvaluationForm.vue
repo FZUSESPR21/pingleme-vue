@@ -31,7 +31,7 @@
 			<br>
 				<EvaCrForm></EvaCrForm>
 			</a-layout-content>	
-			<a-layout-footer style="textAlign: center ;background: white;font-size: small;">
+			<a-layout-footer style="textAlign: center ;background: white;">
 				PingLeMe ©2021 Created by Ant UED
 			</a-layout-footer>
 		</a-layout>

@@ -17,7 +17,7 @@
 			<NormalNav></NormalNav>
 		</a-layout-sider>
 		
-		<a-layout>
+		<a-layout style="background: white;">
 			<a-layout-header :style="{ background: '#fff', padding: 0 }">
 				<div class="info">
 					<a-icon type="user" />&nbsp;用户：XXX
@@ -40,7 +40,7 @@
                     <a-button type="primary">保存</a-button>
                 </div>
 			</a-layout-content>
-			<a-layout-footer style="textAlign: center">
+			<a-layout-footer style="textAlign: center;background:white">
 				PingLeMe ©2021 Created by Ant UED
 			</a-layout-footer>
 		</a-layout>	

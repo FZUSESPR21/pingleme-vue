@@ -17,7 +17,7 @@
 			<NormalNav></NormalNav>
 		</a-layout-sider>
 		
-		<a-layout>
+		<a-layout style="background: white;">
 			<a-layout-header :style="{ background: '#fff', padding: 0 }">
 				<div class="info">
 					<a-icon type="user" />&nbsp;用户：XXX
@@ -38,7 +38,7 @@
 					</a-table>
 				</div>
 			</a-layout-content>
-			<a-layout-footer style="textAlign: center">
+			<a-layout-footer style="textAlign: center;background:white">
 				PingLeMe ©2021 Created by Ant UED
 			</a-layout-footer>
 		</a-layout>	
@@ -162,7 +162,7 @@
 		},
 		methods:{
 			goTocrEvaform(){
-				this.$router.push('/crevaf')
+				this.$router.push('/creva/crevaf')
 			},
 			onSearch(value) {
 			    console.log(value);

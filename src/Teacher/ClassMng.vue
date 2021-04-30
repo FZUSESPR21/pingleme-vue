@@ -18,19 +18,22 @@
 		</a-layout-sider>
 		
 		<a-layout style="background: white;">
-			
-			
+			<a-layout-header :style="{ background: '#fff', padding: 0,margin:'12px' }">
+			<ClassHeader></ClassHeader>
+			</a-layout-header>
 		</a-layout>
+		
 	</a-layout>
 </template>
 
 <script>
 	import NormalNav from "../components/NormalNav.vue"
+	import ClassHeader from "../components/ClassHeader.vue"
 	export default{
-		name:'TInfo',
-
+		name:'ClassMng',
 		components:{
 			NormalNav,
+			ClassHeader,
 		},
 		methods:{
 			onCollapse(collapsed, type) {
@@ -39,7 +42,7 @@
 			onBreakpoint(broken) {
 			    console.log(broken);
 			},
-		},
+		}
 	}
 </script>
 

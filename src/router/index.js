@@ -9,6 +9,8 @@ import PfmDetail from "../normal/PerformanceDetail.vue"
 import Login from "../Login/Login.vue"
 import TClass from "../Teacher/TClass.vue"
 import CrClass from "../Teacher/CrClass.vue"
+import ClassMng from "../Teacher/ClassMng.vue"
+import TInfo from "../Teacher/TInfo.vue"
 
 Vue.use(Router)
 
@@ -20,12 +22,17 @@ export default new Router({
 			component:Login,
 		},
 		{
+			path:'/tinfo',
+			name:'TInfo',
+			component:TInfo,
+		},
+		{
 			path:'/creva',
 			name:'CrEva',
 			component:CreateEvaluation
 		},
 		{
-			path:'/crevaf',
+			path:'/creva/crevaf',
 			name:'CrEvaf',
 			component:CrEvaform
 		},
@@ -58,6 +65,11 @@ export default new Router({
 			path:'/crclass',
 			name:'CrClass',
 			component:CrClass
+		},
+		{
+			path:'/tclass/classmng',
+			name:'ClassMng',
+			component:ClassMng
 		},
 	]
 })

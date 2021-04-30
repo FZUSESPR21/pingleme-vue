@@ -16,6 +16,10 @@
 			</div>
 			<NormalNav></NormalNav>
 		</a-layout-sider>
+		
+		<a-layout style="background: white;">
+			
+		</a-layout>
 	</a-layout>
 </template>
 

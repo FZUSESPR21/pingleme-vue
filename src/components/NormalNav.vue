@@ -6,7 +6,7 @@
       theme="light"
       :inline-collapsed="collapsed"
     >
-      <a-menu-item key="1">
+      <a-menu-item key="info" @click="goToInfo()">
         <a-icon type="user" />
         <span>个人信息</span>
       </a-menu-item>
@@ -49,6 +49,9 @@ export default {
 	methods: {
 		goTocrEva(){
 			this.$router.push('/creva');
+		},
+		goToInfo(){
+			this.$router.push('/tinfo');
 		},
 		goToHwList() {
 			this.$router.push('/hwlist');
