@@ -1,4 +1,4 @@
-
+<template>
 	<a-layout id="components-layout-demo-responsive">
 		<a-layout-sider breakpoint="lg" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint"
 			id="sider1">
@@ -146,12 +146,10 @@
 			},
 		},
 	};
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 	#components-layout-demo-responsive .logo {
 		height: 32px;
 		background: rgba(255, 255, 255, 0);
