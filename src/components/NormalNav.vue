@@ -26,6 +26,10 @@
 	    <a-icon type="form" />
 	    <span>绩效填写</span>
 	  </a-menu-item>
+	  <a-menu-item key="AP" @click="goToAP()">
+	      <a-icon type="form" />
+	      <span>（助教）作业管理</span>
+	    </a-menu-item>
     </a-menu>
   </div>
 </template>
@@ -53,6 +57,9 @@ export default {
     },
 	goToGL(){
 		this.$router.push('/GL');
+	},
+	goToAP(){
+		this.$router.push('/AP');
 	}
 	},
 };

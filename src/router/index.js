@@ -7,6 +7,8 @@ import HwDetail from "../normal/HomeworkDetail.vue"
 import Performance from "../normal/Performance.vue"
 import PfmDetail from "../normal/PerformanceDetail.vue"
 import GL from "../normal/GradeList.vue"
+import AP from "../normal/AssistantPage.vue"
+import AC from '../normal/AsCorrect.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -45,6 +47,16 @@ export default new Router({
 			path:'/pfmdetail',
 			name:'PfmDetail',
 			component:PfmDetail
+		},
+		{
+			path:'/AP',
+			name:'AP',
+			component:AP
+		},
+		{
+			path:'/AC',
+			name:'AC',
+			component:AC
 		},
 	]
 })
