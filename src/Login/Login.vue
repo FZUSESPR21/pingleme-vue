@@ -1,67 +1,109 @@
 <template>
-	<div style="background-color:#2C3E50;">
-		<a-row type="flex" justify="space-around" align="middle">
-			<a-col :span="14" style="background-color: rgba(0,0,0,0);">
-				<a-card title="评了么" :bordered="false" headStyle="width: 300px;fontSize: 36px;color: rgba(0, 0, 0, 0.85);">
-					这块好丑，要改
-				</a-card>
-			</a-col>				
-			<a-col :span="10">
-					<div style="height:300px;width:270px;margin:24px;padding:16px;background-color:whitesmoke;border-radius: 30px;">
-						<a-button type="link" icon="login" >LOGIN</a-button>
-						<a-form
-							id="components-form-demo-normal-login"
-							:form="form"
-							class="login-form"
-							@submit="handleSubmit"
+<a-layout style="background-color: rgba(0,0,0,0);">
+	<div class="background" style="background-color: #161616; width:100%; height=100%"></div>
+	<a-layout-header style="background-color: rgba(0,0,0,0);"></a-layout-header>
+			<a-layout-content style="background-color: rgba(0,0,0,0);">
+			<a-layout style="background-color: rgba(0,0,0,0);">
+				<a-layout-content style="background-color: rgba(0,0,0,0);margin-right:150px">
+					<a-layout style="background: rgba(0,0,0,0);">
+						<a-layout-header style="background: rgba(0,0,0,0);color:white;font-size: 40px;font-weight:bold">评 了 么</a-layout-header>
+						<a-layout-content style="width:350x;padding:10px;background: rgba(0,0,0,0);color:white;font-size:10px">
+							<br>
+							<div style="text-align:center;font-weight:bold">
+							<a-divider orientation="right" style="color:white">
+								  <a-tooltip>
+								    <template slot="title">
+								      评了么评分系统
+								    </template>
+								    System Name
+								  </a-tooltip>
+							</a-divider>
+							<a-divider style="color:white">
+								  <a-tooltip>
+								    <template slot="title">
+								      提高软工实践作业评分效率
+								    </template>
+								    Development purpose
+								  </a-tooltip>
+							</a-divider>
+							<a-divider orientation="left" style="color:white">								  <a-tooltip>
+								    <template slot="title">
+								      评了么团队
+								    </template>
+								    Development Team
+								  </a-tooltip>
+							</a-divider>
+							</div>
+						</a-layout-content>
+					</a-layout>
+				</a-layout-content>
+				<a-layout-sider width='250px' style="margin-top:25px;margin-right:90px;background-color: rgba(0,0,0,0);text-align:center">
+				<div class="loginform" style="height:250px;width:200px;padding:10px;background-color:rgba(0,0,0,0);">
+					<div style="padding:10px"><a-label style="color:white;font-size: large;"><a-icon type="login"/>LOGIN</a-label></div>
+					<a-form
+						id="components-form-demo-normal-login"
+						:form="form"
+						class="login-form"
+						@submit="handleSubmit"
 						>
-							<a-form-item>
-								<a-input
-									v-decorator="[
-										'userName',
-										{ rules: [{ required: true, message: 'Please input your username!' }] },
-									]"
-									placeholder="Username"
-								>
-								<a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
-								</a-input>
-							</a-form-item>
-							<a-form-item>
-									<a-input
-										v-decorator="[
-										'password',
-										{ rules: [{ required: true, message: 'Please input your Password!' }] },
-										]"
-										type="password"
-										placeholder="Password"
-									>
-										<a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
-									</a-input>
-							</a-form-item>
-							<a-form-item>
-									<a-checkbox
-										v-decorator="[
-										'remember',
-										{
-											valuePropName: 'checked',
-											initialValue: true,
-										},
-										]"
-									>
-										记住我
-									</a-checkbox><br>
-									<a-button type="primary" ghost html-type="submit" class="login-form-button">
-										LOGIN
-									</a-button>
-									<a-button type="primary" ghost @click="goTo('/tinfo')">
-										现在先点这个
-									</a-button>
-							</a-form-item>
-						</a-form>
-					</div>
-			</a-col>
-		</a-row>
-	</div>
+						<a-form-item>
+							<a-input
+								v-decorator="[
+								'userName',
+								{ rules: [{ required: true, message: 'Please input your username!' }] },
+								]"
+								placeholder="Username"
+								style="border-radius: 30px"
+							>
+							</a-input>
+						</a-form-item>
+						<a-form-item>
+							<a-input
+								v-decorator="[
+								'password',
+								{ rules: [{ required: true, message: 'Please input your Password!' }] },
+								]"
+								type="password"
+								placeholder="Password"
+								style="border-radius: 30px;"
+							>
+							</a-input>
+						</a-form-item>
+						<a-form-item>
+							<a-checkbox
+								v-decorator="[
+									'remember',
+								{
+								valuePropName: 'checked',
+								initialValue: true,
+								},
+							]"
+							>
+							<a-label style="color:white">Remember Me</a-label>
+							</a-checkbox>
+
+							<a-button 
+								type="primary" 
+								html-type="submit" 
+								class="login-form-button" 
+								style="border-radius: 30px;background: whitesmoke;color:#2C3E50"
+							>
+								LOGIN
+							</a-button>
+							<br/>
+							<a-button 
+								type="primary" 
+								@click="goTo('/tinfo')" 
+								style="border-radius: 30px;background: whitesmoke;color:#2C3E50">
+								现在先点这个
+							</a-button>
+						</a-form-item>
+					</a-form>
+				</div>
+			</a-layout-sider>
+		</a-layout>
+	</a-layout-content>
+</a-layout>
 </template>
 
 <script>
@@ -70,6 +112,11 @@ export default {
 	
 	beforeCreate() {
 	    this.form = this.$form.createForm(this, { name: 'normal_login' });
+	},
+	data(){
+		return {
+
+		};
 	},
 	
 	methods: {
@@ -89,10 +136,20 @@ export default {
 </script>
 
 <style>
+.background{
+	width:100%;  
+	height:100%;
+	z-index:-1;
+	position: absolute;
+}	 
+.front{
+	z-index:1;
+	position: absolute;
+}
 #components-form-demo-normal-login .login-form {
-  max-width: 300px;
+  max-width: 200px;
 }
 #components-form-demo-normal-login .login-form-button {
-  width: 50%;
+  width: 100%;
 }
 </style>
