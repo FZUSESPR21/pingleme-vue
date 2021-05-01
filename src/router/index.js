@@ -6,15 +6,19 @@ import HwList from "../normal/HomeworkList.vue"
 import HwDetail from "../normal/HomeworkDetail.vue"
 import Performance from "../normal/Performance.vue"
 import PfmDetail from "../normal/PerformanceDetail.vue"
-import GrdList from "../normal/GradeList.vue"
 import AstList from "../normal/AssistantList.vue"
 import ClsInfo from "../normal/ClassInfo.vue"
 import CrtClass from "../normal/CreatClass.vue"
-
+import GL from "../normal/GradeList.vue"
 Vue.use(Router)
 
 export default new Router({
 	routes:[
+		{
+			path:'/GL',
+			name:'GL',
+			component:GL
+		},
 		{
 			path:'/',
 			name:'CrEva',

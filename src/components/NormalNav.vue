@@ -15,7 +15,7 @@
         <a-icon type="book" />
         <span>作业列表</span>
       </a-menu-item>
-      <a-menu-item key="gradelist" @click="goToGrdList()">
+      <a-menu-item key="3" @click="goToGL()">
         <a-icon type="file-done" />
         <span>成绩列表</span>
       </a-menu-item>
@@ -70,9 +70,7 @@ export default {
     goToPerformance() {
       this.$router.push('/performance');
     },
-    goToGrdList() {
-      this.$router.push('/gradelist');
-    },
+
     goToAstList() {
       this.$router.push('/astlist');
     },
@@ -82,6 +80,9 @@ export default {
     goToCrtClass() {
       this.$router.push('/crtclass');
     },
+	goToGL(){
+		this.$router.push('/GL');
+	}
 	},
 };
 </script>
