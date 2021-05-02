@@ -22,7 +22,7 @@
 				</div>
 			</a-layout-header>
 			<a-layout-content :style="{ margin: '24px 16px 0' }">
-				<hr>
+				
 				<Correct></Correct>
 			</a-layout-content>
 			<a-layout-footer style="textAlign: center">
