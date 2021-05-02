@@ -113,7 +113,6 @@
 <script>
 export default {
 	name:'Login',
-	
 	beforeCreate() {
 	    this.form = this.$form.createForm(this, { name: 'normal_login' });
 	},

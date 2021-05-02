@@ -49,6 +49,7 @@
 </template>
 
 <script>
+	//创建班级
 	import NormalNav from "../components/NormalNav.vue"
 	
 const formItemLayout = {

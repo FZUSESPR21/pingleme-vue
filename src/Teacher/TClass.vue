@@ -31,7 +31,7 @@
 						<a slot="name" slot-scope="text">{{ text }}</a>
 						<span slot="customTitle"><a-icon type="team" /> 班级</span>
 						<span slot="action1" >
-							<a-button type="link" style="margin-left:0px;" @click="goTo('/tclass/classmng')"><a><a-icon type="edit" /></a></a-button>
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/tclass/mngsl')"><a><a-icon type="edit" /></a></a-button>
 						</span>
 						<span slot="action2" slot-scope="text, record" >
 							<a-button :type="record.groupcollapsed?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.groupcollapsed = !record.groupcollapsed)">
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+	//班级信息
 	import NormalNav from "../components/NormalNav.vue"
 	
 	const columns = [
