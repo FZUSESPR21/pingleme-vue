@@ -1,113 +1,110 @@
 <template>
-<a-layout style="background-color: rgba(0,0,0,0);">
-	<div class="background" style="background-color: #161616; width:100%; height=100%"></div>
-	<a-layout-header style="background-color: rgba(0,0,0,0);"></a-layout-header>
-	<a-layout style="background-color: rgba(0,0,0,0);">
-	<a-layout-sider style="background-color: rgba(0,0,0,0);width:20px"/>
-		<a-layout style="background-color: rgba(0,0,0,0);">
-			<a-layout style="background: rgba(0,0,0,0);">
-				<a-layout-header style="background: rgba(0,0,0,0);color:white;font-size: 40px;font-weight:bold">评 了 么</a-layout-header>
-				<a-layout-content 
-					  style="width:300x;height:100%;padding:10px;background: rgba(0,0,0,0);color:white;font-size:10px"
-					>
-					<br>
-					<div style="text-align:center;font-weight:bold">
-					<a-divider orientation="right" style="color:white">
-						  <a-tooltip>
-						    <template slot="title">
-						      评了么评分系统
-						    </template>
-						    System Name
-						  </a-tooltip>
-					</a-divider>
-					<a-divider style="color:white">
-						  <a-tooltip>
-						    <template slot="title">
-						      提高软工实践作业评分效率
-						    </template>
-						    Development purpose
-						  </a-tooltip>
-					</a-divider>
-					<a-divider orientation="left" style="color:white">								  <a-tooltip>
-						    <template slot="title">
-						      评了么团队
-						    </template>
-						    Development Team
-						  </a-tooltip>
-					</a-divider>
-					</div>
-				</a-layout-content>
-			</a-layout>
-				<a-layout-sider 
-					width='250px' 
-					style="margin-right:0px;background-color: rgba(0,0,0,0);text-align:center"
-					>
-					<div class="loginform" style="height:100%;width:200px;padding:10px;background-color:rgba(0,0,0,0);">
-						<div style="padding:10px"><a-label style="color:white;font-size: large;"><a-icon type="login"/>LOGIN</a-label></div>
-						<a-form
-							id="components-form-demo-normal-login"
-							:form="form"
-							class="login-form"
-							@submit="handleSubmit"
-						>
-							<a-form-item>
-								<a-input
-									v-decorator="[
-										'userName',
-										{ rules: [{ required: true, message: 'Please input your username!' }] },
-									]"
-									placeholder="Username"
-									style="border-radius: 30px"
-								>
-								</a-input>
-							</a-form-item>
-							<a-form-item>
-								<a-input
-									v-decorator="[
-										'password',
-										{ rules: [{ required: true, message: 'Please input your Password!' }] },
-									]"
-									type="password"
-									placeholder="Password"
-									style="border-radius: 30px;"
-								>
-								</a-input>
-							</a-form-item>
-							<a-form-item>
-								<a-checkbox
-									v-decorator="[
-										'remember',
-										{
-										valuePropName: 'checked',
-										initialValue: true,
-										},
-									]"
-									>
-									<a-label style="color:white">Remember Me</a-label>
-									</a-checkbox>
-									<a-button 
-										type="primary" 
-										html-type="submit" 
-										class="login-form-button" 
-										style="border-radius: 30px;background: whitesmoke;color:#2C3E50"
-									>
-										LOGIN
-									</a-button>
-									<br/>
-									<a-button 
-										type="primary" 
-										@click="goTo('/tinfo')" 
-										style="border-radius: 30px;background: whitesmoke;color:#2C3E50">
-										现在先点这个
-									</a-button>
-								</a-form-item>
-							</a-form>
-						</div>
-				</a-layout-sider>
-		</a-layout>
-	<a-layout-sider style="background-color: rgba(0,0,0,0);width:20px"/>
-</a-layout>
-</a-layout>
+<div>
+<div class="background" style="background-color: #161616;"></div>
+<h1 style="background-color: rgba(0,0,0,0);height:35px"></h1>
+<a-row type="flex" justify="space-around" style="height:100%;width:100%;">
+	<a-col :xs="{ span: 0 }" :sm="{ span: 10, offset: 2}">
+		<div class="info">
+			<h1 style="color:whitesmoke;font-size: 28px;font-weight: bold;">评 了 么</h1>
+			<a-divider orientation="right" style="color:whitesmoke">
+				<a-tooltip>
+					<template slot="title">
+					    评了么评分系统
+					</template>
+					    System Name
+				</a-tooltip>
+			</a-divider>
+			<a-divider style="color:whitesmoke">
+				<a-tooltip>
+					<template slot="title">
+					    提高软工实践作业评分效率
+					</template>
+					    Development purpose
+				</a-tooltip>
+			</a-divider>
+			<a-divider orientation="left" style="color:whitesmoke">
+				<a-tooltip>
+					<template slot="title">
+					    评了么团队
+					</template>
+					    Development Team
+				</a-tooltip>
+			</a-divider>
+		</div>
+	</a-col>
+	<a-col :xs="{ span: 12,offset:6}" :sm="{ span: 8,offset:3 }">
+	    <div class="loginform" style="height:300px;width:100%;padding:8px;background-color:rgba(0,0,0,0)">
+	    	<div style="padding:10px;">
+				<a-label style="color:white;font-size:30px;">PINGLEME</a-label>
+				<br/>
+				<a-label style="color:white;font-size: large;">
+					<a-icon type="login"/> LOGIN
+				</a-label>
+	    	</div>
+	    	<a-form
+	    		id="components-form-demo-normal-login"
+	    		:form="form"
+	    		class="login-form"
+	    		@submit="handleSubmit"
+	    	>
+	    		<a-form-item>
+	    			<a-input
+	    				v-decorator="[
+	    					'userName',
+	    					{ rules: [{ required: true, message: 'Please input your username!' }] },
+	    				]"
+	    				placeholder="Username"
+	    				style="border-radius: 15px"
+	    			>
+	    			</a-input>
+	    		</a-form-item>
+	    		<a-form-item>
+	    			<a-input
+	    				v-decorator="[
+	    					'password',
+	    					{ rules: [{ required: true, message: 'Please input your Password!' }] },
+	    				]"
+	    				type="password"
+	    				placeholder="Password"
+	    				style="border-radius: 15px;"
+	    			>
+	    			</a-input>
+	    		</a-form-item>
+	    		<a-form-item>
+	    			<a-checkbox
+	    				v-decorator="[
+	    					'remember',
+	    					{
+	    					valuePropName: 'checked',
+	    					initialValue: true,
+	    					},
+	    				]"
+	    			>
+	    				<a-label style="color:white">记住我</a-label>
+	    			</a-checkbox>
+	    			<a-button 
+	    				type="primary" 
+	    				html-type="submit" 
+	    				class="login-form-button" 
+	    				style="border-radius: 15px;background: whitesmoke;color:#2C3E50"
+	    			>
+	    				LOGIN
+	    			</a-button>
+	    			<br/>
+	    			<a-button 
+	    				type="primary" 
+	    				@click="goTo('/tinfo')" 
+	    				style="border-radius: 15px;background: whitesmoke;color:#2C3E50"
+	    			>
+	    				现在先点这个
+	    			</a-button>
+	    		</a-form-item>
+	    	</a-form>
+	    </div>
+	</a-col>
+	<a-col :xs="{ span: 6}" :sm="{ span: 1}"></a-col>
+</a-row>
+</div>
 </template>
 
 <script>
@@ -134,12 +131,6 @@ export default {
 		        }
 		    });
 		},
-		    onCollapse(collapsed, type) {
-		      console.log(collapsed, type);
-		    },
-		    onBreakpoint(broken) {
-		      console.log(broken);
-		    },
   },
 };
 </script>
@@ -150,15 +141,11 @@ export default {
 	height:100%;
 	z-index:-1;
 	position: absolute;
-}	 
-.front{
-	z-index:1;
-	position: absolute;
 }
-#components-form-demo-normal-login .login-form {
+.login-form {
   max-width: 200px;
 }
-#components-form-demo-normal-login .login-form-button {
+.login-form-button {
   width: 100%;
 }
 </style>
