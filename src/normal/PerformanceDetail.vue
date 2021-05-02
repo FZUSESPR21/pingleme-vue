@@ -32,7 +32,7 @@
 						<a slot="name" slot-scope="text">{{ text }}</a>
 						<span slot="customTitle">姓名</span>
                         <span slot="score" >
-							 <a-input-number id="inputScore" v-model="value" :min="1" :max="100" @change="onChange" />
+							 <a-input-number id="inputScore" v-model="value" :min="1" :max="100" @change="onChange()" />
 						</span>
 					</a-table>
 				</div>

@@ -27,7 +27,7 @@
 			</a-layout-header>
 			<a-layout-content :style="{ margin: '24px 16px 0' }">
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-					<a-input-search placeholder="按作业标题搜索" style="width: 200px;margin-left:0px;" @search="onSearch" />
+					<a-input-search placeholder="按作业标题搜索" style="width: 200px;margin-left:0px;" @search="onSearch()" />
 					<hr>
 					<a-table :columns="columns" :data-source="data"  :pagination="myPagination">
 						<a slot="name" slot-scope="text">{{ text }}</a>
@@ -156,7 +156,7 @@
 				data,
 				columns,
 				myPagination: {
-				    defaultPageSize: 5
+				    defaultPageSize: 10
 				}
 		    };
 		},
