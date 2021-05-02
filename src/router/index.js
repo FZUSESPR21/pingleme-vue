@@ -10,10 +10,16 @@ import AstList from "../normal/AssistantList.vue"
 import ClsInfo from "../normal/ClassInfo.vue"
 import CrtClass from "../normal/CreatClass.vue"
 import GL from "../normal/GradeList.vue"
-Vue.use(Router)
+import User from "../normal/User.vue"
 
+Vue.use(Router)
 export default new Router({
 	routes:[
+		{
+			path:'/user',
+			name:'User',
+			component:User
+		},
 		{
 			path:'/GL',
 			name:'GL',
@@ -48,11 +54,6 @@ export default new Router({
 			path:'/pfmdetail',
 			name:'PfmDetail',
 			component:PfmDetail
-		},
-		{
-			path:'/gradelist',
-			name:'GrdList',
-			component:GrdList
 		},
 		{
 			path:'/astlist',
