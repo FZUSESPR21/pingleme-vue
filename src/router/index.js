@@ -9,10 +9,17 @@ import PfmDetail from "../normal/PerformanceDetail.vue"
 import GL from "../normal/GradeList.vue"
 import AP from "../normal/AssistantPage.vue"
 import AC from '../normal/AsCorrect.vue'
+import HwCorrecting from '../normal/HomeworkCorrecting.vue'
+import ImpHomework from '../normal/ImportHomework.vue'
 Vue.use(Router)
 
 export default new Router({
 	routes:[
+		{
+			path:'/HwCorrecting',
+			name:'HwCorrecting',
+			component:HwCorrecting
+		},
 		{
 			path:'/GL',
 			name:'GL',
@@ -57,6 +64,11 @@ export default new Router({
 			path:'/AC',
 			name:'AC',
 			component:AC
+		},
+		{
+			path:'/ImpHomework',
+			name:'ImpHomework',
+			component:ImpHomework
 		},
 	]
 })

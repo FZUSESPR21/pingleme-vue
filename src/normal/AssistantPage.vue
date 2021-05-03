@@ -29,11 +29,11 @@
 							<a-icon type="smile-o" /> 作业
 						</span>
 						<span slot="action">
-							<a-button type="link" style="margin-left:0px;" @click="goToCorrect()"><a>
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/AC')"><a>
 									<a-icon type="form" />
 								</a></a-button>
 							<a-divider type="vertical" />
-							<a-button type="link" style="margin-left:0px;" @click="goTocrEvaform()"><a>
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/ImpHomework')"><a>
 									<a-icon type="plus-square" />
 								</a></a-button>
 						</span>
@@ -164,12 +164,10 @@
 			};
 		},
 		methods: {
-			goToCorrect() {
-				this.$router.push('/AC');
-			},
-			goTocrEvaform() {
-				this.$router.push('/evacr')
-			},
+			goTo(path) {
+				this.$router.push(path);
+				},
+			
 			onSearch(value) {
 				console.log(value);
 			},
