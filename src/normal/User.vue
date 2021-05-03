@@ -27,13 +27,14 @@
 			</a-layout-header>
 			<a-layout-content :style="{ margin: '24px 16px 0' }">
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-					<a-input-search placeholder="按作业标题搜索" style="width: 200px;margin-left:0px;" @search="onSearch()" />
+					<a-input-search placeholder="按姓名搜索" style="width: 200px;margin-left:0px;" @search="onSearch()" />
+                    <span>&emsp;<a-button type="primary">添加用户</a-button></span>
 					<hr>
 					<a-table :columns="columns" :data-source="data"  :pagination="myPagination">
 						<a slot="name" slot-scope="text">{{ text }}</a>
-						<span slot="customTitle"><a-icon type="smile-o" /> 作业</span>
+						<span slot="customTitle"><a-icon type="smile-o" /> 姓名</span>
 						<span slot="action" >
-							<a-button type="link" style="margin-left:0px;" @click="goToHwDetail()"><a><a-icon type="edit" /></a></a-button>
+							<a-button type="link" style="margin-left:0px;" @click="astDelete()"><a><a-icon type="delete" /></a></a-button>
 						</span>
 					</a-table>
 				</div>
@@ -47,7 +48,7 @@
 
 <script>
 	import NormalNav from "../components/NormalNav.vue";
-	const columns = [
+    const columns = [
 	  {
 	    dataIndex: 'name',
 	    key: 'name',
@@ -55,98 +56,92 @@
 	    scopedSlots: { customRender: 'name' },
 	  },
 	  {
-	    title: '截止日期',
-	    dataIndex: 'end_time',
-	    key: 'end_time',
+	    title: '权限',
+	    dataIndex: 'end_limits',
+	    key: 'end_limits',
 	  },
 	  {
-	    title: '详情',
-	    dataIndex: 'eva_detail',
-	    key: 'eva_detail',
+	    title: '班级',
+	    dataIndex: 'end_class',
+	    key: 'end_class',
 	  },
-	  {
-	    title: '操作',
+      {
+	    title: '删除',
 		'key':'action',
 		scopedSlots: { customRender: 'action' },
 	  },
 	];
-	
-	const data = [
-	  {
+    const data = [
+      {
 	    key: '1',
-	    name: '团队作业三',
-	    end_time: '2021.3.10',
-		eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	    name: 'XXX',
+	    end_limits: 'XXXXXXXXX',
+        end_class: '软件工程X班'
 	  },
-	  {
+      {
 	    key: '2',
-	    name: '团队作业二',
-	    end_time: '2021.3.10',
-		eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	    name: 'XXX',
+	    end_limits: 'XXXXXXXXX',
+        end_class: '软件工程X班'
 	  },
-	  {
+      {
 	    key: '3',
-	    name: '团队作业一',
-	    end_time: '2021.3.10',
-		eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	    name: 'XXX',
+	    end_limits: 'XXXXXXXXX',
+        end_class: '软件工程X班'
 	  },
-	  {
+      {
 	    key: '4',
-	    name: '团队作业',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	    name: 'XXX',
+	    end_limits: 'XXXXXXXXX',
+        end_class: '软件工程X班'
 	  },
-	  {
+      {
 	    key: '5',
-	    name: '团队作',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	    name: 'XXX',
+	    end_limits: 'XXXXXXXXX',
+        end_class: '软件工程X班'
 	  },
-	  {
+      {
 	    key: '6',
-	    name: '团队',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	    name: 'XXX',
+	    end_limits: 'XXXXXXXXX',
+        end_class: '软件工程X班'
 	  },
-	  {
+      {
 	    key: '7',
-	    name: '团',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	    name: 'XXX',
+	    end_limits: 'XXXXXXXXX',
+        end_class: '软件工程X班'
 	  },
-	  {
+      {
 	    key: '8',
-	    name: '团8',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	    name: 'XXX',
+	    end_limits: 'XXXXXXXXX',
+        end_class: '软件工程X班'
 	  },
-	  {
+      {
 	    key: '9',
-	    name: '团9',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	    name: 'XXX',
+	    end_limits: 'XXXXXXXXX',
+        end_class: '软件工程X班'
 	  },
-	  {
+      {
 	    key: '10',
-	    name: '团10',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	    name: 'XXX',
+	    end_limits: 'XXXXXXXXX',
+        end_class: '软件工程X班'
 	  },
-	  {
+      {
 	    key: '11',
-	    name: '团11',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	    name: 'XXX',
+	    end_limits: 'XXXXXXXXX',
+        end_class: '软件工程X班'
 	  },
-	  {
-	    key: '12',
-	    name: '团12',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	];
+    ];
+
 	export default{
-		name:'HomeworkList',
+		name:'User',
 		components:{
 			NormalNav,
 		},
@@ -156,23 +151,23 @@
 				data,
 				columns,
 				myPagination: {
-				    defaultPageSize: 5
+				    defaultPageSize: 10
 				}
 		    };
 		},
 		methods:{
-			goToHwDetail(){
-				this.$router.push('/hwdetail');
-			},
-			onSearch(value) {
-			    console.log(value);
-			},
+            onChange(value) {
+                console.log('changed', value);
+            },
 			onCollapse(collapsed, type) {
 			    console.log(collapsed, type);
 			 },
 			onBreakpoint(broken) {
 			    console.log(broken);
 			},
+            astDelete(){
+
+            }
 		}
 	}
 </script>
