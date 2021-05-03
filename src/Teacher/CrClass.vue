@@ -19,25 +19,45 @@
 		
 		<a-layout style="background: white;">
 			<a-layout-header style="background: #fff;"></a-layout-header>
-			<a-layout-content :style="{ margin: '24px 16px 0',minHeight:'360px','text-align':'center' }">
-				<a-form :form="form">
+			<a-layout-content :style="{ margin: '24px 16px 0',minHeight:'360px',padding:'10px', }">
+				<a-form :form="form" @submit="handleSubmit">
 					<a-form-item
 						:label-col="formItemLayout.labelCol"
 						:wrapper-col="formItemLayout.wrapperCol"
-						label="Class Name"
+						label="班级名"
 					>
-						<a-input
+					  	<a-input
+					  	    v-decorator="[
+					  	        'classname',
+					  	        { rules: [{ required: true, message: '请输入新班级的名字' }] },
+					  	    ]"
+					  	    placeholder="请输入新班级的名字"
+					  	 />
+					</a-form-item>
+					<a-form-item
+						:label-col="formItemLayout.labelCol"
+						:wrapper-col="formItemLayout.wrapperCol"
+						label="助教"
+					>
+						<a-select 
 						    v-decorator="[
-						        'username',
-						        { rules: [{ required: true, message: 'Please input class name' }] },
+						          'assistant',
+						          { rules: [{ required: true, message: '至少选择一个助教' }] },
 						    ]"
-						    placeholder="Please input class name"
-						 />
+							mode="multiple" 
+							style="width: 100%" 
+							placeholder="添加助教" 
+							@change="handleChangeSelect"
+						>
+							<a-select-option v-for="(item,index) in assistantList" :key="index" :value="item.asname">
+								{{ item.asname }}
+							</a-select-option>
+						</a-select>
 					</a-form-item>
 					<a-form-item :label-col="formTailLayout.labelCol" :wrapper-col="formTailLayout.wrapperCol">
-						<a-button type="primary" @click="check">
-						        Create
-						</a-button>
+					      <a-button type="primary" html-type="submit">
+					        创建班级
+					      </a-button>
 					</a-form-item>
 				</a-form>
 			</a-layout-content>
@@ -51,7 +71,52 @@
 <script>
 	//创建班级
 	import NormalNav from "../components/NormalNav.vue"
-	
+const assistantList=[
+	{
+		key:'1',
+		asname:'助教1'
+	},
+	{
+		key:'2',
+		asname:'助教2'
+	},
+	{
+		key:'3',
+		asname:'助教3'
+	},
+	{
+		key:'4',
+		asname:'助教4'
+	},
+	{
+		key:'5',
+		asname:'助教5'
+	},
+	{
+		key:'6',
+		asname:'助教6'
+	},
+	{
+		key:'7',
+		asname:'助教7'
+	},
+	{
+		key:'8',
+		asname:'助教8'
+	},
+	{
+		key:'9',
+		asname:'助教9'
+	},
+	{
+		key:'10',
+		asname:'助教10'
+	},
+	{
+		key:'11',
+		asname:'助教11'
+	},
+];
 const formItemLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 8 },
@@ -60,14 +125,13 @@ const formTailLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 8, offset: 4 },
 };
-
 	export default{
 		name:'CrClass',
 		data(){
 			return {
+				assistantList,
 				formItemLayout,
 				formTailLayout,
-				form: this.$form.createForm(this, { name: 'dynamic_rule' }),
 			}
 		},
 		components:{
@@ -80,17 +144,15 @@ const formTailLayout = {
 			onBreakpoint(broken) {
 			    console.log(broken);
 			},
-			check() {
-			    this.form.validateFields(err => {
-			        if (!err) {
-						console.info('success');
-			        }
-			    });
+			handleChangeSelect(value) {
+				console.log(`selected ${value}`);
 			},
-			handleChange(e) {
-			    this.checkNick = e.target.checked;
-			    this.$nextTick(() => {
-			        this.form.validateFields(['nickname'], { force: true });
+			handleSubmit(e) {
+			    e.preventDefault();
+			    this.form.validateFields((err, values) => {
+					if (!err) {
+			          console.log('Received values of form: ', values);
+					}
 			    });
 			},
 		},
