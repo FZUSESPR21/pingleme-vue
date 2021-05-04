@@ -38,7 +38,7 @@
 <script>
 	import NormalNav from "../components/NormalNav.vue";
 	export default{
-		name:'HwkDetail',
+		name:'ClsInfo',
 		components:{
 			NormalNav,
 		},

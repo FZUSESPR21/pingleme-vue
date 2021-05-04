@@ -11,11 +11,39 @@ import TClass from "../Teacher/TClass.vue"
 import CrClass from "../Teacher/CrClass.vue"
 import ClassMng from "../Teacher/ClassMng.vue"
 import TInfo from "../Teacher/TInfo.vue"
+import AstList from "../normal/AssistantList.vue"
+import ClsInfo from "../normal/ClassInfo.vue"
+import GL from "../normal/GradeList.vue"
 
+import AP from "../normal/AssistantPage.vue"
+import AC from '../normal/AsCorrect.vue'
+import HwCorrecting from '../normal/HomeworkCorrecting.vue'
+import ImpHomework from '../normal/ImportHomework.vue'
 Vue.use(Router)
 
+import User from "../normal/User.vue"
+
+
+Vue.use(Router)
 export default new Router({
 	routes:[
+		{
+
+			path:'/HwCorrecting',
+			name:'HwCorrecting',
+			component:HwCorrecting
+    },
+    {
+			path:'/user',
+			name:'User',
+			component:User
+
+		},
+		{
+			path:'/GL',
+			name:'GL',
+			component:GL
+		},
 		{
 			path:'/',
 			name:'Login',
@@ -70,6 +98,31 @@ export default new Router({
 			path:'/tclass/classmng',
 			name:'ClassMng',
 			component:ClassMng
+    },
+      {
+			path:'/AP',
+			name:'AP',
+			component:AP
+		},
+		{
+			path:'/AC',
+			name:'AC',
+			component:AC
+		},
+		{
+			path:'/ImpHomework',
+			name:'ImpHomework',
+			component:ImpHomework
+    },
+    {
+			path:'/astlist',
+			name:'AstList',
+			component:AstList
+		},
+		{
+			path:'/clsinfo',
+			name:'ClsInfo',
+			component:ClsInfo
 		},
 	]
 })
