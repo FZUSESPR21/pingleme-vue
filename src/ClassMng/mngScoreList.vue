@@ -138,7 +138,7 @@
 	];
 	
 	export default{
-		name:'mngScoreList',
+		name:'mngSL',
 		data(){
 			return {
 				data,
