@@ -35,6 +35,11 @@
 	    <a-icon type="form" />
 	    <span>绩效填写</span>
 	  </a-menu-item>
+
+	  <a-menu-item key="AP" @click="goToAP()">
+	      <a-icon type="form" />
+	      <span>（助教）作业管理</span>
+	    </a-menu-item>
     <a-sub-menu key="clsmanage" v-if="$store.getters.getLimits==3||$store.getters.getLimits==4">
           <span slot="title"> <a-icon type="bar-chart" /><span>班级管理</span></span>
           <a-menu-item key="clsinfo" @click="goToClsInfo()">
@@ -82,6 +87,14 @@ export default {
     goToPerformance() {
       this.$router.push('/performance');
     },
+
+	goToGL(){
+		this.$router.push('/GL');
+	},
+	goToAP(){
+		this.$router.push('/AP');
+	},
+
 
     goToAstList() {
       this.$router.push('/astlist');

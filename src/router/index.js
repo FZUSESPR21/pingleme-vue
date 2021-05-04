@@ -10,15 +10,30 @@ import AstList from "../normal/AssistantList.vue"
 import ClsInfo from "../normal/ClassInfo.vue"
 import CrtClass from "../normal/CreatClass.vue"
 import GL from "../normal/GradeList.vue"
+
+import AP from "../normal/AssistantPage.vue"
+import AC from '../normal/AsCorrect.vue'
+import HwCorrecting from '../normal/HomeworkCorrecting.vue'
+import ImpHomework from '../normal/ImportHomework.vue'
+Vue.use(Router)
+
 import User from "../normal/User.vue"
+
 
 Vue.use(Router)
 export default new Router({
 	routes:[
 		{
+
+			path:'/HwCorrecting',
+			name:'HwCorrecting',
+			component:HwCorrecting
+    },
+    {
 			path:'/user',
 			name:'User',
 			component:User
+
 		},
 		{
 			path:'/GL',
@@ -56,6 +71,22 @@ export default new Router({
 			component:PfmDetail
 		},
 		{
+
+			path:'/AP',
+			name:'AP',
+			component:AP
+		},
+		{
+			path:'/AC',
+			name:'AC',
+			component:AC
+		},
+		{
+			path:'/ImpHomework',
+			name:'ImpHomework',
+			component:ImpHomework
+    },
+    {
 			path:'/astlist',
 			name:'AstList',
 			component:AstList
@@ -69,6 +100,7 @@ export default new Router({
 			path:'/crtclass',
 			name:'CrtClass',
 			component:CrtClass
+
 		},
 	]
 })
