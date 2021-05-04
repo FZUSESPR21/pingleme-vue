@@ -8,38 +8,41 @@
       v-for="(domain, index) in dynamicValidateForm.domains"
       :key="domain.key"
       v-bind="index === 0 ? formItemLayout : {}"
-      :label="index === 0 ? 'Domains' : ''"
+      :label="index === 0 ? '评审表项' : ''"
       :prop="'domains.' + index + '.value'"
       :rules="{
         required: true,
-        message: 'domain can not be null',
+        message: '评审表项不能为空',
         trigger: 'blur',
       }"
     >
       <a-input
         v-model="domain.value"
-        placeholder="please input domain"
-        style="width: 60%; margin-right: 8px"
+        placeholder="内容"
+        style="width: 40%; margin-right: 12px"
       />
+	  <a-input
+	    v-model="domain.value"
+	    placeholder="分值"
+	    style="width: 40%;"
+	  />
       <a-icon
         v-if="dynamicValidateForm.domains.length > 1"
         class="dynamic-delete-button"
         type="minus-circle-o"
+		style="color:#f17575"
         :disabled="dynamicValidateForm.domains.length === 1"
         @click="removeDomain(domain)"
       />
     </a-form-model-item>
     <a-form-model-item v-bind="formItemLayoutWithOutLabel">
       <a-button type="dashed" style="width: 60%" @click="addDomain">
-        <a-icon type="plus" /> Add field
+        <a-icon type="plus" /> 添加评审表项
       </a-button>
     </a-form-model-item>
     <a-form-model-item v-bind="formItemLayoutWithOutLabel">
       <a-button type="primary" html-type="submit" @click="submitForm('dynamicValidateForm')">
         提交
-      </a-button>
-      <a-button style="margin-left: 10px" @click="resetForm('dynamicValidateForm')">
-        重置
       </a-button>
     </a-form-model-item>
   </a-form-model>
@@ -81,9 +84,6 @@ export default {
           return false;
         }
       });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
     },
     removeDomain(item) {
       let index = this.dynamicValidateForm.domains.indexOf(item);

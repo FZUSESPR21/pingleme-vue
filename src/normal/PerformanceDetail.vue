@@ -10,22 +10,22 @@
 			<div class="logo">
 				<a-button type="link"
 						style="margin-bottom: 16px; margin-top: 10px;"
-						@click="() => (collapsed = !collapsed)">
+						>
 							&nbsp;PingLeMe
 				</a-button>
 			</div>
 			<NormalNav></NormalNav>
 		</a-layout-sider>
 		
-		<a-layout>
-			<a-layout-header :style="{ background: '#fff', padding: 0 }">
+		<a-layout style="background: white;">
+			<a-layout-header :style="{ background: '#fff', padding: 0 ,'text-align':'center'}">
 				<div class="info">
 					<a-icon type="user" />&nbsp;用户：XXX
 					<a-divider type="vertical" />
 					<a-icon type="team" />&nbsp;团队：XXX团队
 				</div>
 			</a-layout-header>
-			<a-layout-content :style="{ margin: '24px 16px 0' }">
+			<a-layout-content :style="{ margin: '24px 16px 0',minHeight:'360px' }">
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
 					<hr>
 					<a-table :columns="columns" :data-source="data"  :pagination="false">
@@ -40,7 +40,7 @@
                     <a-button type="primary">保存</a-button>
                 </div>
 			</a-layout-content>
-			<a-layout-footer style="textAlign: center">
+			<a-layout-footer style="textAlign: center;background:white">
 				PingLeMe ©2021 Created by Ant UED
 			</a-layout-footer>
 		</a-layout>	

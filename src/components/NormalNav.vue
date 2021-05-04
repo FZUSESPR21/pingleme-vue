@@ -15,46 +15,52 @@
       theme="light"
       :inline-collapsed="collapsed"
     >
-      <a-menu-item key="1">
+      <a-menu-item key="info" @click="goTo('/tinfo')">
         <a-icon type="user" />
         <span>个人信息</span>
       </a-menu-item>
-      <a-menu-item key="hwlist" @click="goToHwList()" v-if="$store.getters.getLimits==1||$store.getters.getLimits==2">
+
+      <a-menu-item key="hwlist" @click="goTo('/hwlist')" v-if="$store.getters.getLimits==1||$store.getters.getLimits==2">
         <a-icon type="book" />
         <span>作业列表</span>
       </a-menu-item>
-      <a-menu-item key="GL" @click="goToGL()" v-if="$store.getters.getLimits==1||$store.getters.getLimits==2">
+      <a-menu-item key="GL" @click="goTo('/GL')" v-if="$store.getters.getLimits==1||$store.getters.getLimits==2">
         <a-icon type="file-done" />
         <span>成绩列表</span>
       </a-menu-item>
-	  <a-menu-item key="" @click="goTocrEva()" v-if="$store.getters.getLimits==2">
+	  <a-menu-item key="TClass" @click="goTo('/tclass')">
+	    <a-icon type="audit" />
+	    <span>班级信息</span>
+		</a-menu-item>
+	  <a-menu-item key="" @click="goTo('/creva')" v-if="$store.getters.getLimits==2">
 	    <a-icon type="form" />
 	    <span>创建评审表</span>
 	  </a-menu-item>
-    <a-menu-item key="performance" @click="goToPerformance()" v-if="$store.getters.getLimits==2">
+    <a-menu-item key="performance" @click="goTo('/performance')" v-if="$store.getters.getLimits==2">
 	    <a-icon type="form" />
 	    <span>绩效填写</span>
 	  </a-menu-item>
 
-	  <a-menu-item key="AP" @click="goToAP()">
+	  <a-menu-item key="AP" @click="goTo('/AP')">
 	      <a-icon type="form" />
 	      <span>（助教）作业管理</span>
 	    </a-menu-item>
     <a-sub-menu key="clsmanage" v-if="$store.getters.getLimits==3||$store.getters.getLimits==4">
           <span slot="title"> <a-icon type="bar-chart" /><span>班级管理</span></span>
-          <a-menu-item key="clsinfo" @click="goToClsInfo()">
+          <a-menu-item key="clsinfo" @click="goTo('/clsinfo')">
             班级列表
           </a-menu-item>
-          <a-menu-item key="crtclass" @click="goToCrtClass()" v-if="$store.getters.getLimits==4">
+          <a-menu-item key="crtclass" @click="goTo('/crclass')" v-if="$store.getters.getLimits==4">
             创建班级
           </a-menu-item>
-          <a-menu-item key="astlist" @click="goToAstList()" v-if="$store.getters.getLimits==4">
+          <a-menu-item key="astlist" @click="goTo('/astlist')" v-if="$store.getters.getLimits==4">
             助教列表
           </a-menu-item>
         </a-sub-menu>
-    <a-menu-item key="user" @click="goToUser()" v-if="$store.getters.getLimits==5">
+    <a-menu-item key="user" @click="goToUser('/user')" v-if="$store.getters.getLimits==5">
 	    <a-icon type="form" />
 	    <span>用户列表</span>
+
 	  </a-menu-item>
     </a-menu>
   </div>
@@ -69,6 +75,9 @@ export default {
 		};
 	},
 	methods: {
+		goTo(path){
+			this.$router.push(path);
+		},
     openKeys(){
       if(this.$route.path.replace('/','')=='clsinfo'||
       this.$route.path.replace('/','')=='astlist'||
@@ -78,39 +87,7 @@ export default {
 		toggleCollapsed() {
 			this.collapsed = !this.collapsed;
 		},
-		goTocrEva(){
-			this.$router.push('/');
-		},
-    goToHwList() {
-      this.$router.push('/hwlist');
-    },
-    goToPerformance() {
-      this.$router.push('/performance');
-    },
 
-	goToGL(){
-		this.$router.push('/GL');
-	},
-	goToAP(){
-		this.$router.push('/AP');
-	},
-
-
-    goToAstList() {
-      this.$router.push('/astlist');
-    },
-    goToClsInfo() {
-      this.$router.push('/clsinfo');
-    },
-    goToCrtClass() {
-      this.$router.push('/crtclass');
-    },
-  	goToGL(){
-  		this.$router.push('/GL');
-  	},
-    goToUser(){
-  		this.$router.push('/user');
-  	},
 	},
 };
 </script>
