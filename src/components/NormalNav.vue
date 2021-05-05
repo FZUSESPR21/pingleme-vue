@@ -28,10 +28,6 @@
         <a-icon type="file-done" />
         <span>成绩列表</span>
       </a-menu-item>
-	  <a-menu-item key="TClass" @click="goTo('/tclass')">
-	    <a-icon type="audit" />
-	    <span>班级信息</span>
-		</a-menu-item>
 	  <a-menu-item key="" @click="goTo('/creva')" v-if="$store.getters.getLimits==2">
 	    <a-icon type="form" />
 	    <span>创建评审表</span>

@@ -1,3 +1,4 @@
+<!-- ant库+elementui库 cnpm install element-ui --save -->
 <template>
 	<a-layout id="components-layout-demo-responsive">
 		<a-layout-sider
@@ -19,45 +20,80 @@
 		
 		<a-layout style="background: white;">
 			<a-layout-header :style="{ background: '#fff', padding: 0,margin:'12px' }">
-			<ClassHeader></ClassHeader>
+				<ClassHeader></ClassHeader>
 			</a-layout-header>
-			<a-layout-content style="background: white;text-align:center">
-				<div class="analysis-content-body">
-				<div class="upload-tool">
-				<a-upload
-				  name="file"
-				  :multiple="true"
-				  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-				  :headers="headers"
-				  @change="exportChange"
-				>
-				  <a-button @click="btnClick()"> <a-icon type="upload" /> 上传excel文件 </a-button>
-				</a-upload>
+			<a-layout-content style="background: white;">
+				<!-- 当前班级学生的列表，支持删除 -->
+				<div style="padding:24px;background: #fff;">
+					<a-label style="font-size: 20px;"><a-icon type="team"/>班级：XXX</a-label>
 				</div>
-				<!-- 下载模板a标签 -->
-				<div class="table-area">
-				
-				</div>
-					
-				</div>
-				
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
+					<!-- 导入学生 -->
+					<a-button type="primary" @click="showDrawer" style="margin-right:100px"> <a-icon type="plus" /> 导入学生 </a-button>
 					<a-input-search placeholder="按学号搜索" style="width: 200px;margin-left:0px;" @search="onSearch" />
+					<a-drawer
+						title="导入学生"
+						:width="360"
+						:visible="visible"
+						:body-style="{ paddingBottom: '80px' }"
+						@close="onClose"
+					>
+						<!-- 上传excel进行导入并支持预览 -->
+						<div class="analysis-content-body" style="background:#fff">				
+							<div class="upload-tool" style="background:#fff">
+								<span>
+								    <input class="input-file" type="file" @change="exportData"
+								           accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+								    <br/>
+									<a @click="downloadExecl">点击此处下载模版</a>
+								</span>
+							</div>
+							<div class="pagination">
+								<el-pagination
+									@size-change="handleSizeChange"
+									@current-change="CurrentChange"
+									:current-page="currentPage"
+									:page-sizes="[10, 20, 30,40,50]"
+									:page-size="pageSize"
+									layout="total, sizes, jumper"
+									:total="total">
+								</el-pagination>
+								<a-button type="primary">确认导入</a-button>
+							</div>
+							<!--预览-->
+							<div class="table-area">
+								<a-table
+									:data-source="tableData"
+									style="width: 100%"
+									height="450"
+									size="mini"
+									:pagination="false"
+								>
+									<a-table-column
+										:dataIndex="item"
+										:label="item"
+										width="140"
+										v-for="(item,index) in checkboxTableColumn"
+										:key="'column'+index">
+									</a-table-column>
+								</a-table>
+							</div>
+						</div>
+					</a-drawer>
 					<hr>
-					<a-table :columns="columns" :data-source="data"  :pagination="myPagination">
-						<span slot="customTitle"><a-icon type="team" /> 学号</span>
-						<span slot="action" slot-scope="text, record">
+					<a-table bordered :data-source="dataSource" :columns="columns">
+						<a slot="name" slot-scope="text">{{ text }}</a>
+						<template slot="operation" slot-scope="text, record">
 							<a-popconfirm
-							    v-if="dataSource.length"
-							    title="Sure to delete?"
-							    @confirm="() => onDelete(record.key)"
+								v-if="dataSource.length"
+								title="Sure to delete?"
+								@confirm="() => onDelete(record.key)"
 							>
-							    <a href="javascript:;">Delete</a>
+								<a href="javascript:;">Delete</a>
 							</a-popconfirm>
-						</span>
+						</template>
 					</a-table>
 				</div>
-
 			</a-layout-content>
 		</a-layout>
 	</a-layout>
@@ -67,97 +103,8 @@
 	//老师-班级信息-班级管理-学生管理
 	import NormalNav from "../components/NormalNav.vue"
 	import ClassHeader from "../components/ClassHeader.vue"
-	import XLSX from "xlsx"
-	const columns = [
-	  {
-	    dataIndex: 'stuid',
-	    key: 'stuid',
-	    slots: { title: 'customTitle' },
-	    scopedSlots: { customRender: 'stuid' },
-	  },
-	  {
-	    title: '姓名',
-	    dataIndex: 'name',
-	    key: 'name',
-	  },
-	  { title: '操作',
-		dataIndex: 'action',
-		scopedSlots: { customRender: 'action'},
-	  },
-	];
-	
-	const data = [
-	  {
-	    key: '1',
-	    stuid:'221801101',
-		name:'1111'
-	  },
-	  {
-	    key: '2',
-	    stuid:'221801102',
-		name:'1112'
-	  },
-	  {
-	    key: '3',
-	    stuid:'221801103',
-		name:'1113'
-	  },
-	  {
-	    key: '4',
-	    stuid:'221801104',
-		name:'1114'
-	  },
-	  {
-	    key: '5',
-	    stuid:'221801105',
-		name:'1115'
-	  },
-	  {
-	    key: '6',
-	    stuid:'221801106',
-	  		name:'1116'
-	  },
-	  {
-	    key: '7',
-	    stuid:'221801107',
-	  		name:'1117'
-	  },
-	  {
-	    key: '8',
-	    stuid:'221801108',
-	  		name:'1118'
-	  },
-	  {
-	    key: '9',
-	    stuid:'221801109',
-	  		name:'1119'
-	  },
-	  {
-	    key: '10',
-	    stuid:'221801110',
-	  		name:'1120'
-	  },
-	  {
-	    key: '11',
-	    stuid:'221801108',
-	  		name:'1118'
-	  },
-	  {
-	    key: '12',
-	    stuid:'221801108',
-	  		name:'1118'
-	  },
-	  {
-	    key: '13',
-	    stuid:'221801108',
-	  		name:'1118'
-	  },
-	  {
-	    key: '14',
-	    stuid:'221801108',
-	  		name:'1118'
-	  },
-	];
+	import XLSX from "xlsx" //需要下载 cnpm install xlsx
+
 	export default{
 		name:'mngAddstu',
 		data(){
@@ -165,11 +112,107 @@
 			    headers: {
 			       authorization: 'authorization-text',
 			    },
-				data,
-				columns,
-				myPagination: {
-				    defaultPageSize: 10
-				}
+				//上传excel
+				columnHeader:[],//所有键的值
+				excelData:[],// 导入的excel的数据
+				checkboxTableColumn:[],// 表格显示列
+				tableData:[],//表格数据
+				currentPage:1,// 当前分页
+				pageSize:10,// 每页显示数量
+				total:0,// 数据总数
+
+				visible:false,//Drawer
+				//当前班级学生
+				dataSource: [
+				  {
+				    key: '1',
+				    stuid:'221801101',
+					name:'1101'
+				  },
+				  {
+				    key: '2',
+				    stuid:'221801102',
+					name:'1102'
+				  },
+				  {
+				    key: '3',
+				    stuid:'221801103',
+					name:'1103'
+				  },
+				  {
+				    key: '4',
+				    stuid:'221801104',
+					name:'1104'
+				  },
+				  {
+				    key: '5',
+				    stuid:'221801105',
+					name:'1105'
+				  },
+				  {
+				    key: '6',
+				    stuid:'221801106',
+				  		name:'1106'
+				  },
+				  {
+				    key: '7',
+				    stuid:'221801107',
+				  		name:'1107'
+				  },
+				  {
+				    key: '8',
+				    stuid:'221801108',
+				  		name:'1108'
+				  },
+				  {
+				    key: '9',
+				    stuid:'221801109',
+				  		name:'1109'
+				  },
+				  {
+				    key: '10',
+				    stuid:'221801110',
+				  		name:'1110'
+				  },
+				  {
+				    key: '11',
+				    stuid:'221801111',
+				  		name:'1111'
+				  },
+				  {
+				    key: '12',
+				    stuid:'221801112',
+				  		name:'1112'
+				  },
+				  {
+				    key: '13',
+				    stuid:'221801113',
+				  		name:'1113'
+				  },
+				  {
+				    key: '14',
+				    stuid:'221801114',
+				  		name:'1114'
+				  },
+				  ],
+				  count: 14,
+				  columns: [
+				    {
+				      title: 'stuid',
+				      dataIndex: 'stuid',
+				      width: '30%',
+				      scopedSlots: { customRender: 'stuid' },
+				    },
+				    {
+				      title: 'name',
+				      dataIndex: 'name',
+				    },
+				    {
+				      title: 'operation',
+				      dataIndex: 'operation',
+				      scopedSlots: { customRender: 'operation' },
+				    },
+				  ],
 			}
 		},
 		components:{
@@ -177,26 +220,26 @@
 			ClassHeader,
 		},
 		methods:{
-			onDelete(key) {
-			      const dataSource = [...this.data];
-			      this.data = dataSource.filter(item => item.key !== key);
-			},
-			handleChange(info) {
-			    if (info.file.status !== 'uploading') {
-			        console.log(info.file, info.fileList);
-			    }
-			    if (info.file.status === 'done') {
-			        this.$message.success(`${info.file.name} file uploaded successfully`);
-			    } else if (info.file.status === 'error') {
-			        this.$message.error(`${info.file.name} file upload failed.`);
-			    }
-			},
+			//响应式布局的两个函数
 			onCollapse(collapsed, type) {
 			    console.log(collapsed, type);
 			 },
 			onBreakpoint(broken) {
 			    console.log(broken);
 			},
+			//学生表格删除行的函数
+			onDelete(key) {
+				const dataSource = [...this.dataSource];
+				this.dataSource = dataSource.filter(item => item.key !== key);
+			},
+			//Drawer打开和关闭的函数
+			showDrawer() {
+			    this.visible = true;
+			},
+			onClose() {
+			    this.visible = false;
+			},
+			//上传excel的函数
 			btnClick() {
 			    document.querySelector(".input-file").click();
 			},
@@ -253,8 +296,19 @@
 			       // 分页切换
 			CurrentChange(val){
 			    this.currentPage=val;
-			        
-			    this.tableData=this.excelData.slice((val-1)*this.pageSize,(val*this.pageSize)-1);
+			    this.tableData=this.excelData.slice((val-1)*this.pageSize,(val*this.pageSize));
+			},
+					// 每页显示数量改变
+			handleSizeChange(val){
+				this.pageSize=val;
+				this.tableData=this.excelData.slice((this.currentPage-1)*val,(this.currentPage*val));
+			},
+			//下载模板
+			downloadExecl() {
+			    window.open(
+			        "",
+			        "_blank"
+			    );
 			},
 		},
 	}

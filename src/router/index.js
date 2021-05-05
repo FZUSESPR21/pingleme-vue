@@ -11,7 +11,6 @@ import TClass from "../Teacher/TClass.vue"
 import CrClass from "../Teacher/CrClass.vue"
 import TInfo from "../Teacher/TInfo.vue"
 import AstList from "../normal/AssistantList.vue"
-import ClsInfo from "../normal/ClassInfo.vue"
 import GL from "../normal/GradeList.vue"
 import mngSL from "../ClassMng/mngScoreList.vue"
 import AP from "../normal/AssistantPage.vue"
@@ -19,6 +18,9 @@ import AC from '../normal/AsCorrect.vue'
 import HwCorrecting from '../normal/HomeworkCorrecting.vue'
 import ImpHomework from '../normal/ImportHomework.vue'
 import mngAddstu from "../ClassMng/mngAddstu.vue"
+import test from"../ClassMng/test.vue"
+import PersonSL from "../score/personscore.vue"
+
 Vue.use(Router)
 
 import User from "../normal/User.vue"
@@ -27,6 +29,11 @@ import User from "../normal/User.vue"
 Vue.use(Router)
 export default new Router({
 	routes:[
+		{
+			path:'/test',
+			name:'test',
+			component:test,
+		},
 		{
 			path:'/HwCorrecting',
 			name:'HwCorrecting',
@@ -84,7 +91,7 @@ export default new Router({
 			component:PfmDetail
 		},
 		{
-			path:'/tclass',
+			path:'/clsInfo',
 			name:'TClass',
 			component:TClass
 		},
@@ -97,6 +104,11 @@ export default new Router({
 			path:'/tclass/mngaddstu',
 			name:'mngAddstu',
 			component:mngAddstu,
+		},
+		{
+			path:'/tclass/mngsl/personsl',
+			name:'personsl',
+			component:PersonSL,
 		},
 		{
 			path:'/crclass',
@@ -122,11 +134,6 @@ export default new Router({
 			path:'/astlist',
 			name:'AstList',
 			component:AstList
-		},
-		{
-			path:'/clsinfo',
-			name:'ClsInfo',
-			component:ClsInfo
 		},
 	]
 })
