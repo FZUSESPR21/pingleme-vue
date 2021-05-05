@@ -1,9 +1,9 @@
+  
 import Vue from "vue"
 import Router from "vue-router"
 import CreateEvaluation from "../normal/CreateEvaluation.vue";
 import CrEvaform from "../normal/CreateEvaluationForm.vue";
 import HwList from "../normal/HomeworkList.vue"
-import HwDetail from "../normal/HomeworkDetail.vue"
 import Performance from "../normal/Performance.vue"
 import PfmDetail from "../normal/PerformanceDetail.vue"
 import Login from "../Login/Login.vue"
@@ -21,14 +21,45 @@ import ImpHomework from '../normal/ImportHomework.vue'
 import mngAddstu from "../ClassMng/mngAddstu.vue"
 import SelfInfo from '../normal/SelfInfo.vue'
 import LeaderInfo from '../normal/LeaderInfo.vue'
-Vue.use(Router)
-
+import JdgTeam from '../normal/JudgeTeam.vue'
+import TeamList from '../normal/TeamList.vue'
 import User from "../normal/User.vue"
 
 
 Vue.use(Router)
 export default new Router({
-	routes: [{
+	routes: [
+		{
+			path: '/',
+			name: 'Login',
+			component: Login,
+		},
+		{
+			path: '/tinfo',
+			name: 'TInfo',
+			component: TInfo,
+		},
+		{
+			path: '/creva',
+			name: 'CrEva',
+			component: CreateEvaluation
+		},
+		{
+			path: '/creva/crevaf',
+			name: 'CrEvaf',
+			component: CrEvaform
+		},
+		{
+			path: '/hwlist',
+			name: 'HwList',
+			component: HwList
+		},
+		{
+			path: '/performance',
+			name: 'Performance',
+			component: Performance
+    },
+    {
 			path: '/SelfInfo',
 			name: 'SelfInfo',
 			component: SelfInfo
@@ -78,11 +109,6 @@ export default new Router({
 			path: '/hwlist',
 			name: 'HwList',
 			component: HwList
-		},
-		{
-			path: '/hwdetail',
-			name: 'HwDetail',
-			component: HwDetail
 		},
 		{
 			path: '/performance',
@@ -138,6 +164,16 @@ export default new Router({
 			path: '/clsinfo',
 			name: 'ClsInfo',
 			component: ClsInfo
+		},
+		{
+			path: '/jdgteam',
+			name: 'JdgTeam',
+			component: JdgTeam
+		},
+		{
+			path: '/teamlist',
+			name: 'TeamList',
+			component: TeamList
 		},
 	]
 })

@@ -33,7 +33,7 @@
 						<a slot="name" slot-scope="text">{{ text }}</a>
 						<span slot="customTitle"><a-icon type="smile-o" /> 作业</span>
 						<span slot="action" >
-							<a-button type="link" style="margin-left:0px;" @click="See(url)"><a><a-icon type="edit" /></a></a-button>
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/jdgteam')"><a><a-icon type="edit" /></a></a-button>
 						</span>
 					</a-table>
 				</div>
@@ -55,17 +55,12 @@
 	    scopedSlots: { customRender: 'name' },
 	  },
 	  {
-	    title: '截止日期',
-	    dataIndex: 'end_time',
-	    key: 'end_time',
+	    title: '组号',
+	    dataIndex: 'end_num',
+	    key: 'end_num',
 	  },
 	  {
-	    title: '详情',
-	    dataIndex: 'eva_detail',
-	    key: 'eva_detail',
-	  },
-	  {
-	    title: '操作',
+	    title: '进入评审表',
 		'key':'action',
 		scopedSlots: { customRender: 'action' },
 	  },
@@ -74,79 +69,52 @@
 	const data = [
 	  {
 	    key: '1',
-	    name: '团队作业三',
-	    end_time: '2021.3.10',
-		eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '2',
-	    name: '团队作业二',
-	    end_time: '2021.3.10',
-		eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '3',
-	    name: '团队作业一',
-	    end_time: '2021.3.10',
-		eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '4',
-	    name: '团队作业',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '5',
-	    name: '团队作',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '6',
-	    name: '团队',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '7',
-	    name: '团',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '8',
-	    name: '团8',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '9',
-	    name: '团9',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '10',
-	    name: '团10',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '11',
-	    name: '团11',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '12',
-	    name: '团12',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
 	];
 	export default{
-		name:'HomeworkList',
+		name:'TeamList',
 		components:{
 			NormalNav,
 		},
@@ -158,7 +126,6 @@
 				myPagination: {
 				    defaultPageSize: 5
 				},
-				url:"https://edu.cnblogs.com/campus/fzu/FZUSESPR21/homework/11974",
 		    };
 		},
 		methods:{
