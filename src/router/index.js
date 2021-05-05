@@ -18,7 +18,7 @@ import AC from '../normal/AsCorrect.vue'
 import HwCorrecting from '../normal/HomeworkCorrecting.vue'
 import ImpHomework from '../normal/ImportHomework.vue'
 import mngAddstu from "../ClassMng/mngAddstu.vue"
-import test from"../ClassMng/test.vue"
+
 import PersonSL from "../score/personscore.vue"
 
 Vue.use(Router)
@@ -29,11 +29,6 @@ import User from "../normal/User.vue"
 Vue.use(Router)
 export default new Router({
 	routes:[
-		{
-			path:'/test',
-			name:'test',
-			component:test,
-		},
 		{
 			path:'/HwCorrecting',
 			name:'HwCorrecting',
