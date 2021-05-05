@@ -11,8 +11,8 @@
 			<NormalNav></NormalNav>
 		</a-layout-sider>
 
-		<a-layout>
-			<a-layout-header :style="{ background: '#fff', padding: 0 }">
+		<a-layout style="background: white;">
+			<a-layout-header :style="{ background: '#fff', padding: 0 ,'text-align':'center'}">
 				<div class="info">
 					<a-icon type="user" />&nbsp;用户：XXX
 					<a-divider type="vertical" />
@@ -29,7 +29,7 @@
 							<a-icon type="smile-o" /> 作业
 						</span>
 						<span slot="action">
-							<a-button type="link" style="margin-left:0px;" @click="goTo('/AC')"><a>
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/AstCorrect')"><a>
 									<a-icon type="form" />
 								</a></a-button>
 							<a-divider type="vertical" />
@@ -41,7 +41,7 @@
 					</a-table>
 				</div>
 			</a-layout-content>
-			<a-layout-footer style="textAlign: center">
+			<a-layout-footer style="textAlign: center;background:white">
 				PingLeMe ©2021 Created by Ant UED
 			</a-layout-footer>
 		</a-layout>
@@ -149,7 +149,7 @@
 		},
 	];
 	export default {
-		name: 'AP',
+		name: 'AstPage',
 		components: {
 			NormalNav,
 		},

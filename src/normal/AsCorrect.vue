@@ -11,8 +11,8 @@
 			<NormalNav></NormalNav>
 		</a-layout-sider>
 
-		<a-layout>
-			<a-layout-header :style="{ background: '#fff', padding: 0 }">
+		<a-layout style="background: white;">
+			<a-layout-header :style="{ background: '#fff', padding: 0 ,'text-align':'center'}">
 				<div class="info">
 					<a-icon type="user" />&nbsp;用户：XXX
 					<a-divider type="vertical" />
@@ -34,7 +34,7 @@
 					</a-table>
 				</div>
 			</a-layout-content>
-			<a-layout-footer style="textAlign: center">
+			<a-layout-footer style="textAlign: center;background:white">
 				PingLeMe ©2021 Created by Ant UED
 			</a-layout-footer>
 		</a-layout>
@@ -135,7 +135,7 @@
 		},
 	];
 	export default {
-		name: 'AC',
+		name: 'AstCorrect',
 		components: {
 			
 			NormalNav,
