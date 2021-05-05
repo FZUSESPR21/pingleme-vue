@@ -12,8 +12,6 @@ import CrClass from "../Teacher/CrClass.vue"
 import TInfo from "../Teacher/TInfo.vue"
 import AstList from "../normal/AssistantList.vue"
 import ClsInfo from "../normal/ClassInfo.vue"
-import CrtClass from "../normal/CreatClass.vue"
-import GL from "../normal/GradeList.vue"
 import GradeList from "../normal/GradeList.vue"
 import mngSL from "../ClassMng/mngScoreList.vue"
 import AstPage from "../normal/AssistantPage.vue"
@@ -111,11 +109,6 @@ export default new Router({
 			path: '/hwlist',
 			name: 'HwList',
 			component: HwList
-		},
-		{
-			path: '/hwdetail',
-			name: 'HwDetail',
-			component: HwDetail
 		},
 		{
 			path: '/performance',
