@@ -1,6 +1,6 @@
 <template>
 	<a-layout id="components-layout-demo-responsive">
-		<a-layout-sider breakpoint="lg" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint"
+		<a-layout-sider breakpoint="sm" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint"
 			id="sider1">
 			<div class="logo">
 				<a-button type="link" style="margin-bottom: 16px; margin-top: 10px;"
