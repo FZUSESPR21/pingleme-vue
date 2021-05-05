@@ -1,5 +1,5 @@
 <template>
-  <a-layout id="components-layout-demo-responsive-form">
+ <a-layout id="components-layout-demo-responsive-form">
     <a-layout-sider
       breakpoint="lg"
       collapsed-width="0"
@@ -66,11 +66,12 @@ export default {
 </script>
 
 <style>
-#components-layout-demo-evaluationform-trigger .formlogo {
+#components-layout-demo-responsive .logo {
   height: 32px;
   background: rgba(255, 255, 255, 0);
   margin: 16px;
 }
+
 #formsider1 {
   background-color: white;
 }
