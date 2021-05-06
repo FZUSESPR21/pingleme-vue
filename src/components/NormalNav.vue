@@ -1,3 +1,4 @@
+  
 <template>
 	<div style="width: 200px" id="navleft">
 		<div><span>&emsp;<a-button type="primary" v-bind:disabled="$store.getters.getStudentButton"
@@ -54,6 +55,10 @@
 				<span>绩效填写</span>
 			</a-menu-item>
 
+      <a-menu-item key="teamlist" @click="goTo('/teamlist')" v-if="$store.getters.getLimits==2||$store.getters.getLimits==3||$store.getters.getLimits==4">
+				<a-icon type="form" />
+				<span>评审团队</span>
+			</a-menu-item>
 			<a-menu-item key="AstPage" @click="goTo('/AstPage')"
 				v-if="$store.getters.getLimits==3||$store.getters.getLimits==4">
 				<a-icon type="form" />
@@ -76,7 +81,6 @@
 			<a-menu-item key="user" @click="goToUser('/user')" v-if="$store.getters.getLimits==5">
 				<a-icon type="form" />
 				<span>用户列表</span>
-
 			</a-menu-item>
 		</a-menu>
 	</div>
@@ -103,8 +107,8 @@
 			toggleCollapsed() {
 				this.collapsed = !this.collapsed;
 			},
-
 		},
+
 	};
 </script>
 

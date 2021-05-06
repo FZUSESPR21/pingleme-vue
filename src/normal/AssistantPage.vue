@@ -1,6 +1,6 @@
 <template>
 	<a-layout id="components-layout-demo-responsive">
-		<a-layout-sider breakpoint="lg" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint"
+		<a-layout-sider breakpoint="sm" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint"
 			id="sider1">
 			<div class="logo">
 				<a-button type="link" style="margin-bottom: 16px; margin-top: 10px;"
@@ -29,6 +29,7 @@
 							<a-icon type="smile-o" /> 作业
 						</span>
 						<span slot="action">
+
 							<a-button type="link" style="margin-left:0px;" @click="goTo('/AstCorrect')">
 								批改</a-button>
 							<a-divider type="vertical" />

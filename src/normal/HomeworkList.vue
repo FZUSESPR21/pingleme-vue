@@ -1,7 +1,7 @@
 <template>
 	<a-layout id="components-layout-demo-responsive">
 		<a-layout-sider
-			breakpoint="lg"
+			breakpoint="sm"
 			collapsed-width="0"
 			@collapse="onCollapse"
 			@breakpoint="onBreakpoint"
@@ -33,7 +33,7 @@
 						<a slot="name" slot-scope="text">{{ text }}</a>
 						<span slot="customTitle"><a-icon type="smile-o" /> 作业</span>
 						<span slot="action" >
-							<a-button type="link" style="margin-left:0px;" @click="goTo('/hwdetail')"><a><a-icon type="edit" /></a></a-button>
+							<a-button type="link" style="margin-left:0px;" @click="See(url)"><a><a-icon type="edit" /></a></a-button>
 						</span>
 					</a-table>
 				</div>
@@ -157,7 +157,8 @@
 				columns,
 				myPagination: {
 				    defaultPageSize: 5
-				}
+				},
+				url:"https://edu.cnblogs.com/campus/fzu/FZUSESPR21/homework/11974",
 		    };
 		},
 		methods:{
@@ -173,6 +174,9 @@
 			onBreakpoint(broken) {
 			    console.log(broken);
 			},
+			 See (e) {
+      			window.location.href = e
+     		}
 		}
 	}
 </script>
