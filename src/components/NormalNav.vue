@@ -54,6 +54,7 @@
 				<a-icon type="form" />
 				<span>绩效填写</span>
 			</a-menu-item>
+
       <a-menu-item key="teamlist" @click="goTo('/teamlist')" v-if="$store.getters.getLimits==2||$store.getters.getLimits==3||$store.getters.getLimits==4">
 				<a-icon type="form" />
 				<span>评审团队</span>
@@ -80,7 +81,6 @@
 			<a-menu-item key="user" @click="goToUser('/user')" v-if="$store.getters.getLimits==5">
 				<a-icon type="form" />
 				<span>用户列表</span>
-
 			</a-menu-item>
 		</a-menu>
 	</div>
@@ -108,10 +108,10 @@
 				this.collapsed = !this.collapsed;
 			},
 		},
+
 	};
 </script>
 
 <style>
-
 
 </style>

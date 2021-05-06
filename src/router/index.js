@@ -14,7 +14,6 @@ import AstList from "../normal/AssistantList.vue"
 
 import ClsInfo from "../normal/ClassInfo.vue"
 import GradeList from "../normal/GradeList.vue"
-
 import mngSL from "../ClassMng/mngScoreList.vue"
 import AstPage from "../normal/AssistantPage.vue"
 import AstCorrect from '../normal/AsCorrect.vue'
@@ -31,11 +30,13 @@ import LeaderInfo from '../normal/LeaderInfo.vue'
 import JdgTeam from '../normal/JudgeTeam.vue'
 import TeamList from '../normal/TeamList.vue'
 
+
 import User from "../normal/User.vue"
 
 
 Vue.use(Router)
 export default new Router({
+
 	routes: [
 		{
 			path: '/',
@@ -72,7 +73,6 @@ export default new Router({
 			path: '/performance',
 			name: 'Performance',
 			component: Performance
-
     },
     {
 			path: '/SelfInfo',
@@ -80,6 +80,7 @@ export default new Router({
 			component: SelfInfo
 		},
 		{
+
 			path: '/LeaderInfo',
 			name: 'LeaderInfo',
 			component: LeaderInfo

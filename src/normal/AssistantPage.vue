@@ -29,13 +29,12 @@
 							<a-icon type="smile-o" /> 作业
 						</span>
 						<span slot="action">
-							<a-button type="link" style="margin-left:0px;" @click="goTo('/AstCorrect')"><a>
-									<a-icon type="form" />
-								</a></a-button>
+
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/AstCorrect')">
+								批改</a-button>
 							<a-divider type="vertical" />
-							<a-button type="link" style="margin-left:0px;" @click="goTo('/ImpHomework')"><a>
-									<a-icon type="plus-square" />
-								</a></a-button>
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/ImpHomework')">
+								导入</a-button>
 						</span>
 
 					</a-table>
@@ -166,8 +165,8 @@
 		methods: {
 			goTo(path) {
 				this.$router.push(path);
-				},
-			
+			},
+
 			onSearch(value) {
 				console.log(value);
 			},
