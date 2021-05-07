@@ -19,11 +19,13 @@ import AstCorrect from '../normal/AsCorrect.vue'
 import HwCorrecting from '../normal/HomeworkCorrecting.vue'
 import ImpHomework from '../normal/ImportHomework.vue'
 import mngAddstu from "../ClassMng/mngAddstu.vue"
+
 import PersonSL from "../score/personscore.vue"
 import SelfInfo from '../normal/SelfInfo.vue'
 import LeaderInfo from '../normal/LeaderInfo.vue'
 import JdgTeam from '../normal/JudgeTeam.vue'
 import TeamList from '../normal/TeamList.vue'
+
 
 import User from "../normal/User.vue"
 
@@ -67,8 +69,10 @@ export default new Router({
 			path: '/performance',
 			name: 'Performance',
 			component: Performance
+
 		},
 		{
+
 			path: '/SelfInfo',
 			name: 'SelfInfo',
 			component: SelfInfo
