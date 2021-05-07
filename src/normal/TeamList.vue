@@ -1,7 +1,7 @@
 <template>
 	<a-layout id="components-layout-demo-responsive">
 		<a-layout-sider
-			breakpoint="sm"
+			breakpoint="lg"
 			collapsed-width="0"
 			@collapse="onCollapse"
 			@breakpoint="onBreakpoint"
@@ -10,7 +10,7 @@
 			<div class="logo">
 				<a-button type="link"
 						style="margin-bottom: 16px; margin-top: 10px;"
-						>
+				>
 							&nbsp;PingLeMe
 				</a-button>
 			</div>
@@ -33,7 +33,7 @@
 						<a slot="name" slot-scope="text">{{ text }}</a>
 						<span slot="customTitle"><a-icon type="smile-o" /> 作业</span>
 						<span slot="action" >
-							<a-button type="link" style="margin-left:0px;" @click="goToPfmDetail()"><a><a-icon type="edit" /></a></a-button>
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/jdgteam')"><a><a-icon type="edit" /></a></a-button>
 						</span>
 					</a-table>
 				</div>
@@ -55,17 +55,12 @@
 	    scopedSlots: { customRender: 'name' },
 	  },
 	  {
-	    title: '截止日期',
-	    dataIndex: 'end_time',
-	    key: 'end_time',
+	    title: '组号',
+	    dataIndex: 'end_num',
+	    key: 'end_num',
 	  },
 	  {
-	    title: '团队绩效',
-	    dataIndex: 'eva_exist',
-	    key: 'eva_exist',
-	  },
-	  {
-	    title: '操作',
+	    title: '进入评审表',
 		'key':'action',
 		scopedSlots: { customRender: 'action' },
 	  },
@@ -74,79 +69,52 @@
 	const data = [
 	  {
 	    key: '1',
-	    name: '团队作业三',
-	    end_time: '2021.3.10',
-		eva_exist:'未填写'
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '2',
-	    name: '团队作业二',
-	    end_time: '2021.3.10',
-		eva_exist:'已填写'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '3',
-	    name: '团队作业一',
-	    end_time: '2021.3.10',
-		eva_exist:'已填写'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '4',
-	    name: '团队作业',
-	    end_time: '2021.3.10',
-	  		eva_exist:'未填写'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '5',
-	    name: '团队作',
-	    end_time: '2021.3.10',
-	  		eva_exist:'填写'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '6',
-	    name: '团队',
-	    end_time: '2021.3.10',
-	  		eva_exist:'未填写'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '7',
-	    name: '团',
-	    end_time: '2021.3.10',
-	  		eva_exist:'未填写'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '8',
-	    name: '团8',
-	    end_time: '2021.3.10',
-	  		eva_exist:'未填写'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
-	  {
-	    key: '9',
-	    name: '团9',
-	    end_time: '2021.3.10',
-	  		eva_exist:'未填写'
-	  },
-	  {
-	    key: '10',
-	    name: '团10',
-	    end_time: '2021.3.10',
-	  		eva_exist:'未填写'
-	  },
-	  {
-	    key: '11',
-	    name: '团11',
-	    end_time: '2021.3.10',
-	  		eva_exist:'未填写'
-	  },
-	  {
-	    key: '12',
-	    name: '团12',
-	    end_time: '2021.3.10',
-	  		eva_exist:'未填写'
+      {
+	    key: '1',
+	    name: '评了么',
+	    end_num: '9',
 	  },
 	];
 	export default{
-		name:'Performance',
+		name:'TeamList',
 		components:{
 			NormalNav,
 		},
@@ -156,13 +124,13 @@
 				data,
 				columns,
 				myPagination: {
-				    defaultPageSize: 10
-				}
+				    defaultPageSize: 5
+				},
 		    };
 		},
 		methods:{
-			goToPfmDetail(){
-				this.$router.push('/pfmdetail')
+			goTo(path){
+				this.$router.replace(path);
 			},
 			onSearch(value) {
 			    console.log(value);
@@ -173,6 +141,9 @@
 			onBreakpoint(broken) {
 			    console.log(broken);
 			},
+			 See (e) {
+      			window.location.href = e
+     		}
 		}
 	}
 </script>
