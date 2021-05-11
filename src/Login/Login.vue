@@ -55,6 +55,7 @@
 	    				]"
 	    				placeholder="Username"
 	    				style="border-radius: 15px"
+						v-model="user"
 	    			>
 	    			</a-input>
 	    		</a-form-item>
@@ -67,6 +68,7 @@
 	    				type="password"
 	    				placeholder="Password"
 	    				style="border-radius: 15px;"
+						v-model="psd"
 	    			>
 	    			</a-input>
 	    		</a-form-item>
@@ -91,13 +93,6 @@
 	    				LOGIN
 	    			</a-button>
 	    			<br/>
-	    			<a-button 
-	    				type="primary" 
-	    				@click="goTo('/tinfo')" 
-	    				style="border-radius: 15px;background: whitesmoke;color:#2C3E50"
-	    			>
-	    				现在先点这个
-	    			</a-button>
 	    		</a-form-item>
 	    	</a-form>
 	    </div>
@@ -115,7 +110,8 @@ export default {
 	},
 	data(){
 		return {
-
+			user:'',
+			psd:'',
 		};
 	},
 	
@@ -125,9 +121,9 @@ export default {
 		},
 		handleSubmit(e) {
 		    e.preventDefault();
-		    this.form.validateFields((err, values) => {
+		    this.form.validateFields((err) => {
 		        if (!err) {
-		          console.log('Received values of form: ', values);
+		          this.$router.replace('/user');
 		        }
 		    });
 		},

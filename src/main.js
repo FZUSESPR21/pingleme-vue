@@ -7,6 +7,8 @@ import store from "./store"
 import { FormModel } from 'ant-design-vue';
 import echarts from "echarts"
 import ElementUI from "element-ui"
+import './assets/mock.js'
+
 
 Vue.use(ElementUI);
 Vue.use(FormModel);

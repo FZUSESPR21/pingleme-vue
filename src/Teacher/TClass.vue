@@ -27,21 +27,27 @@
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
 					<a-input-search placeholder="按班级名搜索" style="width: 200px;margin-left:0px;" @search="onSearch" />
 					<hr>
-					<a-table :columns="columns" :data-source="data"  :pagination="myPagination">
+					<a-table  :columns="columns" :dataSource="clsinfo">
 						<a slot="name" slot-scope="text">{{ text }}</a>
-						<span slot="customTitle"><a-icon type="team" /> 班级</span>
-						<span slot="action1" >
-							<a-button type="link" style="margin-left:0px;" @click="goTo('/tclass/mngsl')"><a><a-icon type="edit" /></a></a-button>
+						<span slot="customTitle"><a-icon type='team'/>班级号</span>
+						<span slot="assist" slot-scope="text,record">
+							<a-tag 
+								v-for="item in record.assistant" 
+								:key="item.id" 
+								:color="item.id % 3 == '0' ? 'pink' : item.id % 3 == '1' ? 'geekblue' : 'green'">{{item.name}}</a-tag>
 						</span>
-						<span slot="action2" slot-scope="text, record" >
-							<a-button :type="record.groupcollapsed?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.groupcollapsed = !record.groupcollapsed)">
-								<a>{{record.groupcollapsed?'开始':'结束'}}</a>
-							</a-button>
+						<span slot="mngaction" slot-scope="text,record">
+										<a-button type="link" style="margin-left:0px;" @click="goTo('/tclass/mngsl',record.id,record.name)"><a><a-icon type="edit" /></a></a-button>
 						</span>
-						<span slot="action3" slot-scope="text, record">
-							<a-button :type="record.teamcollapsed?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.teamcollapsed = !record.teamcollapsed)">							
-								<a>{{record.teamcollapsed?'开始':'结束'}}</a>
-							</a-button>
+						<span slot="pairaction" slot-scope="text,record" >
+										<a-button :type="record.is_pairing?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.is_pairing = !record.is_pairing)">
+											<a>{{record.is_pairing?'开始':'结束'}}</a>
+										</a-button>
+						</span>
+						<span slot="groupaction" slot-scope="text,record">
+										<a-button :type="record.is_grouping?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.is_grouping = !record.is_grouping)">							
+										<a>{{record.is_grouping?'开始':'结束'}}</a>
+										</a-button>
 						</span>
 					</a-table>
 				</div>
@@ -57,174 +63,86 @@
 <script>
 	//班级信息
 	import NormalNav from "../components/NormalNav.vue"
-	
-	const columns = [
-	  {
-	    dataIndex: 'name',
-	    key: 'name',
-	    slots: { title: 'customTitle' },
-	    scopedSlots: { customRender: 'name' },
-	  },
-	  {
-	    title: '助教',
-	    dataIndex: 'assistant',
-	    key: 'end_time',
-	  },
-	  {
-	    title: '班级管理',
-		'key':'action1',
-		scopedSlots: { customRender: 'action1' },
-	  },
-	  {
-	    title: '结对组队',
-	  	'key':'action2',
-	  	scopedSlots: { customRender: 'action2' },
-		align:'center'
-	  },
-	  {
-	    title: '团队创建',
-	  	'key':'action3',
-	  	scopedSlots: { customRender: 'action3' },
-		align:'center'
-	  },
+	import axios from "axios"
+
+	const columns=[
+		{
+			dataIndex:'id',
+			slots:{title:'customTitle'},
+			scopedSlots: { customRender: 'id' },
+		},
+		{
+			title:'班级名',
+			dataIndex:'name',
+			key:'name',
+			scopedSlots:{customRender:'name'},
+		},
+		{
+			title:'助教',
+			dataIndex:'assistant',
+			key:'assist',
+			scopedSlots:{customRender:'assist'},
+		},
+		{
+			title:'操作',
+			key:'mngaction',
+			scopedSlots:{customRender:'mngaction'},
+		},
+		{
+			title:'结对状态',
+			key:'pairaction',
+			scopedSlots:{customRender:'pairaction'},
+		},
+		{
+			title:'团队状态',
+			key:'groupaction',
+			scopedSlots:{customRender:'groupaction'},
+		}
 	];
-	
-	const data = [
-	  {
-	    key: '1',
-	    name: '一个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '2',
-	    name: '两个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '3',
-	    name: '三个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '4',
-	    name: '四个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '5',
-	    name: '五个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '6',
-	    name: '六个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '7',
-	    name: '七个',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '8',
-	    name: '八个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '9',
-	    name: '九个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '10',
-	    name: '十个',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '11',
-	    name: '十一个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '12',
-	    name: '十二个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '13',
-	    name: '十三个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '14',
-	    name: '十四个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '15',
-	    name: '十五个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	];
-	
 	export default{
 		name:'TClass',
 		data(){
 			return {
-				data,
+				clsinfo:[],
 				columns,
 				myPagination: {
 				    defaultPageSize: 10
-				}
+				},
 			}
+		},
+		mounted(){
+			this.getClassList();
 		},
 		components:{
 			NormalNav,
 		},
+
 		methods:{
-			goTo(path){
-				this.$router.replace(path);
+			goTo(path,clsid,clsname){
+				this.$router.push({
+					path:path,
+					query:{
+						id:clsid,
+						name:clsname,
+					}
+				});
 			},
 			onSearch(value) {
 			    console.log(value);
 			},
+			//响应式布局的函数
 			onCollapse(collapsed, type) {
 			    console.log(collapsed, type);
 			 },
 			onBreakpoint(broken) {
 			    console.log(broken);
 			},
-		}
+			//连班级接口的
+			getClassList(){
+				axios.get('api/v1/class/list?{page=}')
+				.then(response => (this.clsinfo=response.data.data.class))
+			},
+		},
 	}
 </script>
 
