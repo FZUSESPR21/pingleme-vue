@@ -1,7 +1,7 @@
 <template>
  <a-layout id="components-layout-demo-responsive-form">
     <a-layout-sider
-      breakpoint="lg"
+      breakpoint="sm"
       collapsed-width="0"
       @collapse="onCollapse"
       @breakpoint="onBreakpoint"

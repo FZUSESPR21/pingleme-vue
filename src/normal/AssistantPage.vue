@@ -1,6 +1,6 @@
 <template>
 	<a-layout id="components-layout-demo-responsive">
-		<a-layout-sider breakpoint="lg" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint"
+		<a-layout-sider breakpoint="sm" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint"
 			id="sider1">
 			<div class="logo">
 				<a-button type="link" style="margin-bottom: 16px; margin-top: 10px;"
@@ -29,13 +29,12 @@
 							<a-icon type="smile-o" /> 作业
 						</span>
 						<span slot="action">
-							<a-button type="link" style="margin-left:0px;" @click="goTo('/AstCorrect')"><a>
-									<a-icon type="form" />
-								</a></a-button>
+
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/AstCorrect')">
+								批改</a-button>
 							<a-divider type="vertical" />
-							<a-button type="link" style="margin-left:0px;" @click="goTo('/ImpHomework')"><a>
-									<a-icon type="plus-square" />
-								</a></a-button>
+							<a-button type="link" style="margin-left:0px;" @click="goTo('/ImpHomework')">
+								导入</a-button>
 						</span>
 
 					</a-table>
@@ -166,8 +165,8 @@
 		methods: {
 			goTo(path) {
 				this.$router.push(path);
-				},
-			
+			},
+
 			onSearch(value) {
 				console.log(value);
 			},

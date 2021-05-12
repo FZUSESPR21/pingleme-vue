@@ -1,7 +1,7 @@
 <template>
 	<a-layout id="components-layout-demo-responsive">
 		<a-layout-sider
-			breakpoint="lg"
+			breakpoint="sm"
 			collapsed-width="0"
 			@collapse="onCollapse"
 			@breakpoint="onBreakpoint"
@@ -22,8 +22,10 @@
 			<ClassHeader></ClassHeader>
 			</a-layout-header>
 			<a-layout style="background: white;">
-				<a-layout-header style="background: white;text-align:center;margin-top:0px">成绩列表</a-layout-header>
-				<a-layout-content :style="{ margin: '0px 16px 0',minHeight:'360px' }">
+				<a-layout-content >
+					<div style="padding:24px;background: #fff;">
+						<a-label style="font-size: 20px;"><a-icon type="team"/>班级：XXX</a-label>
+					</div>
 					<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
 						<a-input-search placeholder="按作业名搜索" style="width: 200px;margin-left:0px;" @search="onSearch" />
 						<hr>
@@ -138,7 +140,7 @@
 	];
 	
 	export default{
-		name:'mngScoreList',
+		name:'mngSL',
 		data(){
 			return {
 				data,
