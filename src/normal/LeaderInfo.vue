@@ -26,21 +26,18 @@
 						<div class="info">
 							<a-card>
 								<a-descriptions title="个人信息">
-									<a-descriptions-item label="姓名" span="3">
-										XXX
-									</a-descriptions-item>
-									<a-descriptions-item label="学号" span="3">
-										221801323
-									</a-descriptions-item>
-									<a-descriptions-item label="结对状态" span="3">
-										221801305
-									</a-descriptions-item>
-									<a-descriptions-item label="团队状态" span="3">
-										评了么
-									</a-descriptions-item>
-									<a-descriptions-item label="密码" span="3">
-										XXXXXXXXX
-									</a-descriptions-item>
+								  <a-descriptions-item label="姓名" span="3">
+								    {{User.nickname}}
+								  </a-descriptions-item>
+								  <a-descriptions-item label="学号" span="3">
+								    {{User.uid}}
+								  </a-descriptions-item>
+								  <a-descriptions-item label="结对状态" span="3">
+								    {{User.pair}}
+								  </a-descriptions-item>
+								  <a-descriptions-item label="团队状态" span="3">
+								    {{User.team}}
+								  </a-descriptions-item>
 								</a-descriptions>
 							</a-card>
 						</div>
@@ -69,12 +66,15 @@
 									</a-collapse-panel>
 									<a-collapse-panel key="2" header="团队成员" :style="customStyle">
 										<div>
-											<a-button class="editable-add-btn" @click="handleAdd">
-												添加
-											</a-button>
-											<a-button type="primary">
-												保存
-											</a-button>
+											<span >
+											  <label>姓名：</label>
+											  <input placeholder="请输入姓名" v-model="input_name"/>
+											  <label>&nbsp;&nbsp;学号：</label>
+											  <input placeholder="请输入学号" v-model="input_id"/>
+											  <a-button class="editable-add-btn" @click="handleAdd">
+											    添加
+											  </a-button>
+											</span>
 											<a-table bordered :data-source="dataSource" :columns="columns"
 												:pagination="false">
 
@@ -114,7 +114,7 @@
 				</div>
 			</a-layout-content>
 			<a-layout-footer style="textAlign: center;background:white">
-				Ant Design ©2018 Created by Ant UED
+				PingLeMe ©2021 Created by Ant UED
 			</a-layout-footer>
 		</a-layout>
 	</a-layout>
@@ -155,37 +155,26 @@
 				}
 			};
 			return {
-				dataSource: [{
-						key: '0',
-						name: 'CXQ',
-						id: '221801323',
-
-					},
-					{
-						key: '1',
-						name: 'CXQ',
-						id: '221801323',
-					},
-				],
-				count: 2,
+				dataSource: [],
+				count: 1,
 				columns: [{
-						title: '姓名',
-						dataIndex: 'name',
-					},
-					{
-						title: '学号',
-						dataIndex: 'id',
-					},
-					{
-						title: '操作',
-						dataIndex: 'operation',
-						scopedSlots: {
-							customRender: 'operation'
-						},
-					},
+				    title: '姓名',
+				    dataIndex: 'name',
+				  },
+				  {
+				    title: '学号',
+				    dataIndex: 'id',
+				  },
+				  {
+				    title: '操作',
+				    dataIndex: 'operation',
+				    scopedSlots: {
+				      customRender: 'operation'
+				    },
+				  },
 				],
 
-
+				User:[],
 				customStyle: 'background: white;',
 				hasErrors,
 				form: this.$form.createForm(this, {
@@ -216,6 +205,14 @@
 			};
 		},
 		mounted() {
+			this.$axios.get('http://xx.com/api/v1/user/{id}')
+			  .then(res => {
+			    this.User = res.data.data;
+			  }),
+			  this.$axios.get('http://xx.com/api/v1/team/member')
+			    .then(res => {
+			      this.dataSource = res.data.data;
+			    }),
 			this.$nextTick(() => {
 				// To disabled submit button at the beginning.
 				this.form.validateFields();

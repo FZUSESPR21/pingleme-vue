@@ -22,7 +22,7 @@
 				</div>
 			</a-layout-header>
 			<a-layout-content :style="{ margin: '24px 16px 0' }">
-				
+
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
 					<a-table :columns="columns" :data-source="data">
 						<span slot="action">
@@ -30,7 +30,7 @@
 									<a-icon type="edit" />
 								</a></a-button>
 						</span>
-				
+
 					</a-table>
 				</div>
 			</a-layout-content>
@@ -47,14 +47,14 @@
 			title: '学号',
 			dataIndex: 'id',
 			key: 'id',
-	
+
 		},
 		{
 			title: '姓名',
 			dataIndex: 'name',
 			key: 'name',
 		},
-	
+
 		{
 			title: '操作',
 			'key': 'action',
@@ -63,85 +63,17 @@
 			},
 		},
 	];
-	
-	const data = [{
-			key: '1',
-			id: '221801XXX',
-			name: 'XXX',
-	
-		},
-		{
-			key: '2',
-			id: '221801XXX',
-			name: 'XXX',
-	
-		},
-		{
-			key: '3',
-			id: '221801XXX',
-			name: 'XXX',
-	
-		},
-		{
-			key: '4',
-			id: '221801XXX',
-			name: 'XXX',
-	
-		},
-		{
-			key: '5',
-			id: '221801XXX',
-			name: 'XXX',
-	
-		},
-		{
-			key: '6',
-			id: '221801XXX',
-			name: 'XXX',
-	
-		},
-		{
-			key: '7',
-			id: '221801XXX',
-			name: 'XXX',
-		},
-		{
-			key: '8',
-			id: '221801XXX',
-			name: 'XXX',
-		},
-		{
-			key: '9',
-			id: '221801XXX',
-			name: 'XXX',
-		},
-		{
-			key: '10',
-			id: '221801XXX',
-			name: 'XXX',
-	
-		},
-		{
-			key: '11',
-			id: '221801XXX',
-			name: 'XXX',
-	
-		},
-		{
-			key: '12',
-			id: '221801XXX',
-			name: 'XXX',
-	
-		},
-	];
+
+	const data = [];
 	export default {
 		name: 'AstCorrect',
 		components: {
-			
+
 			NormalNav,
 		},
 		data() {
 			return {
+
 				collapsed: false,
 				data,
 				columns,
@@ -150,8 +82,16 @@
 				}
 			};
 		},
+		mounted() {
+
+			this.$axios.get('http://xx.com/api/v1/homework/student')
+				.then(res => {
+					this.data = res.data.list;
+
+				}, );
+		},
 		methods: {
-			goTo(path){
+			goTo(path) {
 				this.$router.push(path);
 			},
 			onSearch(value) {
@@ -163,7 +103,7 @@
 			onBreakpoint(broken) {
 				console.log(broken);
 			},
-		
+
 		},
 	}
 </script>

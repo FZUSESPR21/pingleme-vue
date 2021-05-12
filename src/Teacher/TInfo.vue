@@ -25,16 +25,12 @@
 						<div class="info">
 							<a-card>
 								<a-descriptions title="个人信息">
-									<a-descriptions-item label="用户名" span="3">
-										XXX
-									</a-descriptions-item>
-									<a-descriptions-item label="姓名" span="3">
-										221801323
-									</a-descriptions-item>
-
-									<a-descriptions-item label="密码" span="3">
-										XXXXXXXXX
-									</a-descriptions-item>
+								  <a-descriptions-item label="id" span="3">
+								    {{User.uid}}
+								  </a-descriptions-item>
+								  <a-descriptions-item label="姓名" span="3">
+								    {{User.nickname}}
+								  </a-descriptions-item>
 								</a-descriptions>
 								<a-collapse accordion :bordered="false">
 									<a-collapse-panel key="1" header="修改密码" :style="customStyle">
@@ -79,7 +75,7 @@
 			NormalNav,
 		},
 		data() {
-
+			
 			let validatePass = (rule, value, callback) => {
 				if (value === '') {
 					callback(new Error('请输入新密码'));
@@ -100,9 +96,8 @@
 				}
 			};
 			return {
+				User:[],
 				customStyle: 'background: white;',
-
-
 				ruleForm: {
 					pass: '',
 					checkPass: '',
@@ -126,6 +121,13 @@
 					},
 				},
 			};
+		},
+		mounted() {
+			this.$axios.get('http://xx.com/api/v1/user/me')
+			  .then(res => {
+			    this.User = res.data.data;
+			  })
+
 		},
 		methods: {
 			onCollapse(collapsed, type) {

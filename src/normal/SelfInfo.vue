@@ -25,21 +25,18 @@
 						<div class="info">
 							<a-card>
 								<a-descriptions title="个人信息">
-									<a-descriptions-item label="姓名" span="3">
-										XXX
-									</a-descriptions-item>
-									<a-descriptions-item label="学号" span="3">
-										221801323
-									</a-descriptions-item>
-									<a-descriptions-item label="结对状态" span="3">
-										221801305
-									</a-descriptions-item>
-									<a-descriptions-item label="团队状态" span="3">
-										评了么
-									</a-descriptions-item>
-									<a-descriptions-item label="密码" span="3">
-										XXXXXXXXX
-									</a-descriptions-item>
+								  <a-descriptions-item label="姓名" span="3">
+								    {{User.nickname}}
+								  </a-descriptions-item>
+								  <a-descriptions-item label="学号" span="3">
+								    {{User.uid}}
+								  </a-descriptions-item>
+								  <a-descriptions-item label="结对状态" span="3">
+								    {{User.pair}}
+								  </a-descriptions-item>
+								  <a-descriptions-item label="团队状态" span="3">
+								    {{User.team}}
+								  </a-descriptions-item>
 								</a-descriptions>
 							</a-card>
 						</div>
@@ -103,7 +100,7 @@
 				</div>
 			</a-layout-content>
 			<a-layout-footer style="textAlign: center;background:white">
-				Ant Design ©2018 Created by Ant UED
+				PingLeMe ©2021 Created by Ant UED
 			</a-layout-footer>
 		</a-layout>
 	</a-layout>
@@ -142,6 +139,7 @@
 				}
 			};
 			return {
+				User: [],
 				customStyle: 'background: white;',
 				hasErrors,
 				form: this.$form.createForm(this, {
@@ -172,6 +170,10 @@
 			};
 		},
 		mounted() {
+			this.$axios.get('http://xx.com/api/v1/user/{id}')
+			  .then(res => {
+			    this.User = res.data.data;
+			  }),
 			this.$nextTick(() => {
 				// To disabled submit button at the beginning.
 				this.form.validateFields();
