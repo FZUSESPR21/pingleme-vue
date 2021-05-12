@@ -10,7 +10,14 @@
   },
   "dependencies": {
     "ant-design-vue": "^1.7.4",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
+<<<<<<< Updated upstream
+=======
+    "echarts": "^5.1.1",
+    "element-ui": "^2.15.1",
+    "mockjs": "^1.1.0",
+>>>>>>> Stashed changes
     "nyc": "^15.1.0",
     "vue": "^2.6.11",
     "vue-router": "^3.5.1",
