@@ -29,7 +29,6 @@
 							<a-icon type="smile-o" /> 作业
 						</span>
 						<span slot="action">
-
 							<a-button type="link" style="margin-left:0px;" @click="goTo('/AstCorrect')">
 								批改</a-button>
 							<a-divider type="vertical" />
@@ -49,9 +48,10 @@
 
 <script>
 	import NormalNav from "../components/NormalNav.vue";
-	const columns = [{
-			dataIndex: 'name',
-			key: 'name',
+	const columns = [
+		{
+			dataIndex: 'title',
+			key: 'title',
 			slots: {
 				title: 'customTitle'
 			},
@@ -74,79 +74,7 @@
 		},
 	];
 
-	const data = [{
-			key: '1',
-			name: '团队作业三',
-			end_time: '2021.3.10',
-
-		},
-		{
-			key: '2',
-			name: '团队作业二',
-			end_time: '2021.3.10',
-
-		},
-		{
-			key: '3',
-			name: '团队作业一',
-			end_time: '2021.3.10',
-
-		},
-		{
-			key: '4',
-			name: '团队作业',
-			end_time: '2021.3.10',
-
-		},
-		{
-			key: '5',
-			name: '团队作',
-			end_time: '2021.3.10',
-
-		},
-		{
-			key: '6',
-			name: '团队',
-			end_time: '2021.3.10',
-
-		},
-		{
-			key: '7',
-			name: '团',
-			end_time: '2021.3.10',
-
-		},
-		{
-			key: '8',
-			name: '团8',
-			end_time: '2021.3.10',
-
-		},
-		{
-			key: '9',
-			name: '团9',
-			end_time: '2021.3.10',
-
-		},
-		{
-			key: '10',
-			name: '团10',
-			end_time: '2021.3.10',
-
-		},
-		{
-			key: '11',
-			name: '团11',
-			end_time: '2021.3.10',
-
-		},
-		{
-			key: '12',
-			name: '团12',
-			end_time: '2021.3.10',
-
-		},
-	];
+	
 	export default {
 		name: 'AstPage',
 		components: {
@@ -155,13 +83,21 @@
 		data() {
 			return {
 				collapsed: false,
-				data,
+				data:[],
 				columns,
 				myPagination: {
 					defaultPageSize: 5
 				}
 			};
 		},
+	mounted() {
+	
+		this.$axios.get('http://xx.com/api/v1/homework')
+			.then(res => {
+				this.data = res.data.list;
+	
+			}, );
+	},
 		methods: {
 			goTo(path) {
 				this.$router.push(path);

@@ -80,6 +80,7 @@
 			<a-menu-item key="user" @click="goToUser('/user')" v-if="$store.getters.getLimits==5">
 				<a-icon type="form" />
 				<span>用户列表</span>
+
 			</a-menu-item>
 		</a-menu>
 	</div>
