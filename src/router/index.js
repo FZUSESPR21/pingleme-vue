@@ -29,51 +29,12 @@ import SelfInfo from '../normal/SelfInfo.vue'
 import LeaderInfo from '../normal/LeaderInfo.vue'
 import JdgTeam from '../normal/JudgeTeam.vue'
 import TeamList from '../normal/TeamList.vue'
-
-
 import User from "../normal/User.vue"
 
 
 Vue.use(Router)
 export default new Router({
-
 	routes: [
-		{
-			path: '/',
-			name: 'Login',
-			component: Login,
-		},
-
-		{
-			path:'/HwCorrecting',
-			name:'HwCorrecting',
-			component:HwCorrecting
-    },
-    {
-			path: '/tinfo',
-			name: 'TInfo',
-			component: TInfo,
-		},
-		{
-			path: '/creva',
-			name: 'CrEva',
-			component: CreateEvaluation
-		},
-		{
-			path: '/creva/crevaf',
-			name: 'CrEvaf',
-			component: CrEvaform
-		},
-		{
-			path: '/hwlist',
-			name: 'HwList',
-			component: HwList
-		},
-		{
-			path: '/performance',
-			name: 'Performance',
-			component: Performance
-    },
     {
 			path: '/SelfInfo',
 			name: 'SelfInfo',
@@ -208,6 +169,5 @@ export default new Router({
 			name: 'TeamList',
 			component: TeamList
 		},
-
 	]
 })

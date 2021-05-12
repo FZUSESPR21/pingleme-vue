@@ -1,7 +1,8 @@
   
 <template>
 	<div style="width: 200px" id="navleft">
-		<div><span>&emsp;<a-button type="primary" v-bind:disabled="$store.getters.getStudentButton"
+		
+		<!-- <div><span>&emsp;<a-button type="primary" v-bind:disabled="$store.getters.getStudentButton"
 					@click="$store.commit('studentClick')">学生</a-button>
 				&emsp;<a-button type="primary" v-bind:disabled="$store.getters.getHeadmanButton"
 					@click="$store.commit('headmanClick')">组长</a-button>
@@ -14,8 +15,7 @@
 			<br /><br />
 			<a-button type="primary" v-bind:disabled="$store.getters.getSuperButton"
 				@click="$store.commit('superClick')">管理员</a-button>&emsp;
-		</div>
-
+		</div> -->
 		<a-menu :default-selected-keys="[this.$route.path.replace('/','')]" :default-open-keys="[openKeys()]"
 			mode="inline" theme="light" :inline-collapsed="collapsed">
 			<a-menu-item key="SelfInfo" @click="goTo('/SelfInfo')" v-if="$store.getters.getLimits==1">
@@ -26,7 +26,7 @@
 				<a-icon type="user" />
 				<span>个人信息</span>
 			</a-menu-item>
-			<a-menu-item key="Tinfo" @click="goTo('/tinfo')"
+			<a-menu-item key="tinfo" @click="goTo('/tinfo')"
 				v-if="$store.getters.getLimits==3||$store.getters.getLimits==4||$store.getters.getLimits==5">
 				<a-icon type="user" />
 				<span>个人信息</span>
@@ -42,7 +42,7 @@
 				<a-icon type="file-done" />
 				<span>成绩列表</span>
 			</a-menu-item>
-			<a-menu-item key="TClass" @click="goTo('/tclass')">
+			<a-menu-item key="TClass" @click="goTo('/tclass')" v-if="$store.getters.getLimits==3||$store.getters.getLimits==4">
 				<a-icon type="audit" />
 				<span>班级信息</span>
 			</a-menu-item>
@@ -54,7 +54,6 @@
 				<a-icon type="form" />
 				<span>绩效填写</span>
 			</a-menu-item>
-
       <a-menu-item key="teamlist" @click="goTo('/teamlist')" v-if="$store.getters.getLimits==2||$store.getters.getLimits==3||$store.getters.getLimits==4">
 				<a-icon type="form" />
 				<span>评审团队</span>
@@ -113,5 +112,6 @@
 </script>
 
 <style>
+
 
 </style>

@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state:{
         limits: 4,
-        studentButton:true,
+        studentButton:false,
         headmanButton:false,
         assistantButton:false,
         teacherButton:false,
