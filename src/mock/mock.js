@@ -24,6 +24,6 @@ Mock.mock('http://localhost:8081/test/assistant/add', 'post', (data) => {
   // 请求传过来的参数在body中,传回的是json字符串,需要转义一下
   const info= JSON.parse(data)
   return {
-     
+     info
   }
 })
