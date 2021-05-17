@@ -47,38 +47,10 @@
 								    <br/>
 									<a @click="downloadExecl">点击此处下载模版</a>
 								</span>
-								
-							</div>
-							<div class="pagination">
-								<el-pagination
-									@size-change="handleSizeChange"
-									@current-change="CurrentChange"
-									:current-page="currentPage"
-									:page-sizes="[10, 20, 30,40,50]"
-									:page-size="pageSize"
-									layout="total, sizes, jumper"
-									:total="total">
-								</el-pagination>
+								<br/>
 								<a-button type="primary" @click="addstu()">确认导入</a-button>
 							</div>
 							<!--预览-->
-							<div class="table-area">
-								<a-table
-									:data-source="tableData"
-									style="width: 100%"
-									height="450"
-									size="mini"
-									:pagination="false"
-								>
-									<a-table-column
-										:dataIndex="item"
-										:label="item"
-										width="140"
-										v-for="(item,index) in checkboxTableColumn"
-										:key="'column'+index">
-									</a-table-column>
-								</a-table>
-							</div>
 						</div>
 					</a-drawer>
 					<hr>
