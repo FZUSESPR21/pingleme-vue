@@ -55,6 +55,7 @@
 	    				]"
 	    				placeholder="Username"
 	    				style="border-radius: 15px"
+						v-model="user"
 	    			>
 	    			</a-input>
 	    		</a-form-item>
@@ -67,6 +68,7 @@
 	    				type="password"
 	    				placeholder="Password"
 	    				style="border-radius: 15px;"
+						v-model="psd"
 	    			>
 	    			</a-input>
 	    		</a-form-item>
@@ -91,6 +93,7 @@
 	    				LOGIN
 	    			</a-button>
 	    			<br/>
+
 	    			<a-button 
 	    				type="primary" 
 	    				@click="goTo('/tinfo')" 
@@ -114,6 +117,7 @@
 							<a-button type="primary" v-bind:disabled="$store.getters.getSuperButton"
 							@click="hided()">隐藏</a-button>
 					</div>
+
 	    		</a-form-item>
 	    	</a-form>
 	    </div>
@@ -131,7 +135,12 @@ export default {
 	},
 	data(){
 		return {
+
+			user:'',
+			psd:'',
+
 			hide:true,
+
 		};
 	},
 	
@@ -144,9 +153,9 @@ export default {
 		},
 		handleSubmit(e) {
 		    e.preventDefault();
-		    this.form.validateFields((err, values) => {
+		    this.form.validateFields((err) => {
 		        if (!err) {
-		          console.log('Received values of form: ', values);
+		          this.$router.replace('/user');
 		        }
 		    });
 		},

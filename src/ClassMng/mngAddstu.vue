@@ -47,37 +47,10 @@
 								    <br/>
 									<a @click="downloadExecl">点击此处下载模版</a>
 								</span>
-							</div>
-							<div class="pagination">
-								<el-pagination
-									@size-change="handleSizeChange"
-									@current-change="CurrentChange"
-									:current-page="currentPage"
-									:page-sizes="[10, 20, 30,40,50]"
-									:page-size="pageSize"
-									layout="total, sizes, jumper"
-									:total="total">
-								</el-pagination>
-								<a-button type="primary">确认导入</a-button>
+								<br/>
+								<a-button type="primary" @click="addstu()">确认导入</a-button>
 							</div>
 							<!--预览-->
-							<div class="table-area">
-								<a-table
-									:data-source="tableData"
-									style="width: 100%"
-									height="450"
-									size="mini"
-									:pagination="false"
-								>
-									<a-table-column
-										:dataIndex="item"
-										:label="item"
-										width="140"
-										v-for="(item,index) in checkboxTableColumn"
-										:key="'column'+index">
-									</a-table-column>
-								</a-table>
-							</div>
 						</div>
 					</a-drawer>
 					<hr>
@@ -104,7 +77,8 @@
 	import NormalNav from "../components/NormalNav.vue"
 	import ClassHeader from "../components/ClassHeader.vue"
 	import XLSX from "xlsx" //需要下载 cnpm install xlsx
-
+	import axios from "axios"
+	
 	export default{
 		name:'mngAddstu',
 		data(){
@@ -120,92 +94,22 @@
 				currentPage:1,// 当前分页
 				pageSize:10,// 每页显示数量
 				total:0,// 数据总数
-
 				visible:false,//Drawer
+				outdata:[],
+				addData:[],
+				
 				//当前班级学生
-				dataSource: [
-				  {
-				    key: '1',
-				    stuid:'221801101',
-					name:'1101'
-				  },
-				  {
-				    key: '2',
-				    stuid:'221801102',
-					name:'1102'
-				  },
-				  {
-				    key: '3',
-				    stuid:'221801103',
-					name:'1103'
-				  },
-				  {
-				    key: '4',
-				    stuid:'221801104',
-					name:'1104'
-				  },
-				  {
-				    key: '5',
-				    stuid:'221801105',
-					name:'1105'
-				  },
-				  {
-				    key: '6',
-				    stuid:'221801106',
-				  		name:'1106'
-				  },
-				  {
-				    key: '7',
-				    stuid:'221801107',
-				  		name:'1107'
-				  },
-				  {
-				    key: '8',
-				    stuid:'221801108',
-				  		name:'1108'
-				  },
-				  {
-				    key: '9',
-				    stuid:'221801109',
-				  		name:'1109'
-				  },
-				  {
-				    key: '10',
-				    stuid:'221801110',
-				  		name:'1110'
-				  },
-				  {
-				    key: '11',
-				    stuid:'221801111',
-				  		name:'1111'
-				  },
-				  {
-				    key: '12',
-				    stuid:'221801112',
-				  		name:'1112'
-				  },
-				  {
-				    key: '13',
-				    stuid:'221801113',
-				  		name:'1113'
-				  },
-				  {
-				    key: '14',
-				    stuid:'221801114',
-				  		name:'1114'
-				  },
-				  ],
-				  count: 14,
-				  columns: [
+				dataSource: [],
+				columns: [
 				    {
-				      title: 'stuid',
-				      dataIndex: 'stuid',
+				      title: '学号',
+				      dataIndex: 'stu_id',
 				      width: '30%',
 				      scopedSlots: { customRender: 'stuid' },
 				    },
 				    {
-				      title: 'name',
-				      dataIndex: 'name',
+				      title: '姓名',
+				      dataIndex: 'stu_name',
 				    },
 				    {
 				      title: 'operation',
@@ -214,6 +118,11 @@
 				    },
 				  ],
 			}
+		},
+		mounted(){
+			axios
+				.get('api/class/student/list/:class_id')
+				.then(response => (this.dataSource=response.data.data.stu_list))
 		},
 		components:{
 			NormalNav,
@@ -272,14 +181,14 @@
 			        var wb = XLSX.read(data, {
 			              type: "buffer"
 			        });
-			        var outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+			        that.outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
 			            // 导出格式为json，{表数据：[]}
-			        console.log(outdata);
-			        that.excelData=outdata;
-			        that.tableData=outdata.slice(0,10);
-			        that.total=outdata.length;
+			        console.log(that.outdata);
+			        that.excelData=that.outdata;
+			        that.tableData=that.outdata.slice(0,10);
+			        that.total=that.outdata.length;
 			            // 获取数据的key
-			        var importDataThead = Array.from(Object.keys(outdata[0])).map(
+			        var importDataThead = Array.from(Object.keys(that.outdata[0])).map(
 			            item => {
 			                return item;
 			            }
@@ -309,6 +218,35 @@
 			        "",
 			        "_blank"
 			    );
+			},
+			//批量添加学生--1.json数据处理成正确的请求格式；2.获取导入后的结果展示表格
+			getPostdata(){
+				const outd=this.outdata;
+				var adata={}
+				var jsonstr="[]";
+				var jsonarr=eval('('+jsonstr+')');
+				var count=this.total;
+				for (var i=0;i<count;i++){
+					var item=outd[i];
+					//console.log(outd[i]);
+					var arr={
+						"uid":item.学号,
+						"name":item.姓名,
+						"class_id":"123",
+						"password":"12312313212"
+					}
+					jsonarr.push(arr);
+				}
+				adata.student=jsonarr;
+				this.addData=adata;
+			},
+			showResult(){
+				axios.post('/api/v1/user/student/add',this.addData)
+				.then(response => (console.log(response.data.msg)))
+			},
+			addstu(){
+				this.getPostdata();
+				this.showResult();
 			},
 		},
 	}
