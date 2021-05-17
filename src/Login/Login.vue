@@ -93,6 +93,31 @@
 	    				LOGIN
 	    			</a-button>
 	    			<br/>
+
+	    			<a-button 
+	    				type="primary" 
+	    				@click="goTo('/tinfo')" 
+	    				style="border-radius: 15px;background: whitesmoke;color:#2C3E50"
+	    			>
+	    				现在先点这个
+	    			</a-button>
+					<div v-if="hide"><span>&emsp;<a-button type="primary" v-bind:disabled="$store.getters.getStudentButton"
+								@click="$store.commit('studentClick');goTo('/SelfInfo')">学生</a-button>
+							&emsp;<a-button type="primary" v-bind:disabled="$store.getters.getHeadmanButton"
+								@click="$store.commit('headmanClick');goTo('/LeaderInfo')">组长</a-button>
+							<br />
+							<a-button type="primary" v-bind:disabled="$store.getters.getAssistantButton"
+								@click="$store.commit('assistantClick');goTo('/tinfo')">助教</a-button>&emsp;
+							<a-button type="primary" v-bind:disabled="$store.getters.getTeacherButton"
+								@click="$store.commit('teacherClick');goTo('/tinfo')">老师</a-button>
+						</span>
+						<br />
+						<a-button type="primary" v-bind:disabled="$store.getters.getSuperButton"
+							@click="$store.commit('superClick');goTo('/tinfo')">管理员</a-button>&emsp;
+							<a-button type="primary" v-bind:disabled="$store.getters.getSuperButton"
+							@click="hided()">隐藏</a-button>
+					</div>
+
 	    		</a-form-item>
 	    	</a-form>
 	    </div>
@@ -110,14 +135,21 @@ export default {
 	},
 	data(){
 		return {
+
 			user:'',
 			psd:'',
+
+			hide:true,
+
 		};
 	},
 	
 	methods: {
 		goTo(path){
 			this.$router.replace(path);
+		},
+		hided(){
+			this.hide=false;
 		},
 		handleSubmit(e) {
 		    e.preventDefault();
