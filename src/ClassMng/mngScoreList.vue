@@ -127,15 +127,10 @@
 				}
 			},
 			
-			//获得路由传来的班级名
 			getClsparams(){
-				var routerPid=this.$route.query.id
-				this.clsid=routerPid
-				
-				var routerPname=this.$route.query.name
+				var routerPname=this.$route.params.cname
 				this.clsname=routerPname
 			},
-			
 			//连班级作业列表接口的
 			getScorelist(){
 				axios

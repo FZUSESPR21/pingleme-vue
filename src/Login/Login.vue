@@ -45,7 +45,7 @@
 	    		id="components-form-demo-normal-login"
 	    		:form="form"
 	    		class="login-form"
-	    		@submit="handleSubmit"
+				@submit="handleSubmit"
 	    	>
 	    		<a-form-item>
 	    			<a-input
@@ -93,31 +93,6 @@
 	    				LOGIN
 	    			</a-button>
 	    			<br/>
-
-	    			<a-button 
-	    				type="primary" 
-	    				@click="goTo('/tinfo')" 
-	    				style="border-radius: 15px;background: whitesmoke;color:#2C3E50"
-	    			>
-	    				现在先点这个
-	    			</a-button>
-					<div v-if="hide"><span>&emsp;<a-button type="primary" v-bind:disabled="$store.getters.getStudentButton"
-								@click="$store.commit('studentClick');goTo('/SelfInfo')">学生</a-button>
-							&emsp;<a-button type="primary" v-bind:disabled="$store.getters.getHeadmanButton"
-								@click="$store.commit('headmanClick');goTo('/LeaderInfo')">组长</a-button>
-							<br />
-							<a-button type="primary" v-bind:disabled="$store.getters.getAssistantButton"
-								@click="$store.commit('assistantClick');goTo('/tinfo')">助教</a-button>&emsp;
-							<a-button type="primary" v-bind:disabled="$store.getters.getTeacherButton"
-								@click="$store.commit('teacherClick');goTo('/tinfo')">老师</a-button>
-						</span>
-						<br />
-						<a-button type="primary" v-bind:disabled="$store.getters.getSuperButton"
-							@click="$store.commit('superClick');goTo('/tinfo')">管理员</a-button>&emsp;
-							<a-button type="primary" v-bind:disabled="$store.getters.getSuperButton"
-							@click="hided()">隐藏</a-button>
-					</div>
-
 	    		</a-form-item>
 	    	</a-form>
 	    </div>
@@ -128,6 +103,8 @@
 </template>
 
 <script>
+	import axios from "axios"
+	
 export default {
 	name:'Login',
 	beforeCreate() {
@@ -135,7 +112,8 @@ export default {
 	},
 	data(){
 		return {
-
+			userName:'',
+			userRole:'',
 			user:'',
 			psd:'',
 
@@ -145,6 +123,13 @@ export default {
 	},
 	
 	methods: {
+		getUserRole(){
+			let data = {"id":this.user,"psw":this.psd};
+			axios.post('/api/v1/user/login',data)
+			.then(res=>{
+			    this.userRole=res.data.data.role;this.userName=res.data.data.name;
+			})
+		},
 		goTo(path){
 			this.$router.replace(path);
 		},
@@ -152,13 +137,32 @@ export default {
 			this.hide=false;
 		},
 		handleSubmit(e) {
-		    e.preventDefault();
-		    this.form.validateFields((err) => {
-		        if (!err) {
-		          this.$router.replace('/user');
-		        }
-		    });
+			e.preventDefault();
+			      this.form.validateFields((err, values) => {
+			        if (!err) {
+						this.getUserRole();
+						console.log(values);
+						console.log(this.userRole);
+						if(this.userRole=='1'){
+							this.$store.commit('studentClick');
+							this.goTo('/SelfInfo');
+						}
+						else if(this.userRole=='2'){
+							this.$store.commit('teacherClick');
+							this.goTo('/tinfo');
+						}
+						else if(this.userRole=='4'){
+							this.$store.commit('teacherClick');
+							this.goTo('/tinfo');
+						}
+						else if(this.userRole=='3'){
+							this.$store.commit('headmanClick');
+							this.goTo('/LeaderInfo');
+						}
+					}
+				});
 		},
+		
   },
 };
 </script>
