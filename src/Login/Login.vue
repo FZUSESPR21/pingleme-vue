@@ -151,11 +151,11 @@ export default {
 							this.$store.commit('teacherClick');
 							this.goTo('/tinfo');
 						}
-						else if(this.userRole=='3'){
+						else if(this.userRole=='4'){
 							this.$store.commit('teacherClick');
 							this.goTo('/tinfo');
 						}
-						else if(this.userRole=='4'){
+						else if(this.userRole=='3'){
 							this.$store.commit('headmanClick');
 							this.goTo('/LeaderInfo');
 						}

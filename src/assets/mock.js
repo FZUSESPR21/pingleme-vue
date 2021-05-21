@@ -43,7 +43,7 @@ Mock.mock('/api/v1/user/login', 'post', function(option) {
 		  }
 		)
 	}
-	else if(id=='001800001'&&psw=='001800001'){
+	else if(id=='1801'&&psw=='1801'){
 		return Mock.mock(
 		  {
 		    "code": 0,

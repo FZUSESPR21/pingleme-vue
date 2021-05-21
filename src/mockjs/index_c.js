@@ -25,7 +25,7 @@ Mock.mock('http://xx.com/api/v1/team/member', 'get', {
 Mock.mock('http://xx.com/api/v1/user/me', 'get', {
 	"code": 0,
 	"data": {
-		"uid": "001800001",
+		"uid": "1801",
 		"nickname": "@cname",
 	},
 	"msg": "Success"
