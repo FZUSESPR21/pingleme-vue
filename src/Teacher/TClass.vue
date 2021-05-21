@@ -19,9 +19,7 @@
 		
 		<a-layout style="background: white;">
 			<a-layout-header :style="{ background: '#fff', padding: 0,'text-align':'center' }">
-				<div class="info">
-					<a-icon type="user" />&nbsp;用户：XXX
-				</div>
+
 			</a-layout-header>
 			<a-layout-content :style="{ margin: '24px 16px 0',minHeight:'360px' }">
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
@@ -37,7 +35,7 @@
 								:color="item.id % 3 == '0' ? 'pink' : item.id % 3 == '1' ? 'geekblue' : 'green'">{{item.name}}</a-tag>
 						</span>
 						<span slot="mngaction" slot-scope="text,record">
-										<a-button type="link" style="margin-left:0px;" @click="goTo('/tclass/mngsl',record.id,record.name)"><a><a-icon type="edit" /></a></a-button>
+										<a-button type="link" style="margin-left:0px;" @click="goTo('/tclass/mngsl/'+record.name)"><a><a-icon type="edit" /></a></a-button>
 						</span>
 						<span slot="pairaction" slot-scope="text,record" >
 										<a-button :type="record.is_pairing?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.is_pairing = !record.is_pairing)">
@@ -118,14 +116,8 @@
 		},
 
 		methods:{
-			goTo(path,clsid,clsname){
-				this.$router.push({
-					path:path,
-					query:{
-						id:clsid,
-						name:clsname,
-					}
-				});
+			goTo(path){
+				this.$router.push(path);
 			},
 			onSearch(value) {
 			    console.log(value);

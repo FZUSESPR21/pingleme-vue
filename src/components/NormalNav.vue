@@ -91,10 +91,13 @@
 		name: 'NormalNav',
 		data() {
 			return {
+
 				collapsed: false,
 			};
 		},
+
 		methods: {
+
 			goTo(path) {
 				this.$router.push(path);
 			},

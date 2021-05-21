@@ -1,16 +1,62 @@
 import Mock from 'mockjs'
 
+Mock.mock('/api/v1/user/login', 'post', function(option) {
+  // 请求传过来的参数在body中,传回的是json字符串,需要转义一下
+	console.log(option);
+	let bodystr=option.body;
+	let jsonarr=eval('('+bodystr+')');
+	let id = jsonarr.id;
+	let psw=jsonarr.psw;
+	if(id=='221801101'&&psw=='221801101'){
+		return Mock.mock(
+		  {
+		    "code": 0,
+		    "data": {
+		      "uid": "2218012xx",
+		      "name": "I'm学生",
+		      "role": '1',
+		    }
+		  }
+		)
+	}
+	else if(id=='1801'&&psw=='1801'){
+		return Mock.mock(
+		  {
+		    "code": 0,
+		    "data": {
+		      "uid": "2218012xx",
+		      "name": "I'm老师",
+		      "role": '2',
+		    }
+		  }
+		)
+	}
+	else if(id=='221800001'&&psw=='221800001'){
+		return Mock.mock(
+		  {
+		    "code": 0,
+		    "data": {
+		      "uid": "2218012xx",
+		      "name": "I'm组长",
+		      "role": '3' ,
+		    }
+		  }
+		)
+	}
+	else if(id=='001800001'&&psw=='001800001'){
+		return Mock.mock(
+		  {
+		    "code": 0,
+		    "data": {
+		      "uid": "2218012xx",
+		      "name": "I'm助教",
+		      "role": '4',
+		    }
+		  }
+		)
+	}
 
-Mock.mock('/api/v1/user/login','post',{
-	    "code": 0,
-	    "data": {
-	      "uid": "2218012xx",
-	      "name": "吴系挂",
-	      "role": 2 ,
-	    }
-	  
 });
-
 Mock.mock('/api/v1/user/student/add','post',{
 	    "code": 0,
 	    "data": {

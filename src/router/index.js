@@ -98,7 +98,7 @@ export default new Router({
 			component: TClass
 		},
 		{
-			path: '/tclass/mngsl',
+			path: '/tclass/mngsl/:cname',
 			name: 'mngSL',
 			component: mngSL,
 		},
@@ -108,7 +108,7 @@ export default new Router({
 			component:TClass
     },
     {
-			path: '/tclass/mngaddstu',
+			path: '/tclass/mngaddstu/:cname',
 			name: 'mngAddstu',
 			component: mngAddstu,
 		},

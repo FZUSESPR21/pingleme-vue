@@ -4,7 +4,7 @@ const Random = Mock.Random;
 Mock.mock('http://xx.com/api/v1/user/{id}', 'get', {
 	"code": 0,
 	"data": {
-		"uid": "221801XXX",
+		"uid": "221801101",
 		"nickname": "@cname",
 		"pair": "1231",
 		"team": "team"
@@ -25,7 +25,7 @@ Mock.mock('http://xx.com/api/v1/team/member', 'get', {
 Mock.mock('http://xx.com/api/v1/user/me', 'get', {
 	"code": 0,
 	"data": {
-		"uid": "221801XXX",
+		"uid": "001800001",
 		"nickname": "@cname",
 	},
 	"msg": "Success"

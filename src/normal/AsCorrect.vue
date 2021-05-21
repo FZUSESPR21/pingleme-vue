@@ -13,13 +13,7 @@
 
 		<a-layout style="background: white;">
 			<a-layout-header :style="{ background: '#fff', padding: 0 ,'text-align':'center'}">
-				<div class="info">
-					<a-icon type="user" />&nbsp;用户：XXX
-					<a-divider type="vertical" />
-					<a-icon type="team" />&nbsp;团队：XXX团队
-					<a-divider type="vertical" />
-					<a-icon type="book" />&nbsp;作业：作业XXX
-				</div>
+
 			</a-layout-header>
 			<a-layout-content :style="{ margin: '24px 16px 0' }">
 

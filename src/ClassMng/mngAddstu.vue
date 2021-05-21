@@ -25,7 +25,7 @@
 			<a-layout-content style="background: white;">
 				<!-- 当前班级学生的列表，支持删除 -->
 				<div style="padding:24px;background: #fff;">
-					<a-label style="font-size: 20px;"><a-icon type="team"/>班级：XXX</a-label>
+					<a-label style="font-size: 20px;"><a-icon type="team"/>班级：{{clsname}}</a-label>
 				</div>
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
 					<!-- 导入学生 -->
@@ -83,6 +83,7 @@
 		name:'mngAddstu',
 		data(){
 			return {
+				clsname:'',
 			    headers: {
 			       authorization: 'authorization-text',
 			    },
@@ -120,15 +121,23 @@
 			}
 		},
 		mounted(){
-			axios
-				.get('api/class/student/list/:class_id')
-				.then(response => (this.dataSource=response.data.data.stu_list))
+			this.getClsparams();
+			this.getStuList();
 		},
 		components:{
 			NormalNav,
 			ClassHeader,
 		},
 		methods:{
+			getClsparams(){
+				var routerPname=this.$route.params.cname
+				this.clsname=routerPname
+			},
+			getStuList(){
+				axios
+					.get('api/class/student/list/:class_id')
+					.then(response => (this.dataSource=response.data.data.stu_list))
+			},
 			//响应式布局的两个函数
 			onCollapse(collapsed, type) {
 			    console.log(collapsed, type);
