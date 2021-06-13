@@ -1,36 +1,61 @@
 import Vue from "vue"
 import Router from "vue-router"
-import CreateEvaluation from "../normal/CreateEvaluation.vue";
-import CrEvaform from "../normal/CreateEvaluationForm.vue";
-import HwList from "../normal/HomeworkList.vue"
-import Performance from "../normal/Performance.vue"
-import PfmDetail from "../normal/PerformanceDetail.vue"
-import Login from "../Login/Login.vue"
-import TClass from "../Teacher/TClass.vue"
-import CrClass from "../Teacher/CrClass.vue"
-import TInfo from "../Teacher/TInfo.vue"
-import AstList from "../normal/AssistantList.vue"
-import ClsInfo from "../normal/ClassInfo.vue"
-import GradeList from "../normal/GradeList.vue"
-import mngSL from "../ClassMng/mngScoreList.vue"
-import AstPage from "../normal/AssistantPage.vue"
-import AstCorrect from '../normal/AsCorrect.vue'
-import HwCorrecting from '../normal/HomeworkCorrecting.vue'
-import ImpHomework from '../normal/ImportHomework.vue'
-import mngAddstu from "../ClassMng/mngAddstu.vue"
+//import {fetch} from '@/util/http'
+//import {delCookie,getCookie} from '@/util/util'
 
+import Login from "@/Login/Login.vue"	//登录
+
+import TInfo from "@/Teacher/TInfo.vue"
+import User from "@/normal/User.vue"
+import SelfInfo from '@/normal/SelfInfo.vue'
+import LeaderInfo from '@/normal/LeaderInfo.vue'
+
+import CrClass from "@/Teacher/CrClass.vue"
+import TClass from "@/Teacher/TClass.vue"
+
+import mngAddstu from "@/ClassMng/mngAddstu.vue"
+import mngSL from "@/ClassMng/mngScoreList.vue"
 import PersonSL from "../score/personscore.vue"
-import SelfInfo from '../normal/SelfInfo.vue'
-import LeaderInfo from '../normal/LeaderInfo.vue'
+
+import CrEvaform from "@/normal/CreateEvaluationForm.vue";
+import CreateEvaluation from "@/normal/CreateEvaluation.vue";
+import Performance from "@/normal/Performance.vue"
+import PfmDetail from "@/normal/PerformanceDetail.vue"
+
+
+import HwList from "@/normal/HomeworkList.vue"
+import AstList from "@/normal/AssistantList.vue"
+import GradeList from "@/normal/GradeList.vue"
+import AstPage from "@/normal/AssistantPage.vue"
+import AstCorrect from '@/normal/AsCorrect.vue'
+
+import ClsInfo from "@/normal/ClassInfo.vue"
+
+import HwCorrecting from '@/normal/HomeworkCorrecting.vue'
+import ImpHomework from '@/normal/ImportHomework.vue'
+
 import JdgTeam from '../normal/JudgeTeam.vue'
 import TeamList from '../normal/TeamList.vue'
-import User from "../normal/User.vue"
+
+
+import test from "../Login/test.vue"
 
 
 Vue.use(Router)
-export default new Router({
-	routes: [
-    {
+
+	const routes= [
+		{
+			path: '/',
+			name: 'Login',
+			component: Login,
+		},
+		
+		{
+			path:'/test',
+			name: 'test',
+			component: test
+		},
+		{
 			path: '/SelfInfo',
 			name: 'SelfInfo',
 			component: SelfInfo
@@ -56,11 +81,6 @@ export default new Router({
 			path: '/GradeList',
 			name: 'GradeList',
 			component: GradeList
-		},
-		{
-			path: '/',
-			name: 'Login',
-			component: Login,
 		},
 		{
 			path: '/tinfo',
@@ -98,7 +118,7 @@ export default new Router({
 			component: TClass
 		},
 		{
-			path: '/tclass/mngsl/:cname',
+			path: '/tclass/mngsl',
 			name: 'mngSL',
 			component: mngSL,
 		},
@@ -108,7 +128,7 @@ export default new Router({
 			component:TClass
     },
     {
-			path: '/tclass/mngaddstu/:cname',
+			path: '/tclass/mngaddstu/',
 			name: 'mngAddstu',
 			component: mngAddstu,
 		},
@@ -164,5 +184,31 @@ export default new Router({
 			name: 'TeamList',
 			component: TeamList
 		},
-	]
-})
+	];
+	const router=new Router({
+		routes
+	});
+	/*
+//这个是请求页面路由的时候会验证token存不存在，不存在的话会到登录页
+router.beforeEach((to, from, next) => {
+ if(to.meta.requireAuth) {
+  fetch('/').then(res => {
+   if(res.code == 401) {
+    next();
+   } else {
+    if(getCookie('session')) {
+     delCookie('session');
+    }
+    if(getCookie('u_uuid')) {
+     delCookie('u_uuid');
+    }
+    next({
+     path: '/'
+    });
+   }
+  });
+ } else {
+  next();
+ }
+});*/
+export default router;
