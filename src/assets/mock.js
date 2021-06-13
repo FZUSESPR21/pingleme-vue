@@ -1,5 +1,6 @@
 import Mock from 'mockjs'
 
+/*
 Mock.mock('/api/v1/user/login', 'post', function(option) {
   // 请求传过来的参数在body中,传回的是json字符串,需要转义一下
 	console.log(option);
@@ -57,13 +58,14 @@ Mock.mock('/api/v1/user/login', 'post', function(option) {
 	}
 
 });
+*/
 Mock.mock('/api/v1/user/student/add','post',{
 	    "code": 0,
 	    "data": {
 	    },
 	    "msg": "Success"
 });
-
+/*
 Mock.mock('api/v1/class/list?{page=}','get',{
 	    "code": 0,
 	    "data": {
@@ -288,7 +290,7 @@ Mock.mock('api/class/student/list/:class_id','get',{
 	        ]
 	    },
 	"msg": "Success"
-});
+});*/
 Mock.mock('/api/v1/class/homework/list/:class_id','get',{
 	"code": 0,
 	    "data": {
