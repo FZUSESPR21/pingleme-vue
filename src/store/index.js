@@ -11,11 +11,15 @@ export default new Vuex.Store({
         assistantButton:false,
         teacherButton:false,
         superButton:false,
+		url:"http://192.168.50.192:3000",
     },
     getters:{
         getLimits(state){
             return state.limits;
         },
+		getUrl(state){
+		    return state.url;
+		},
         getStudentButton(state){
             return state.studentButton;
         },

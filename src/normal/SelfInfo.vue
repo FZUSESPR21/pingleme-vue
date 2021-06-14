@@ -21,18 +21,18 @@
 						<div class="info">
 							<a-card>
 								<a-descriptions title="个人信息">
-								  <a-descriptions-item label="姓名" span="3">
-								    {{User.nickname}}
-								  </a-descriptions-item>
-								  <a-descriptions-item label="学号" span="3">
-								    {{User.uid}}
-								  </a-descriptions-item>
-								  <a-descriptions-item label="结对状态" span="3">
-								    {{User.pair}}
-								  </a-descriptions-item>
-								  <a-descriptions-item label="团队状态" span="3">
-								    {{User.team}}
-								  </a-descriptions-item>
+									<a-descriptions-item label="姓名" span="3">
+										{{User.student_name}}
+									</a-descriptions-item>
+									<a-descriptions-item label="学号" span="3">
+										{{User.student_uid}}
+									</a-descriptions-item>
+									<a-descriptions-item label="结对状态" span="3">
+										{{User.pair_name}}
+									</a-descriptions-item>
+									<a-descriptions-item label="团队状态" span="3">
+										{{User.team_id}}
+									</a-descriptions-item>
 								</a-descriptions>
 							</a-card>
 						</div>
@@ -46,7 +46,7 @@
 												<a-input v-decorator="[
 		                       'userName',
 		                       { rules: [{ required: true, message: '请输入有效的学号' }] },
-		                     ]" placeholder="请输入结对队友学号">
+		                     ]" placeholder="请输入结对队友学号" v-model="input_pair">
 													<a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)" />
 												</a-input>
 											</a-form-item>
@@ -62,7 +62,8 @@
 									<a-collapse-panel key="2" header="创建团队" :style="customStyle">
 										<a-form :layout="inline">
 											<a-form-item label="团队名称">
-												<a-input placeholder="创建团队将自动成为组长，非组长学生请勿创建！" />
+												<a-input placeholder="创建团队将自动成为组长，非组长学生请勿创建！" @click="createTeam()"
+													v-model="input_teamname" />
 												<a-button type="primary">
 													确认
 												</a-button>
@@ -71,6 +72,9 @@
 									</a-collapse-panel>
 									<a-collapse-panel key="3" header="修改密码" :style="customStyle">
 										<a-form-model ref="ruleForm" :model="ruleForm" :rules="rules" v-bind="layout">
+											<a-form-model-item  label="输入旧密码" >
+												<a-input v-model="old_password" type="password" autocomplete="off" />
+											</a-form-model-item>
 											<a-form-model-item has-feedback label="输入新密码" prop="pass">
 												<a-input v-model="ruleForm.pass" type="password" autocomplete="off" />
 											</a-form-model-item>
@@ -135,7 +139,7 @@
 				}
 			};
 			return {
-				userName:'',
+				userName: '',
 				User: [],
 				customStyle: 'background: white;',
 				hasErrors,
@@ -168,19 +172,19 @@
 		},
 		mounted() {
 			this.getUname();
-			this.$axios.get('http://xx.com/api/v1/user/{id}')
-			  .then(res => {
-			    this.User = res.data.data;
-			  }),
-			this.$nextTick(() => {
-				// To disabled submit button at the beginning.
-				this.form.validateFields();
-			});
+			this.$axios.get(this.$store.getters.getUrl + '/api/v1/user/:' + 'id')
+				.then(res => {
+					this.User = res.data.data;
+				}),
+				this.$nextTick(() => {
+					// To disabled submit button at the beginning.
+					this.form.validateFields();
+				});
 		},
 		methods: {
-			getUname(){
-				var routerPname=this.$route.params.uname
-				this.userName=routerPname
+			getUname() {
+				var routerPname = this.$route.params.uname
+				this.userName = routerPname
 			},
 			onCollapse(collapsed, type) {
 				console.log(collapsed, type);
@@ -201,15 +205,44 @@
 			handleSubmit(e) {
 				e.preventDefault();
 				this.form.validateFields((err, values) => {
-					if (!err) {
-						console.log('Received values of form: ', values);
-					}
-				});
+						if (!err) {
+							console.log('Received values of form: ', values);
+						}
+					}),
+					this.$axios.post(this.$store.getters.getUrl + 'api/v1/user/pair/add', {
+						"Student1UID": this.User.student_uid,
+						"Student2UID": this.input_pair,
+					})
+					.then(res => {
+						console.log(res.data);
+					})
 			},
+
+			createTeam() {
+				this.$axios.post(this.$store.getters.getUrl + 'api/v1/user/team/create', {
+						"name": this.input_teamname,
+						"group_leader_id": this.User.student_uid,
+						"class_id": this.User.class_id,
+					})
+					.then(res => {
+						this.User.team_id = res.data.data.team_id;
+					})
+			},
+
+
 			submitForm(formName) {
 				this.$refs[formName].validate(valid => {
 					if (valid) {
-						alert('submit!');
+						// alert('submit!');
+						this.$axios.post(this.$store.getters.getUrl + 'api/v1/user/password/change', {
+								"uid": this.User.student_uid,
+								"old_password": this.old_password,
+								"new_password": this.ruleForm.pass,
+								"new_password_confirm": this.ruleForm.checkPass
+							})
+							.then(res => {
+								alert(res.data.message);
+							})
 					} else {
 						console.log('error submit!!');
 						return false;

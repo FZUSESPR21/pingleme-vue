@@ -233,8 +233,8 @@
 				} = this;
 				const newData = {
 					key: count,
-					name: `CXQ`,
-					id: 221801323,
+					name: this.input_name,
+					id: this.input_id,
 				};
 				this.dataSource = [...dataSource, newData];
 				this.count = count + 1;
