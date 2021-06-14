@@ -103,8 +103,7 @@
 </template>
 
 <script>
-	import axios from "axios"
-	
+//import {setCookie} from '@/util/util'
 export default {
 	name:'Login',
 	beforeCreate() {
@@ -124,10 +123,35 @@ export default {
 	
 	methods: {
 		getUserRole(){
-			let data = {"id":this.user,"psw":this.psd};
-			axios.post('/api/v1/user/login',data)
+			//this.$axios.post('http://192.168.50.192:3000/debug/ping')
+			this.$axios.post('http://192.168.50.192:3000/api/v1/login',
+				this.$qs.stringify({
+					'uid':this.user,
+					'password':this.psd
+				})
+			)
 			.then(res=>{
-			    this.userRole=res.data.data.role;this.userName=res.data.data.name;
+				console.log(res.data)
+				if(res.data.code=='40001'){
+					console.log('错误代码：'+res.data.code+','+res.data.msg);
+				}
+				else{
+					console.log(res.data.data);	
+/*					let expireDays = 1000 * 60 * 60 ;
+					setCookie('session',res.data.token,expireDays); //设置Session
+					setCookie('u_uuid',res.data.data.uid,expireDays); //设置用户编号
+					if(this.$route.query.redirect) {
+					    this.$router.push(this.$route.query.redirect);
+					}
+					 else {
+					    this.$router.push('/test'); //跳转
+					}
+					*/
+				}				
+			    //this.userRole=res.data.data.role;this.userName=res.data.data.name;
+			})
+			.catch(res=>{
+				console.log(res.data);
 			})
 		},
 		goTo(path){
@@ -142,6 +166,8 @@ export default {
 			        if (!err) {
 						this.getUserRole();
 						console.log(values);
+						this.goTo('/test');
+						/*
 						console.log(this.userRole);
 						if(this.userRole=='1'){
 							this.$store.commit('studentClick');
@@ -159,6 +185,7 @@ export default {
 							this.$store.commit('headmanClick');
 							this.goTo('/LeaderInfo');
 						}
+						*/
 					}
 				});
 		},
