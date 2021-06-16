@@ -124,7 +124,7 @@ export default {
 	methods: {
 		getUserRole(){
 			//this.$axios.post('http://192.168.50.192:3000/debug/ping')
-			this.$axios.post('http://192.168.50.192:3000/api/v1/login',
+			this.$axios.post('http://pingleme.top:3000/api/v1/login',
 				this.$qs.stringify({
 					'uid':this.user,
 					'password':this.psd
@@ -166,7 +166,7 @@ export default {
 			        if (!err) {
 						this.getUserRole();
 						console.log(values);
-						this.goTo('/test');
+						this.goTo('/SelfInfo');
 						/*
 						console.log(this.userRole);
 						if(this.userRole=='1'){

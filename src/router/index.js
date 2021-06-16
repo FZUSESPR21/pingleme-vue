@@ -38,7 +38,7 @@ import JdgTeam from '../normal/JudgeTeam.vue'
 import TeamList from '../normal/TeamList.vue'
 
 
-import test from "../Login/test.vue"
+
 
 
 Vue.use(Router)
@@ -50,11 +50,7 @@ Vue.use(Router)
 			component: Login,
 		},
 		
-		{
-			path:'/test',
-			name: 'test',
-			component: test
-		},
+		
 		{
 			path: '/SelfInfo',
 			name: 'SelfInfo',
