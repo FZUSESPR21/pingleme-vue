@@ -22,10 +22,10 @@
 							<a-card>
 								<a-descriptions title="个人信息">
 									<a-descriptions-item label="姓名" span="3">
-										{{User.student_name}}
+										{{User.user_name}}
 									</a-descriptions-item>
 									<a-descriptions-item label="学号" span="3">
-										{{User.student_uid}}
+										{{User.uid}}
 									</a-descriptions-item>
 									<a-descriptions-item label="结对状态" span="3">
 										{{User.pair_name}}
@@ -172,10 +172,13 @@
 		},
 		mounted() {
 			this.getUname();
-			this.$axios.get(this.$store.getters.getUrl + '/api/v1/user/:' + 'id')
+
+			this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
 				.then(res => {
 					this.User = res.data.data;
 				}),
+
+
 				this.$nextTick(() => {
 					// To disabled submit button at the beginning.
 					this.form.validateFields();
@@ -203,45 +206,61 @@
 			},
 			// Only show error after a field is touched.
 			handleSubmit(e) {
+
 				e.preventDefault();
 				this.form.validateFields((err, values) => {
 						if (!err) {
 							console.log('Received values of form: ', values);
 						}
 					}),
-					this.$axios.post(this.$store.getters.getUrl + 'api/v1/user/pair/add', {
-						"Student1UID": this.User.student_uid,
-						"Student2UID": this.input_pair,
+
+					this.$axios.post("http://pingleme.top:3000/api/v1/user/pair/add", {
+						"Student1UID": this.User.uid,
+						"Student2UID": this.input_pair
 					})
 					.then(res => {
-						console.log(res.data);
+						if (res.data.code == 40001)
+							this.$message.info(res.data.msg);
+
+					}),
+					this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
+					.then(res => {
+						this.User = res.data.data;
 					})
+
+
 			},
 
 			createTeam() {
-				this.$axios.post(this.$store.getters.getUrl + 'api/v1/user/team/create', {
+				this.$axios.post('http://pingleme.top:3000/api/v1/team/create', {
 						"name": this.input_teamname,
-						"group_leader_id": this.User.student_uid,
-						"class_id": this.User.class_id,
+						"group_leader_id": this.User.id,
+						"class_id": this.User.class_id
 					})
 					.then(res => {
-						this.User.team_id = res.data.data.team_id;
+						this.$message.info(res.data.msg);
+						if(res.data.code == 0)
+						this.$router.push('/LeaderInfo');
 					})
+
+					
+
 			},
+
 
 
 			submitForm(formName) {
 				this.$refs[formName].validate(valid => {
 					if (valid) {
 						// alert('submit!');
-						this.$axios.post(this.$store.getters.getUrl + 'api/v1/user/password/change', {
-								"uid": this.User.student_uid,
+						this.$axios.post(this.$store.getters.getUrl + '/api/v1/user/password/change', {
+								"uid": this.User.uid,
 								"old_password": this.old_password,
 								"new_password": this.ruleForm.pass,
 								"new_password_confirm": this.ruleForm.checkPass
 							})
 							.then(res => {
-								alert(res.data.message);
+								alert(res.data.msg);
 							})
 					} else {
 						console.log('error submit!!');

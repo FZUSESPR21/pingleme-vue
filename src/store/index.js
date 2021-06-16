@@ -11,7 +11,9 @@ export default new Vuex.Store({
         assistantButton:false,
         teacherButton:false,
         superButton:false,
-		url:"http://192.168.50.192:3000",
+
+		url:"http://pingleme.top:3000",
+
     },
     getters:{
         getLimits(state){

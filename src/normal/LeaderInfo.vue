@@ -22,18 +22,18 @@
 						<div class="info">
 							<a-card>
 								<a-descriptions title="个人信息">
-								  <a-descriptions-item label="姓名" span="3">
-								    {{User.nickname}}
-								  </a-descriptions-item>
-								  <a-descriptions-item label="学号" span="3">
-								    {{User.uid}}
-								  </a-descriptions-item>
-								  <a-descriptions-item label="结对状态" span="3">
-								    {{User.pair}}
-								  </a-descriptions-item>
-								  <a-descriptions-item label="团队状态" span="3">
-								    {{User.team}}
-								  </a-descriptions-item>
+									<a-descriptions-item label="姓名" span="3">
+										{{User.user_name}}
+									</a-descriptions-item>
+									<a-descriptions-item label="学号" span="3">
+										{{User.uid}}
+									</a-descriptions-item>
+									<a-descriptions-item label="结对状态" span="3">
+										{{User.pair_name}}
+									</a-descriptions-item>
+									<a-descriptions-item label="团队状态" span="3">
+										{{User.team_id}}
+									</a-descriptions-item>
 								</a-descriptions>
 							</a-card>
 						</div>
@@ -47,7 +47,7 @@
 												<a-input v-decorator="[
 			                    'userName',
 			                    { rules: [{ required: true, message: '请输入有效的学号' }] },
-			                  ]" placeholder="请输入结对队友学号">
+			                  ]" placeholder="请输入结对队友学号" v-model="input_pair">
 													<a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)" />
 												</a-input>
 											</a-form-item>
@@ -62,21 +62,19 @@
 									</a-collapse-panel>
 									<a-collapse-panel key="2" header="团队成员" :style="customStyle">
 										<div>
-											<span >
-											  <label>姓名：</label>
-											  <input placeholder="请输入姓名" v-model="input_name"/>
-											  <label>&nbsp;&nbsp;学号：</label>
-											  <input placeholder="请输入学号" v-model="input_id"/>
-											  <a-button class="editable-add-btn" @click="handleAdd">
-											    添加
-											  </a-button>
+											<span>
+												<label>&nbsp;&nbsp;学号：</label>
+												<input placeholder="请输入学号" v-model="input_id" />
+												<a-button class="editable-add-btn" @click="handleAdd">
+													添加
+												</a-button>
 											</span>
 											<a-table bordered :data-source="dataSource" :columns="columns"
 												:pagination="false">
 
 												<template slot="operation" slot-scope="text, record">
 													<a-popconfirm v-if="dataSource.length" title="确认删除?"
-														@confirm="() => onDelete(record.key)">
+														@confirm="() => onDelete(record)">
 														<a href="javascript:;">删除</a>
 													</a-popconfirm>
 												</template>
@@ -85,6 +83,9 @@
 									</a-collapse-panel>
 									<a-collapse-panel key="3" header="修改密码" :style="customStyle">
 										<a-form-model ref="ruleForm" :model="ruleForm" :rules="rules" v-bind="layout">
+											<a-form-model-item label="输入旧密码">
+												<a-input v-model="old_password" type="password" autocomplete="off" />
+											</a-form-model-item>
 											<a-form-model-item has-feedback label="输入新密码" prop="pass">
 												<a-input v-model="ruleForm.pass" type="password" autocomplete="off" />
 											</a-form-model-item>
@@ -152,25 +153,25 @@
 			};
 			return {
 				dataSource: [],
-				count: 1,
+				// count: 1,
 				columns: [{
-				    title: '姓名',
-				    dataIndex: 'name',
-				  },
-				  {
-				    title: '学号',
-				    dataIndex: 'id',
-				  },
-				  {
-				    title: '操作',
-				    dataIndex: 'operation',
-				    scopedSlots: {
-				      customRender: 'operation'
-				    },
-				  },
+						title: '姓名',
+						dataIndex: 'name',
+					},
+					{
+						title: '学号',
+						dataIndex: 'id',
+					},
+					{
+						title: '操作',
+						dataIndex: 'operation',
+						scopedSlots: {
+							customRender: 'operation'
+						},
+					},
 				],
 
-				User:[],
+				User: [],
 				customStyle: 'background: white;',
 				hasErrors,
 				form: this.$form.createForm(this, {
@@ -201,18 +202,19 @@
 			};
 		},
 		mounted() {
-			this.$axios.get('http://xx.com/api/v1/user/{id}')
-			  .then(res => {
-			    this.User = res.data.data;
-			  }),
-			  this.$axios.get('http://xx.com/api/v1/team/member')
-			    .then(res => {
-			      this.dataSource = res.data.data;
-			    }),
-			this.$nextTick(() => {
-				// To disabled submit button at the beginning.
-				this.form.validateFields();
-			});
+			this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
+				.then(res => {
+					this.User = res.data.data;
+				}),
+
+				this.$axios.get('http://pingleme.top:3000/api/v1/team/member')
+				.then(res => {
+					this.dataSource = res.data.data;
+				}),
+				this.$nextTick(() => {
+					// To disabled submit button at the beginning.
+					this.form.validateFields();
+				});
 		},
 		methods: {
 			onCollapse(collapsed, type) {
@@ -222,12 +224,31 @@
 				console.log(broken);
 			},
 
-			onDelete(key) {
-				const dataSource = [...this.dataSource];
-				this.dataSource = dataSource.filter(item => item.key !== key);
+			onDelete(value) {
+				this.$axios.post('http://pingleme.top:3000/api/v1/team/member/remove',{
+				  "uid":value.id,
+				  "team_id":this.User.team_id
+				})
+				  .then(res => {
+				   console.log(res.data)
+				  }),
+				/* const dataSource = [...this.dataSource];
+				this.dataSource = dataSource.filter(item => item.key !== key); */
+				this.$axios.get('memeber/info')
+				  .then(res => {
+				    this.dataSource = res.data.data.dataSource;
+				    // this.count=res.data.data.count;
+				  })
 			},
 			handleAdd() {
-				const {
+				this.$axios.post('http://pingleme.top:3000/api/v1/team/member/add',{
+						 "uid": this.input_id,
+						  "team_id":this.User.team_id
+				})
+				  .then(res => {
+				   this.$message.info(res.data.msg);
+				  }),
+				/* const {
 					count,
 					dataSource
 				} = this;
@@ -237,7 +258,12 @@
 					id: this.input_id,
 				};
 				this.dataSource = [...dataSource, newData];
-				this.count = count + 1;
+				this.count = count + 1; */
+				this.$axios.get('memeber/add')
+				  .then(res => {
+				    this.dataSource = res.data.data.dataSource;
+				    // this.count=res.data.data.count;
+				  })
 			},
 
 			// Only show error after a field is touched.
@@ -252,15 +278,36 @@
 			handleSubmit(e) {
 				e.preventDefault();
 				this.form.validateFields((err, values) => {
-					if (!err) {
-						console.log('Received values of form: ', values);
-					}
-				});
+						if (!err) {
+							console.log('Received values of form: ', values);
+						}
+					}),
+					this.$axios.post("http://pingleme.top:3000/api/v1/user/pair/add", {
+						"Student1UID": this.User.uid,
+						"Student2UID": this.input_pair
+					})
+					.then(res => {
+						if (res.data.code == 40001)
+							this.$message.info(res.data.msg);
+
+					}),
+					this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
+					.then(res => {
+						this.User = res.data.data;
+					});
 			},
 			submitForm(formName) {
 				this.$refs[formName].validate(valid => {
 					if (valid) {
-						alert('submit!');
+						this.$axios.post(this.$store.getters.getUrl + '/api/v1/user/password/change', {
+								"uid": this.User.uid,
+								"old_password": this.old_password,
+								"new_password": this.ruleForm.pass,
+								"new_password_confirm": this.ruleForm.checkPass
+							})
+							.then(res => {
+								alert(res.data.msg);
+							})
 					} else {
 						console.log('error submit!!');
 						return false;
