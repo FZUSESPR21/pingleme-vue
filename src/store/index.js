@@ -16,6 +16,9 @@ export default new Vuex.Store({
         assistantButton:false,
         teacherButton:false,
         superButton:false,
+
+		url:"http://pingleme.top:3000",
+
     },
     getters:{
 		Userid:(state) => state.u_id,
@@ -27,6 +30,9 @@ export default new Vuex.Store({
         getLimits(state){
             return state.limits;
         },
+		getUrl(state){
+		    return state.url;
+		},
         getStudentButton(state){
             return state.studentButton;
         },

@@ -172,7 +172,7 @@
 				data,
 				columns,
 				activeKey: ['1'],
-				url: "https://edu.cnblogs.com/campus/fzu/FZUSESPR21/homework/11974"
+				url: "http://pingleme.top:3000/api/v1/homework/detail/view/1.pdf"
 			}
 		},
 		watch: {

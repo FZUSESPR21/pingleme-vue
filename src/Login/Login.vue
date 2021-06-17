@@ -167,9 +167,10 @@ export default {
 						this.getUserInfo();
 						console.log(values);
 
+
 						let userRole=this.$store.getters.UserRole
 						console.log(userRole);
-						if(userRole=='0'){
+						if(this.userRole=='1'){
 							this.$store.commit('studentClick');
 							this.goTo('/SelfInfo');
 						}
