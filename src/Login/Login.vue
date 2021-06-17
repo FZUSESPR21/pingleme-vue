@@ -122,7 +122,7 @@ export default {
 	},
 	
 	methods: {
-		getUserRole(){
+		getUserInfo(){
 			//this.$axios.post('http://192.168.50.192:3000/debug/ping')
 			this.$axios.post('http://pingleme.top:3000/api/v1/login',
 				this.$qs.stringify({
@@ -131,24 +131,24 @@ export default {
 				})
 			)
 			.then(res=>{
-				console.log(res.data)
+				//console.log(res.data)
 				if(res.data.code=='40001'){
-					console.log('错误代码：'+res.data.code+','+res.data.msg);
+					//console.log();
+					alert('错误代码：'+res.data.code+','+res.data.msg);
 				}
 				else{
-					console.log(res.data.data);	
-/*					let expireDays = 1000 * 60 * 60 ;
-					setCookie('session',res.data.token,expireDays); //设置Session
-					setCookie('u_uuid',res.data.data.uid,expireDays); //设置用户编号
-					if(this.$route.query.redirect) {
-					    this.$router.push(this.$route.query.redirect);
+					if(res.data.code==0)
+					{
+						//console.log(res.data.data);	
+
+						this.$store.commit('handleUserid',res.data.data.uid)
+						this.$store.commit('handleUserName',res.data.data.user_name)
+						this.$store.commit('handleUserRole',res.data.data.role)
+						this.$store.commit('handleUserTeam',res.data.data.team_id)
+						this.$store.commit('handleUserclass',res.data.data.class_id)
 					}
-					 else {
-					    this.$router.push('/test'); //跳转
-					}
-					*/
 				}				
-			    //this.userRole=res.data.data.role;this.userName=res.data.data.name;
+
 			})
 			.catch(res=>{
 				console.log(res.data);
@@ -164,28 +164,31 @@ export default {
 			e.preventDefault();
 			      this.form.validateFields((err, values) => {
 			        if (!err) {
-						this.getUserRole();
+						this.getUserInfo();
 						console.log(values);
-						this.goTo('/SelfInfo');
-						/*
-						console.log(this.userRole);
+
+
+						let userRole=this.$store.getters.UserRole
+						console.log(userRole);
 						if(this.userRole=='1'){
 							this.$store.commit('studentClick');
 							this.goTo('/SelfInfo');
 						}
-						else if(this.userRole=='2'){
+						else if(userRole=='1'){
 							this.$store.commit('teacherClick');
 							this.goTo('/tinfo');
 						}
-						else if(this.userRole=='4'){
+						else if(userRole=='2'){
 							this.$store.commit('teacherClick');
 							this.goTo('/tinfo');
 						}
-						else if(this.userRole=='3'){
+						else if(userRole=='0'){
 							this.$store.commit('headmanClick');
 							this.goTo('/LeaderInfo');
 						}
-						*/
+						else if(userRole=='9'){
+							this.goTo('/test')
+						}
 					}
 				});
 		},
