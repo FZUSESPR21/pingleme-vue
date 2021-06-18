@@ -171,11 +171,20 @@
 			};
 		},
 		mounted() {
-			this.getUname();
-
-			this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
+			this.$axios.get('http://47.101.54.43/api/v1/user/me')
 				.then(res => {
-					this.User = res.data.data;
+					if(res.data.code=='401'){
+						alert("未登录，请登录");
+						this.$router.replace('/');
+					}
+					else{
+						if(res.data.code=='0'){
+							this.User = res.data.data;
+						}
+						else
+							alert('code:'+res.data.code+' msg:'+res.data.msg)
+					}
+					
 				}),
 
 
@@ -185,10 +194,6 @@
 				});
 		},
 		methods: {
-			getUname() {
-				var routerPname = this.$route.params.uname
-				this.userName = routerPname
-			},
 			onCollapse(collapsed, type) {
 				console.log(collapsed, type);
 			},

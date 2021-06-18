@@ -202,12 +202,23 @@
 			};
 		},
 		mounted() {
-			this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
+			this.$axios.get('http://47.101.54.43/api/v1/user/me')
 				.then(res => {
-					this.User = res.data.data;
+					if(res.data.code=='401'){
+						alert("未登录，请登录");
+						this.$router.replace('/');
+					}
+					else{
+						if(res.data.code=='0'){
+							this.User = res.data.data;
+						}
+						else
+							alert('code:'+res.data.code+' msg:'+res.data.msg)
+					}
+					
 				}),
 
-				this.$axios.get('http://pingleme.top:3000/api/v1/team/member')
+				this.$axios.get('http://47.101.54.43/api/v1/team/member')
 				.then(res => {
 					this.dataSource = res.data.data;
 				}),
@@ -225,7 +236,7 @@
 			},
 
 			onDelete(value) {
-				this.$axios.post('http://pingleme.top:3000/api/v1/team/member/remove',{
+				this.$axios.post('http://47.101.54.43/api/v1/team/member/remove',{
 				  "uid":value.id,
 				  "team_id":this.User.team_id
 				})
@@ -241,7 +252,7 @@
 				  })
 			},
 			handleAdd() {
-				this.$axios.post('http://pingleme.top:3000/api/v1/team/member/add',{
+				this.$axios.post('http://47.101.54.43/api/v1/team/member/add',{
 						 "uid": this.input_id,
 						  "team_id":this.User.team_id
 				})
@@ -282,7 +293,7 @@
 							console.log('Received values of form: ', values);
 						}
 					}),
-					this.$axios.post("http://pingleme.top:3000/api/v1/user/pair/add", {
+					this.$axios.post("http://47.101.54.43/api/v1/user/pair/add", {
 						"Student1UID": this.User.uid,
 						"Student2UID": this.input_pair
 					})
@@ -291,7 +302,7 @@
 							this.$message.info(res.data.msg);
 
 					}),
-					this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
+					this.$axios.get('http://47.101.54.43/api/v1/user/me')
 					.then(res => {
 						this.User = res.data.data;
 					});

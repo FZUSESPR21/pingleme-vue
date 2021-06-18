@@ -86,14 +86,20 @@
 		},
 		mounted(){
 			this.$axios
-				.get('http://pingleme.top:3000/api/v1/class/assistant/list/all')
+				.get('http://47.101.54.43/api/v1/class/assistant/list/all')
 				.then(res=>{
 					if(res.data.code==0){
 						console.log(res.data.data)
 						this.data=res.data.data
 					}
 					else{
-						console('code:'+res.data.code+' msg:'+res.data.msg)
+						if(res.data.code=='401'){
+							alert("未登录，请登录");
+							this.$router.replace('/');
+						}
+						else{
+							alert('code:'+res.data.code+' msg:'+res.data.msg)
+						}
 					}
 				})
 		},

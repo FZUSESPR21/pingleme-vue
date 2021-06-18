@@ -127,12 +127,25 @@
 			//连班级作业列表接口的
 			getScorelist(){
 				axios
-					.get('http://pingleme.top:3000/api/v1/class/homework/list?class_id='+this.$store.getters.Userclass
+					.get('http://47.101.54.43/api/v1/class/homework/list?class_id='+this.$store.getters.Userclass
 						//,this.$qs.stringify({
 						//	'ClassID':this.$store.getters.Userclass
 						//})
 					)
-					.then(response => (this.data=response.data.data.list))
+					.then(res => {
+						if(res.data.code=='0'){
+							this.data=res.data.data.list
+						}
+						else{
+							if(res.data.code=='401'){
+								alert("未登录，请登录");
+								this.$router.replace('/');
+							}
+							else{
+								alert('code:'+res.data.code+' msg:'+res.data.msg)
+							}
+						}
+					})
 			},
 		}
 	}

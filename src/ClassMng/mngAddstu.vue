@@ -133,10 +133,21 @@
 		methods:{
 			getStuList(){
 				axios
-					.get('http://pingleme.top:3000/api/v1/class/student/list/'+this.$store.getters.Userclass)
+					.get('http://47.101.54.43/api/v1/class/student/list/'+this.$store.getters.Userclass)
 					.then(res => {
-						this.dataSource=res.data.data.data
-						console.log(res.data.data)
+						if(res.data.code=='401'){
+							alert("未登录，请登录");
+							this.$router.replace('/');
+						}
+						else{
+							if(res.data.code=='0'){
+								this.dataSource=res.data.data.data
+								console.log(res.data.data)
+							}
+							else{
+								alert('code:'+res.data.code+' msg:'+res.data.msg)
+							}
+						}
 					})
 			},
 			//响应式布局的两个函数
@@ -226,7 +237,7 @@
 			//下载模板
 			downloadExecl() {
 			    window.open(
-			        "http://pingleme.top:3000/api/v1/student/import/template",
+			        "http://47.101.54.43/api/v1/student/import/template",
 			        "_blank"
 			    );
 			},

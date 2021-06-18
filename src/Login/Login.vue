@@ -124,7 +124,7 @@ export default {
 	methods: {
 		getUserInfo(){
 			//this.$axios.post('http://192.168.50.192:3000/debug/ping')
-			this.$axios.post('http://pingleme.top:3000/api/v1/login',
+			this.$axios.post('http://47.101.54.43/api/v1/login',
 				this.$qs.stringify({
 					'uid':this.user,
 					'password':this.psd
