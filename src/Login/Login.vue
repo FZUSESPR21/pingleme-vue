@@ -174,7 +174,7 @@ export default {
 							this.$store.commit('studentClick');
 							this.goTo('/SelfInfo');
 						}
-						else if(userRole=='1'){
+						else if(userRole=='2'){
 							this.$store.commit('teacherClick');
 							this.goTo('/tinfo');
 						}

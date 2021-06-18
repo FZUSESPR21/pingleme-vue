@@ -25,7 +25,7 @@
 			<a-layout-content style="background: white;">
 				<!-- 当前班级学生的列表，支持删除 -->
 				<div style="padding:24px;background: #fff;">
-					<a-label style="font-size: 20px;"><a-icon type="team"/>班级：{{clsname}}</a-label>
+					<a-label style="font-size: 20px;"><a-icon type="team"/>班级：{{$store.getters.Userclass}}</a-label>
 				</div>
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
 					<!-- 导入学生 -->
@@ -43,7 +43,8 @@
 							<div class="upload-tool" style="background:#fff">
 								<span>
 								    <input class="input-file" type="file" @change="exportData"
-								           accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+								           accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+									/>
 								    <br/>
 									<a @click="downloadExecl">点击此处下载模版</a>
 								</span>
@@ -83,7 +84,6 @@
 		name:'mngAddstu',
 		data(){
 			return {
-				clsname:'',
 			    headers: {
 			       authorization: 'authorization-text',
 			    },
@@ -98,22 +98,25 @@
 				visible:false,//Drawer
 				outdata:[],
 				addData:[],
+				formData:undefined,
 				
 				//当前班级学生
 				dataSource: [],
 				columns: [
 				    {
 				      title: '学号',
-				      dataIndex: 'stu_id',
+				      dataIndex: 'uid',
 				      width: '30%',
+					  key:'uid',
 				      scopedSlots: { customRender: 'stuid' },
 				    },
 				    {
 				      title: '姓名',
-				      dataIndex: 'stu_name',
+				      dataIndex: 'user_name',
+					  key:'username'
 				    },
 				    {
-				      title: 'operation',
+				      title: '操作',
 				      dataIndex: 'operation',
 				      scopedSlots: { customRender: 'operation' },
 				    },
@@ -121,7 +124,6 @@
 			}
 		},
 		mounted(){
-			this.getClsparams();
 			this.getStuList();
 		},
 		components:{
@@ -129,14 +131,13 @@
 			ClassHeader,
 		},
 		methods:{
-			getClsparams(){
-				var routerPname=this.$route.params.cname
-				this.clsname=routerPname
-			},
 			getStuList(){
 				axios
-					.get('api/class/student/list/:class_id')
-					.then(response => (this.dataSource=response.data.data.stu_list))
+					.get('http://pingleme.top:3000/api/v1/class/student/list/'+this.$store.getters.Userclass)
+					.then(res => {
+						this.dataSource=res.data.data.data
+						console.log(res.data.data)
+					})
 			},
 			//响应式布局的两个函数
 			onCollapse(collapsed, type) {
@@ -167,6 +168,7 @@
 			    }
 			    const that = this;
 			        // 拿取文件对象
+					this.formData=event.currentTarget.files[0];
 			    let f = event.currentTarget.files[0];
 			        //这里已经拿到了excel的file文件，若是项目需求，可直接$emit丢出文件
 			        // that.$emit('getMyExcelData',f);
@@ -224,7 +226,7 @@
 			//下载模板
 			downloadExecl() {
 			    window.open(
-			        "",
+			        "http://pingleme.top:3000/api/v1/student/import/template",
 			        "_blank"
 			    );
 			},
@@ -254,10 +256,17 @@
 				.then(response => (console.log(response.data.msg)))
 			},
 			addstu(){
-				this.getPostdata();
-				this.showResult();
+				//const that = this;
+				    // 拿取文件对象
+				console.log(this.formData);
+				//let formData = event.currentTarget.files[0];
+				let configs = { 
+				    headers:{'Content-Type':'multipart/form-data'}
+				};
+				this.$axios.post("http://pingleme.top:3000/api/v1/user/student/import",this.formData,configs)
+					.then(res=>{console.log(res.data)})
 			},
-		},
+		}
 	}
 </script>
 

@@ -24,19 +24,13 @@
 			<a-layout-content :style="{ margin: '24px 16px 0' }">
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
 					<a-input-search placeholder="按姓名搜索" style="width: 200px;margin-left:0px;" @search="onSearch()" />
-                    <span>&emsp;<a-button type="primary" @click="showModal">添加助教</a-button>
-					<a-modal v-model="visible" title="添加助教" @ok="handleOk">
-     				<a-input ref="uid" placeholder="请输入助教uid" />
-					<a-input ref="name" placeholder="请输入助教姓名" />
-					<a-input ref="pwd" placeholder="请输入助教密码" />
-    				</a-modal>
-					</span>
+                    <span>&emsp;<a-button type="primary">添加助教</a-button></span>
 					<hr>
-					<a-table :columns="columns" :data-source="astlist"  :pagination="myPagination">
+					<a-table :columns="columns" :data-source="data"  :pagination="myPagination">
 						<a slot="name" slot-scope="text">{{ text }}</a>
 						<span slot="customTitle"><a-icon type="smile-o" /> 姓名</span>
-						<span slot="action" slot-scope="record">
-							<a-button type="link" style="margin-left:0px;" @click="astDelete(record)"><a><a-icon type="delete" /></a></a-button>
+						<span slot="action" >
+							<a-button type="link" style="margin-left:0px;" @click="astDelete()"><a><a-icon type="delete" /></a></a-button>
 						</span>
 					</a-table>
 				</div>
@@ -53,19 +47,19 @@
     const columns = [
 	  {
 	    dataIndex: 'user_name',
-	    key: 'user_name',
+	    key: 'name',
 	    slots: { title: 'customTitle' },
 	    scopedSlots: { customRender: 'name' },
 	  },
 	  {
-	    title: 'uid',
+	    title: '学号',
 	    dataIndex: 'uid',
-	    key: 'uid',
+	    key: 'end_num',
 	  },
 	  {
 	    title: '管理班级',
 	    dataIndex: 'class_name',
-	    key: 'class_name',
+	    key: 'end_class',
 	  },
       {
 	    title: '删除',
@@ -73,7 +67,7 @@
 		scopedSlots: { customRender: 'action' },
 	  },
 	];
-
+ 
 
 	export default{
 		name:'AstList',
@@ -83,26 +77,27 @@
 		data() {  
 		    return {
 				collapsed: false,
-				astlist:[],
+				data:[],
 				columns,
 				myPagination: {
 				    defaultPageSize: 10
-				},
-				ModalText: 'Content of the modal',
-    	 		visible: false,
+				}
 		    };
 		},
-		 mounted() {
-				this.load()
-			
-
-    	},
+		mounted(){
+			this.$axios
+				.get('http://pingleme.top:3000/api/v1/class/assistant/list/all')
+				.then(res=>{
+					if(res.data.code==0){
+						console.log(res.data.data)
+						this.data=res.data.data
+					}
+					else{
+						console('code:'+res.data.code+' msg:'+res.data.msg)
+					}
+				})
+		},
 		methods:{
-			load(){this.$axios.get('http://pingleme.top:3000/api/v1/class/assistant/list/all')
-     		   .then(res => {
-    	    		this.astlist=res.data.data;
-				//   console.log(res.data)
-     		   })},
             onChange(value) {
                 console.log('changed', value);
             },
@@ -112,32 +107,9 @@
 			onBreakpoint(broken) {
 			    console.log(broken);
 			},
-            astDelete(value){
-				// console.log(value.uid);
-				let data = {"uid":value.uid,"class_id":value.class_id};
-				this.$axios.post('http://pingleme.top:3000/api/v1/class/assistant/remove',data)
-      				  .then(res => {
-      					    alert(res.data.msg);
-      		 	}) 
-				   this.load();
-            },
-			astAdd(){
-				const Qs = require('qs');
-				let data =Qs.stringify ({"uid":this.$refs.uid.value,"password":this.$refs.pwd.value,"user_name":this.$refs.name.value});
-				this.$axios.post('http://pingleme.top:3000/api/v1/user/assistant/add',data)
-      				  .then(res => {
-      					    alert(res.data.msg);
-							console.log(res.data);
-      		 	}) 
-				   this.load();
-			},
-			showModal() {
-   			   this.visible = true;
-   			},
-			handleOk() {
-				this.astAdd();
-    			this.visible = false;
- 		 	},
+            astDelete(){
+
+            }
 		}
 	}
 </script>
