@@ -37,14 +37,14 @@
 						<span slot="mngaction" slot-scope="text,record">
 										<a-button type="link" style="margin-left:0px;" @click="goTo('/tclass/mngsl/'+record.name)"><a><a-icon type="edit" /></a></a-button>
 						</span>
-						<span slot="pairaction" slot-scope="text,record" >
-										<a-button :type="record.is_pairing?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.is_pairing = !record.is_pairing)">
-											<a>{{record.is_pairing?'开始':'结束'}}</a>
+						<span slot="pair_status" slot-scope="text,record" >
+										<a-button :type="record.pair_status?'danger':'primary'" ghost style="margin-left:0px;" @click="changePair(record)">
+											<a>{{record.pair_status?'结束':'开始'}}</a>
 										</a-button>
 						</span>
-						<span slot="groupaction" slot-scope="text,record">
-										<a-button :type="record.is_grouping?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.is_grouping = !record.is_grouping)">							
-										<a>{{record.is_grouping?'开始':'结束'}}</a>
+						<span slot="team_status" slot-scope="text,record">
+										<a-button :type="record.team_status?'danger':'primary'" ghost style="margin-left:0px;" @click="changeTeam(record)">							
+										<a>{{record.team_status?'结束':'开始'}}</a>
 										</a-button>
 						</span>
 					</a-table>
@@ -65,21 +65,21 @@
 
 	const columns=[
 		{
-			dataIndex:'id',
+			dataIndex:'class_id',
 			slots:{title:'customTitle'},
-			scopedSlots: { customRender: 'id' },
+			scopedSlots: { customRender: 'class_id' },
 		},
 		{
 			title:'班级名',
-			dataIndex:'name',
-			key:'name',
-			scopedSlots:{customRender:'name'},
+			dataIndex:'class_name',
+			key:'class_name',
+			scopedSlots:{customRender:'class_name'},
 		},
 		{
 			title:'助教',
-			dataIndex:'assistant',
-			key:'assist',
-			scopedSlots:{customRender:'assist'},
+			dataIndex:'assistants',
+			key:'assistants',
+			scopedSlots:{customRender:'assistants'},
 		},
 		{
 			title:'操作',
@@ -88,20 +88,23 @@
 		},
 		{
 			title:'结对状态',
-			key:'pairaction',
-			scopedSlots:{customRender:'pairaction'},
+			key:'pair_status',
+			scopedSlots:{customRender:'pair_status'},
 		},
 		{
 			title:'团队状态',
-			key:'groupaction',
-			scopedSlots:{customRender:'groupaction'},
+			key:'team_status',
+			scopedSlots:{customRender:'team_status'},
 		}
+	];
+	
+	const clsinfo = [
 	];
 	export default{
 		name:'TClass',
 		data(){
 			return {
-				clsinfo:[],
+				clsinfo,
 				columns,
 				myPagination: {
 				    defaultPageSize: 10
@@ -131,8 +134,16 @@
 			},
 			//连班级接口的
 			getClassList(){
-				axios.get('api/v1/class/list?{page=}')
-				.then(response => (this.clsinfo=response.data.data.class))
+				axios.get('http://pingleme.top:3000/api/v1/class/list?page=1')
+				.then(response => (this.clsinfo=response.data.data))
+			},
+			changePair(value){
+				axios.post('http://pingleme.top:3000/api/v1/class/pair/toggle?class_id='+value.class_id)
+				.then(response => (alert(response.data.msg)))
+			},
+			changeTeam(value){
+				axios.post('http://pingleme.top:3000/api/v1/class/team/toggle?class_id='+value.class_id)
+				.then(response => (alert(response.data.msg)))
 			},
 		},
 	}
