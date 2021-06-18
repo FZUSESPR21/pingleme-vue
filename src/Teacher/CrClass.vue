@@ -146,7 +146,7 @@ const formTailLayout = {
 			},
 			getAssList(){
 				this.$axios
-					.get('http://pingleme.top:3000/api/v1/class/assistant/list/all')
+					.get('http://47.101.54.43/api/v1/class/assistant/list/all')
 					.then(res=>{
 						if(res.data.code==0){
 							console.log(res.data.data)
@@ -160,13 +160,19 @@ const formTailLayout = {
 							}
 						}
 						else{
-							console('code:'+res.data.code+' msg:'+res.data.msg)
+							if(res.data.code=='401'){
+								alert("未登录，请登录");
+								this.$router.replace('/');
+							}
+							else{
+								alert('code:'+res.data.code+' msg:'+res.data.msg)
+							}
 						}
 					})
 			},
 			getTeachList(){
 				this.$axios
-					.get('http://pingleme.top:3000/api/v1/class/teacher/list/all')
+					.get('http://47.101.54.43/api/v1/class/teacher/list/all')
 					.then(res=>{
 						if(res.data.code==0){
 							console.log('tecah:'+res.data.data)
@@ -208,17 +214,36 @@ const formTailLayout = {
 					j.assistant_id=sal[i]
 					json.push(j)
 				}
-				JSON.stringify(json)
+				/*
+				console.log(0)
 				console.log(json)
-				
+				let ass=JSON.stringify(json)
+				let asslist=ass.replace(new RegExp('\\"',"gm"), '"' );
+				console.log(1)
+				console.log(json)
+				console.log(2)
+				console.log(ass)
+				console.log(3)
+				console.log(asslist)
+				console.log(4)
+			*/
+				let data=[];
+				let dataj={};
+				dataj.assistant_list=json
+				dataj.teacher_id=teaid;
+				dataj.class_name=cn;
+				data.push(dataj)
+				console.log(data)
+				console.log(dataj)
+				console.log(0)
+
 				this.$axios
-					.post('http://pingleme.top:3000/api/v1/class/create',
-						this.$qs.stringify({
+					.post('http://47.101.54.43/api/v1/class/create',dataj
+					/*	this.$qs.stringify({
 							'class_name':cn,
 							'teacher_id':teaid,
-							'assistant_list':json,
-	
-						})
+							'assistant_list':ass.replace(new RegExp('\\"',"gm"), '"' ),
+						})*/
 					)
 					.then(res=>{
 						if(res.data.code==0){

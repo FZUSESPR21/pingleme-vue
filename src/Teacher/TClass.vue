@@ -138,7 +138,15 @@
 			//连班级接口的
 			getClassList(){
 				this.$axios.get('http://pingleme.top:3000/api/v1/class/list')
-				.then(response => (this.clsinfo=response.data.data))
+				.then(res => {
+					if(res.data.code=='401'){
+						alert("未登录，请登录");
+						this.$router.replace('/');
+					}
+					else{
+						this.clsinfo=res.data.data
+					}
+				})
 			},
 			goTomngclass(path,cid){
 				this.$store.commit('handleUserclass',cid)

@@ -29,8 +29,6 @@ import GradeList from "@/normal/GradeList.vue"
 import AstPage from "@/normal/AssistantPage.vue"
 import AstCorrect from '@/normal/AsCorrect.vue'
 
-import ClsInfo from "@/normal/ClassInfo.vue"
-
 import HwCorrecting from '@/normal/HomeworkCorrecting.vue'
 import ImpHomework from '@/normal/ImportHomework.vue'
 
@@ -165,11 +163,7 @@ Vue.use(Router)
 			name: 'AstList',
 			component: AstList
 		},
-		{
-			path: '/clsinfo',
-			name: 'ClsInfo',
-			component: ClsInfo
-		},
+
 		{
 			path: '/jdgteam',
 			name: 'JdgTeam',
