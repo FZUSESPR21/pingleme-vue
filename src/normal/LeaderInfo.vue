@@ -32,7 +32,8 @@
 										{{User.pair_name}}
 									</a-descriptions-item>
 									<a-descriptions-item label="团队状态" span="3">
-										{{User.team_id}}
+										{{this.team_name}}
+
 									</a-descriptions-item>
 								</a-descriptions>
 							</a-card>
@@ -160,7 +161,7 @@
 					},
 					{
 						title: '学号',
-						dataIndex: 'id',
+						dataIndex: 'uid',
 					},
 					{
 						title: '操作',
@@ -172,6 +173,7 @@
 				],
 
 				User: [],
+				team_name: '',
 				customStyle: 'background: white;',
 				hasErrors,
 				form: this.$form.createForm(this, {
@@ -207,14 +209,19 @@
 					this.User = res.data.data;
 				}),
 
-				this.$axios.get('http://pingleme.top:3000/api/v1/team/member')
-				.then(res => {
-					this.dataSource = res.data.data;
-				}),
+
 				this.$nextTick(() => {
 					// To disabled submit button at the beginning.
 					this.form.validateFields();
 				});
+			setTimeout(() => {
+				this.$axios.get('http://pingleme.top:3000/api/v1/team/detail/' + this.User.team_id)
+					.then(res => {
+						this.team_name = res.data.data.team_name;
+						this.dataSource = res.data.data.teammates;
+					})
+			}, 1000);
+
 		},
 		methods: {
 			onCollapse(collapsed, type) {
@@ -225,45 +232,49 @@
 			},
 
 			onDelete(value) {
-				this.$axios.post('http://pingleme.top:3000/api/v1/team/member/remove',{
-				  "uid":value.id,
-				  "team_id":this.User.team_id
-				})
-				  .then(res => {
-				   console.log(res.data)
-				  }),
-				/* const dataSource = [...this.dataSource];
-				this.dataSource = dataSource.filter(item => item.key !== key); */
-				this.$axios.get('memeber/info')
-				  .then(res => {
-				    this.dataSource = res.data.data.dataSource;
-				    // this.count=res.data.data.count;
-				  })
+				this.$axios.post('http://pingleme.top:3000/api/v1/team/member/remove', {
+						"uid": value.uid,
+						"team_id": this.User.team_id
+					})
+					.then(res => {
+						this.$message.info(res.data.msg);
+					}),
+					/* const dataSource = [...this.dataSource];
+					this.dataSource = dataSource.filter(item => item.key !== key); */
+					setTimeout(() =>{
+					    this.$axios.get('http://pingleme.top:3000/api/v1/team/detail/' + this.User.team_id)
+					    .then(res => {					  
+					    	this.dataSource = res.data.data.teammates;					
+					    })
+					},);
+					
 			},
 			handleAdd() {
-				this.$axios.post('http://pingleme.top:3000/api/v1/team/member/add',{
-						 "uid": this.input_id,
-						  "team_id":this.User.team_id
-				})
-				  .then(res => {
-				   this.$message.info(res.data.msg);
-				  }),
-				/* const {
-					count,
-					dataSource
-				} = this;
-				const newData = {
-					key: count,
-					name: this.input_name,
-					id: this.input_id,
-				};
-				this.dataSource = [...dataSource, newData];
-				this.count = count + 1; */
-				this.$axios.get('memeber/add')
-				  .then(res => {
-				    this.dataSource = res.data.data.dataSource;
-				    // this.count=res.data.data.count;
-				  })
+				this.$axios.post('http://pingleme.top:3000/api/v1/team/member/add', {
+						"uid": this.input_id,
+						"team_id": this.User.team_id
+					})
+					.then(res => {
+						this.$message.info(res.data.msg);
+					}),
+					/* const {
+						count,
+						dataSource
+					} = this;
+					const newData = {
+						key: count,
+						name: this.input_name,
+						id: this.input_id,
+					};
+					this.dataSource = [...dataSource, newData];
+					this.count = count + 1; */
+					setTimeout(() => {
+						this.$axios.get('http://pingleme.top:3000/api/v1/team/detail/' + this.User.team_id)
+							.then(res => {
+								this.dataSource = res.data.data.teammates;
+							})
+					}, 1000);
+
 			},
 
 			// Only show error after a field is touched.
