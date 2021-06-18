@@ -62,9 +62,9 @@
 									<a-collapse-panel key="2" header="创建团队" :style="customStyle">
 										<a-form :layout="inline">
 											<a-form-item label="团队名称">
-												<a-input placeholder="创建团队将自动成为组长，非组长学生请勿创建！"
+												<a-input placeholder="创建团队将自动成为组长，非组长学生请勿创建！" @click="createTeam()"
 													v-model="input_teamname" />
-												<a-button type="primary" @click="createTeam()">
+												<a-button type="primary">
 													确认
 												</a-button>
 											</a-form-item>
@@ -72,7 +72,7 @@
 									</a-collapse-panel>
 									<a-collapse-panel key="3" header="修改密码" :style="customStyle">
 										<a-form-model ref="ruleForm" :model="ruleForm" :rules="rules" v-bind="layout">
-											<a-form-model-item label="输入旧密码">
+											<a-form-model-item  label="输入旧密码" >
 												<a-input v-model="old_password" type="password" autocomplete="off" />
 											</a-form-model-item>
 											<a-form-model-item has-feedback label="输入新密码" prop="pass">
@@ -172,10 +172,12 @@
 		},
 		mounted() {
 			this.getUname();
+
 			this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
 				.then(res => {
 					this.User = res.data.data;
 				}),
+
 
 				this.$nextTick(() => {
 					// To disabled submit button at the beginning.
@@ -211,6 +213,7 @@
 							console.log('Received values of form: ', values);
 						}
 					}),
+
 					this.$axios.post("http://pingleme.top:3000/api/v1/user/pair/add", {
 						"Student1UID": this.User.uid,
 						"Student2UID": this.input_pair
@@ -243,6 +246,7 @@
 					
 
 			},
+
 
 
 			submitForm(formName) {
