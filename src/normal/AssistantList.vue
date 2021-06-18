@@ -46,19 +46,19 @@
 	import NormalNav from "../components/NormalNav.vue";
     const columns = [
 	  {
-	    dataIndex: 'name',
+	    dataIndex: 'user_name',
 	    key: 'name',
 	    slots: { title: 'customTitle' },
 	    scopedSlots: { customRender: 'name' },
 	  },
 	  {
 	    title: '学号',
-	    dataIndex: 'end_num',
+	    dataIndex: 'uid',
 	    key: 'end_num',
 	  },
 	  {
 	    title: '管理班级',
-	    dataIndex: 'end_class',
+	    dataIndex: 'class_name',
 	    key: 'end_class',
 	  },
       {
@@ -67,74 +67,7 @@
 		scopedSlots: { customRender: 'action' },
 	  },
 	];
-    const data = [
-      {
-	    key: '1',
-	    name: 'XXX',
-	    end_num: 'XXXXXXXXX',
-        end_class: '软件工程X班'
-	  },
-      {
-	    key: '2',
-	    name: 'XXX',
-	    end_num: 'XXXXXXXXX',
-        end_class: '软件工程X班'
-	  },
-      {
-	    key: '3',
-	    name: 'XXX',
-	    end_num: 'XXXXXXXXX',
-        end_class: '软件工程X班'
-	  },
-      {
-	    key: '4',
-	    name: 'XXX',
-	    end_num: 'XXXXXXXXX',
-        end_class: '软件工程X班'
-	  },
-      {
-	    key: '5',
-	    name: 'XXX',
-	    end_num: 'XXXXXXXXX',
-        end_class: '软件工程X班'
-	  },
-      {
-	    key: '6',
-	    name: 'XXX',
-	    end_num: 'XXXXXXXXX',
-        end_class: '软件工程X班'
-	  },
-      {
-	    key: '7',
-	    name: 'XXX',
-	    end_num: 'XXXXXXXXX',
-        end_class: '软件工程X班'
-	  },
-      {
-	    key: '8',
-	    name: 'XXX',
-	    end_num: 'XXXXXXXXX',
-        end_class: '软件工程X班'
-	  },
-      {
-	    key: '9',
-	    name: 'XXX',
-	    end_num: 'XXXXXXXXX',
-        end_class: '软件工程X班'
-	  },
-      {
-	    key: '10',
-	    name: 'XXX',
-	    end_num: 'XXXXXXXXX',
-        end_class: '软件工程X班'
-	  },
-      {
-	    key: '11',
-	    name: 'XXX',
-	    end_num: 'XXXXXXXXX',
-        end_class: '软件工程X班'
-	  },
-    ];
+ 
 
 	export default{
 		name:'AstList',
@@ -144,12 +77,25 @@
 		data() {  
 		    return {
 				collapsed: false,
-				data,
+				data:[],
 				columns,
 				myPagination: {
 				    defaultPageSize: 10
 				}
 		    };
+		},
+		mounted(){
+			this.$axios
+				.get('http://pingleme.top:3000/api/v1/class/assistant/list/all')
+				.then(res=>{
+					if(res.data.code==0){
+						console.log(res.data.data)
+						this.data=res.data.data
+					}
+					else{
+						console('code:'+res.data.code+' msg:'+res.data.msg)
+					}
+				})
 		},
 		methods:{
             onChange(value) {

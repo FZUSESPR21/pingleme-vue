@@ -26,26 +26,24 @@
 					<a-input-search placeholder="按班级名搜索" style="width: 200px;margin-left:0px;" @search="onSearch" />
 					<hr>
 					<a-table  :columns="columns" :dataSource="clsinfo">
-						<a slot="name" slot-scope="text">{{ text }}</a>
-						<span slot="customTitle"><a-icon type='team'/>班级号</span>
 						<span slot="assist" slot-scope="text,record">
 							<a-tag 
-								v-for="item in record.assistant" 
-								:key="item.id" 
-								:color="item.id % 3 == '0' ? 'pink' : item.id % 3 == '1' ? 'geekblue' : 'green'">{{item.name}}</a-tag>
+								v-for="item in record.assistants" 
+								:key="item.AssistantID" 
+								:color="item.AssistantID % 3 == '0' ? 'pink' : item.AssistantID % 3 == '1' ? 'geekblue' : 'green'">{{item.AssistantName}}</a-tag>
 						</span>
 						<span slot="mngaction" slot-scope="text,record">
-										<a-button type="link" style="margin-left:0px;" @click="goTo('/tclass/mngsl/'+record.name)"><a><a-icon type="edit" /></a></a-button>
+							<a-button type="link" style="margin-left:0px;" @click="goTomngclass('/tclass/mngsl',record.class_id)"><a><a-icon type="edit" /></a></a-button>
 						</span>
 						<span slot="pairaction" slot-scope="text,record" >
-										<a-button :type="record.is_pairing?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.is_pairing = !record.is_pairing)">
-											<a>{{record.is_pairing?'开始':'结束'}}</a>
-										</a-button>
+							<a-button :type="record.pair_status?'danger':'primary'" ghost style="margin-left:0px;"  @click="changePair(record.class_id)">
+								<a>{{record.pair_status?'结束':'开始'}}</a>
+							</a-button>
 						</span>
 						<span slot="groupaction" slot-scope="text,record">
-										<a-button :type="record.is_grouping?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.is_grouping = !record.is_grouping)">							
-										<a>{{record.is_grouping?'开始':'结束'}}</a>
-										</a-button>
+							<a-button :type="record.team_status?'danger':'primary'" ghost style="margin-left:0px;"  @click="changeTeam(record.class_id)">							
+								<a>{{record.team_status?'结束':'开始'}}</a>
+							</a-button>
 						</span>
 					</a-table>
 				</div>
@@ -61,23 +59,29 @@
 <script>
 	//班级信息
 	import NormalNav from "../components/NormalNav.vue"
-	import axios from "axios"
 
 	const columns=[
 		{
-			dataIndex:'id',
-			slots:{title:'customTitle'},
-			scopedSlots: { customRender: 'id' },
+			title:'班级号',
+			key:'clsid',
+			dataIndex:'class_id',
+			scopedSlots: { customRender: 'clsid' },
 		},
 		{
 			title:'班级名',
-			dataIndex:'name',
-			key:'name',
-			scopedSlots:{customRender:'name'},
+			dataIndex:'class_name',
+			key:'clsname',
+			scopedSlots:{customRender:'clsname'},
+		},
+		{
+			title:'老师',
+			dataIndex:'teacher_name',
+			key:'teacher',
+			scopedSlots:{customRender:'teach'},
 		},
 		{
 			title:'助教',
-			dataIndex:'assistant',
+			dataIndex:'assistants',
 			key:'assist',
 			scopedSlots:{customRender:'assist'},
 		},
@@ -88,12 +92,14 @@
 		},
 		{
 			title:'结对状态',
-			key:'pairaction',
+			dataIndex:'pair_status',
+			key:'pair_status',
 			scopedSlots:{customRender:'pairaction'},
 		},
 		{
 			title:'团队状态',
-			key:'groupaction',
+			dataIndex:'team_status',
+			key:'team_status',
 			scopedSlots:{customRender:'groupaction'},
 		}
 	];
@@ -131,9 +137,36 @@
 			},
 			//连班级接口的
 			getClassList(){
-				axios.get('api/v1/class/list?{page=}')
-				.then(response => (this.clsinfo=response.data.data.class))
+				this.$axios.get('http://pingleme.top:3000/api/v1/class/list')
+				.then(response => (this.clsinfo=response.data.data))
 			},
+			goTomngclass(path,cid){
+				this.$store.commit('handleUserclass',cid)
+				this.goTo(path)
+			},
+			
+			changePair(clsid){
+				this.$axios
+				.post('http://pingleme.top:3000/api/v1/class/pair/toggle?class_id='+clsid)
+				/*this.$axios
+				.post('http://192.168.50.192:3000/api/v1/class/pair/toggle',
+					this.$qs.stringify({
+						'class_id':clsid
+					})
+				)*/
+				/*
+				var params = new URLSearchParams();
+				params.append('class_id', clsid);
+				this.$axios({
+				    method: 'post',
+				    url:'http://192.168.50.192:3000/api/v1/class/pair/toggle',
+				    data:params
+				});*/
+			},
+			changeTeam(clsid){
+				this.$axios
+				.post('http://pingleme.top:3000/api/v1/class/team/toggle?class_id='+clsid)
+			}
 		},
 	}
 </script>

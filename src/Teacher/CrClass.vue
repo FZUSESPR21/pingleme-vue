@@ -20,46 +20,59 @@
 		<a-layout style="background: white;">
 			<a-layout-header style="background: #fff;"></a-layout-header>
 			<a-layout-content :style="{ margin: '24px 16px 0',minHeight:'360px',padding:'10px', }">
-				<a-form :form="form" @submit="handleSubmit">
-					<a-form-item
-						:label-col="formItemLayout.labelCol"
-						:wrapper-col="formItemLayout.wrapperCol"
+				<a-form-model
+					ref="ruleForm"
+					:model="form"
+					:rules="rules"
+					:label-col="modellabelCol"
+					:wrapper-col="modelwrapperCol"
+				>
+					<a-form-model-item
 						label="班级名"
+						prop="clsname"
 					>
 					  	<a-input
-					  	    v-decorator="[
-					  	        'classname',
-					  	        { rules: [{ required: true, message: '请输入新班级的名字' }] },
-					  	    ]"
-					  	    placeholder="请输入新班级的名字"
-					  	 />
-					</a-form-item>
-					<a-form-item
-						:label-col="formItemLayout.labelCol"
-						:wrapper-col="formItemLayout.wrapperCol"
-						label="助教"
+						ref="cname"
+						v-model="form.clsname"
+							placeholder="输入班级名"
+							/>
+					</a-form-model-item>
+					<a-form-model-item
+						label="老师"
+						prop="teacher"
 					>
 						<a-select 
-						    v-decorator="[
-						          'assistant',
-						          { rules: [{ required: true, message: '至少选择一个助教' }] },
-						    ]"
+						v-model="form.teacher"
+							placeholder="选择老师" 
+							@change="teachhandleChangeSelect"
+						>
+							<a-select-option v-for="(item,index) in teacherList" :key="index" :value="item.id">
+								{{ item.user_name }}
+							</a-select-option>
+						</a-select>
+					</a-form-model-item>
+					<a-form-model-item
+						label="助教"
+						prop="assist"
+					>
+						<a-select 
+						ref="cas"
+						v-model="form.assist"
 							mode="multiple" 
-							style="width: 100%" 
 							placeholder="添加助教" 
 							@change="handleChangeSelect"
 						>
-							<a-select-option v-for="(item,index) in assistantList" :key="index" :value="item.asname">
-								{{ item.asname }}
+							<a-select-option v-for="(item,index) in assistantList" :key="index" :value="item.id">
+								{{ item.user_name }}
 							</a-select-option>
 						</a-select>
-					</a-form-item>
-					<a-form-item :label-col="formTailLayout.labelCol" :wrapper-col="formTailLayout.wrapperCol">
-					      <a-button type="primary" html-type="submit">
+					</a-form-model-item>
+					<a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
+					      <a-button type="primary" @click="onSubmit">
 					        创建班级
 					      </a-button>
-					</a-form-item>
-				</a-form>
+					</a-form-model-item>
+				</a-form-model>
 			</a-layout-content>
 			<a-layout-footer style="textAlign: center;background:white">
 				PingLeMe ©2021 Created by Ant UED
@@ -71,56 +84,7 @@
 <script>
 	//创建班级
 	import NormalNav from "../components/NormalNav.vue"
-const assistantList=[
-	{
-		key:'1',
-		asname:'助教1'
-	},
-	{
-		key:'2',
-		asname:'助教2'
-	},
-	{
-		key:'3',
-		asname:'助教3'
-	},
-	{
-		key:'4',
-		asname:'助教4'
-	},
-	{
-		key:'5',
-		asname:'助教5'
-	},
-	{
-		key:'6',
-		asname:'助教6'
-	},
-	{
-		key:'7',
-		asname:'助教7'
-	},
-	{
-		key:'8',
-		asname:'助教8'
-	},
-	{
-		key:'9',
-		asname:'助教9'
-	},
-	{
-		key:'10',
-		asname:'助教10'
-	},
-	{
-		key:'11',
-		asname:'助教11'
-	},
-];
-const formItemLayout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 8 },
-};
+
 const formTailLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 8, offset: 4 },
@@ -129,13 +93,43 @@ const formTailLayout = {
 		name:'CrClass',
 		data(){
 			return {
-				assistantList,
-				formItemLayout,
+				assistantList:[],
+				teacherList:[],
+				modellabelCol: { span: 4 },
+				modelwrapperCol: { span: 8 },
+				form:{
+					clsname:'',
+					teacher:undefined,
+					assist:[],
+				},
+				rules:{
+					clsname:[
+						{required:true,message:'请输入班级名'}
+					],
+					teacher:[
+						{required:true,message:'请选择老师',trigger: 'change'}
+					],
+					assist:[
+						{required:true,message:'至少选择一个助教'}
+					],
+				},
 				formTailLayout,
 			}
 		},
 		components:{
 			NormalNav,
+		},
+		mounted(){
+		/*	this.$axios.post('http://pingleme.top:3000/debug/user/add',
+				this.$qs.stringify({
+					'uid':"ass18010",
+					'name':'assis10',
+					'password':'789qwerty',
+					'role':2
+				})
+			);*/
+			this.getAssList();
+			this.getTeachList();
 		},
 		methods:{
 			onCollapse(collapsed, type) {
@@ -147,14 +141,95 @@ const formTailLayout = {
 			handleChangeSelect(value) {
 				console.log(`selected ${value}`);
 			},
-			handleSubmit(e) {
-			    e.preventDefault();
-			    this.form.validateFields((err, values) => {
-					if (!err) {
-			          console.log('Received values of form: ', values);
-					}
-			    });
+			teachhandleChangeSelect(value) {
+				console.log(`selected ${value}`);
 			},
+			getAssList(){
+				this.$axios
+					.get('http://pingleme.top:3000/api/v1/class/assistant/list/all')
+					.then(res=>{
+						if(res.data.code==0){
+							console.log(res.data.data)
+							let arr=res.data.data
+							for(let item in arr)
+							{
+								if (arr[item].class_id==0 && arr[item].class_name==''){
+									let i={"id":arr[item].id,"user_name":arr[item].user_name}
+									this.assistantList.push(i)
+								}
+							}
+						}
+						else{
+							console('code:'+res.data.code+' msg:'+res.data.msg)
+						}
+					})
+			},
+			getTeachList(){
+				this.$axios
+					.get('http://pingleme.top:3000/api/v1/class/teacher/list/all')
+					.then(res=>{
+						if(res.data.code==0){
+							console.log('tecah:'+res.data.data)
+							let arr=res.data.data
+							for(let item in arr)
+							{
+									let i={"id":arr[item].id,"user_name":arr[item].user_name}
+									this.teacherList.push(i)
+							}
+						}
+						else{
+							console('code:'+res.data.code+' msg:'+res.data.msg)
+						}
+					})
+			},
+			onSubmit() {
+				this.$refs.ruleForm.validate(valid => {
+				    if (valid) {
+						let cn=this.$refs.cname.value
+						//console.log(cn)
+						
+						console.log(this.form.teacher)//不能注释
+						let teaid=this.form.teacher
+						
+						console.log(this.form.assist)//不能注释
+						let str=this.form.assist
+						//console.log(cn+' '+teaid+' '+str)
+						this.createca(cn,teaid,str)
+				    } else {
+				        console.log('error submit!!');
+				        return false;
+				    }
+				});
+			},
+			createca(cn,teaid,sal){
+				let json=[];
+				for(let i=0;i<sal.length;i++){
+					let j={}
+					j.assistant_id=sal[i]
+					json.push(j)
+				}
+				JSON.stringify(json)
+				console.log(json)
+				
+				this.$axios
+					.post('http://pingleme.top:3000/api/v1/class/create',
+						this.$qs.stringify({
+							'class_name':cn,
+							'teacher_id':teaid,
+							'assistant_list':json,
+	
+						})
+					)
+					.then(res=>{
+						if(res.data.code==0){
+							alert("创建成功");
+						}
+						else{
+							alert("创建失败");
+						}
+					})
+				
+			}
 		},
 	}
 </script>

@@ -24,7 +24,7 @@
 			<a-layout style="background: white;">
 				<a-layout-content >
 					<div style="padding:24px;background: #fff;">
-						<a-label style="font-size: 20px;"><a-icon type="team"/>班级：{{clsname}}</a-label>
+						<a-label style="font-size: 20px;"><a-icon type="team"/>班级：{{$store.getters.Userclass}}</a-label>
 					</div>
 					<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
 						<a-input-search placeholder="按作业名搜索" style="width: 200px;margin-left:0px;" @search="onSearch" />
@@ -88,13 +88,10 @@
 				myPagination: {
 					defaultPageSize: 5
 				},
-				clsid:'',
-				clsname:'',
 			}
 		},
 
 		mounted(){
-			this.getClsparams();
 			this.getScorelist();
 		},
 		components:{
@@ -127,15 +124,15 @@
 				}
 			},
 			
-			getClsparams(){
-				var routerPname=this.$route.params.cname
-				this.clsname=routerPname
-			},
 			//连班级作业列表接口的
 			getScorelist(){
 				axios
-					.get('/api/v1/class/homework/list/:class_id')
-					.then(response => (this.data=response.data.data.homework_list))
+					.get('http://pingleme.top:3000/api/v1/class/homework/list?class_id='+this.$store.getters.Userclass
+						//,this.$qs.stringify({
+						//	'ClassID':this.$store.getters.Userclass
+						//})
+					)
+					.then(response => (this.data=response.data.data.list))
 			},
 		}
 	}
