@@ -208,13 +208,14 @@ const formTailLayout = {
 				});
 			},
 			createca(cn,teaid,sal){
+				/*
 				let json=[];
 				for(let i=0;i<sal.length;i++){
 					let j={}
 					j.assistant_id=sal[i]
 					json.push(j)
 				}
-				/*
+				
 				console.log(0)
 				console.log(json)
 				let ass=JSON.stringify(json)
@@ -226,7 +227,7 @@ const formTailLayout = {
 				console.log(3)
 				console.log(asslist)
 				console.log(4)
-			*/
+			
 				let data=[];
 				let dataj={};
 				dataj.assistant_list=json
@@ -235,15 +236,15 @@ const formTailLayout = {
 				data.push(dataj)
 				console.log(data)
 				console.log(dataj)
-				console.log(0)
+				console.log(0)*/
 
 				this.$axios
-					.post('http://47.101.54.43/api/v1/class/create',dataj
-					/*	this.$qs.stringify({
+					.post('http://47.101.54.43/api/v1/class/create',
+						this.$qs.stringify({
 							'class_name':cn,
 							'teacher_id':teaid,
-							'assistant_list':ass.replace(new RegExp('\\"',"gm"), '"' ),
-						})*/
+							'assistant_list':sal,
+						})
 					)
 					.then(res=>{
 						if(res.data.code==0){
