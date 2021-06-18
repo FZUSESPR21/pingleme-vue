@@ -38,10 +38,15 @@
 								<a>{{record.groupcollapsed?'开始':'结束'}}</a>
 							</a-button>
 						</span>
-						<span slot="action3" slot-scope="text, record">
-							<a-button :type="record.teamcollapsed?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.teamcollapsed = !record.teamcollapsed)">							
-								<a>{{record.teamcollapsed?'开始':'结束'}}</a>
-							</a-button>
+						<span slot="pair_status" slot-scope="text,record" >
+										<a-button :type="record.pair_status?'danger':'primary'" ghost style="margin-left:0px;" @click="changePair(record)">
+											<a>{{record.pair_status?'结束':'开始'}}</a>
+										</a-button>
+						</span>
+						<span slot="team_status" slot-scope="text,record">
+										<a-button :type="record.team_status?'danger':'primary'" ghost style="margin-left:0px;" @click="changeTeam(record)">							
+										<a>{{record.team_status?'结束':'开始'}}</a>
+										</a-button>
 						</span>
 					</a-table>
 				</div>
@@ -57,151 +62,51 @@
 <script>
 	//班级信息
 	import NormalNav from "../components/NormalNav.vue"
-	
-	const columns = [
-	  {
-	    dataIndex: 'name',
-	    key: 'name',
-	    slots: { title: 'customTitle' },
-	    scopedSlots: { customRender: 'name' },
-	  },
-	  {
-	    title: '助教',
-	    dataIndex: 'assistant',
-	    key: 'end_time',
-	  },
-	  {
-	    title: '班级管理',
-		'key':'action1',
-		scopedSlots: { customRender: 'action1' },
-	  },
-	  {
-	    title: '结对组队',
-	  	'key':'action2',
-	  	scopedSlots: { customRender: 'action2' },
-		align:'center'
-	  },
-	  {
-	    title: '团队创建',
-	  	'key':'action3',
-	  	scopedSlots: { customRender: 'action3' },
-		align:'center'
-	  },
+	import axios from "axios"
+
+	const columns=[
+		{
+			dataIndex:'class_id',
+			slots:{title:'customTitle'},
+			scopedSlots: { customRender: 'class_id' },
+		},
+		{
+			title:'班级名',
+			dataIndex:'class_name',
+			key:'class_name',
+			scopedSlots:{customRender:'class_name'},
+		},
+		{
+			title:'助教',
+			dataIndex:'assistants',
+			key:'assistants',
+			scopedSlots:{customRender:'assistants'},
+		},
+		{
+			title:'操作',
+			key:'mngaction',
+			scopedSlots:{customRender:'mngaction'},
+		},
+		{
+			title:'结对状态',
+			key:'pair_status',
+			scopedSlots:{customRender:'pair_status'},
+		},
+		{
+			title:'团队状态',
+			key:'team_status',
+			scopedSlots:{customRender:'team_status'},
+		}
 	];
 	
-	const data = [
-	  {
-	    key: '1',
-	    name: '一个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '2',
-	    name: '两个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '3',
-	    name: '三个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '4',
-	    name: '四个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '5',
-	    name: '五个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '6',
-	    name: '六个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '7',
-	    name: '七个',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '8',
-	    name: '八个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '9',
-	    name: '九个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '10',
-	    name: '十个',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '11',
-	    name: '十一个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '12',
-	    name: '十二个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '13',
-	    name: '十三个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '14',
-	    name: '十四个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
-	  {
-	    key: '15',
-	    name: '十五个班',
-	    assistant: '2021.3.10',
-		groupcollapsed:true,
-		teamcollapsed:true,
-	  },
+	const clsinfo = [
 	];
 	
 	export default{
 		name:'TClass',
 		data(){
 			return {
-				data,
+				clsinfo,
 				columns,
 				myPagination: {
 				    defaultPageSize: 10
@@ -224,7 +129,20 @@
 			onBreakpoint(broken) {
 			    console.log(broken);
 			},
-		}
+			//连班级接口的
+			getClassList(){
+				axios.get('http://pingleme.top:3000/api/v1/class/list?page=1')
+				.then(response => (this.clsinfo=response.data.data))
+			},
+			changePair(value){
+				axios.post('http://pingleme.top:3000/api/v1/class/pair/toggle?class_id='+value.class_id)
+				.then(response => (alert(response.data.msg)))
+			},
+			changeTeam(value){
+				axios.post('http://pingleme.top:3000/api/v1/class/team/toggle?class_id='+value.class_id)
+				.then(response => (alert(response.data.msg)))
+			},
+		},
 	}
 </script>
 
