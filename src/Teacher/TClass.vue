@@ -156,11 +156,15 @@
 			changePair(clsid){
 				this.$axios
 				.post('http://pingleme.top:3000/api/v1/class/pair/toggle?class_id='+clsid)
-	
+				.then(res=>{alert(res.data.msg)})
+				location.reload();
 			},
 			changeTeam(clsid){
 				this.$axios
 				.post('http://pingleme.top:3000/api/v1/class/team/toggle?class_id='+clsid)
+				.then(res=>{alert(res.data.msg)})
+
+				location.reload();
 			}
 		},
 	}

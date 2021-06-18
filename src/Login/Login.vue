@@ -135,6 +135,7 @@ export default {
 				if(res.data.code=='40001'){
 					//console.log();
 					alert('错误代码：'+res.data.code+','+res.data.msg);
+					location.reload();
 				}
 				else{
 					if(res.data.code==0)
