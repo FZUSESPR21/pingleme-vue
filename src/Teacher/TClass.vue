@@ -148,20 +148,7 @@
 			changePair(clsid){
 				this.$axios
 				.post('http://pingleme.top:3000/api/v1/class/pair/toggle?class_id='+clsid)
-				/*this.$axios
-				.post('http://192.168.50.192:3000/api/v1/class/pair/toggle',
-					this.$qs.stringify({
-						'class_id':clsid
-					})
-				)*/
-				/*
-				var params = new URLSearchParams();
-				params.append('class_id', clsid);
-				this.$axios({
-				    method: 'post',
-				    url:'http://192.168.50.192:3000/api/v1/class/pair/toggle',
-				    data:params
-				});*/
+	
 			},
 			changeTeam(clsid){
 				this.$axios
