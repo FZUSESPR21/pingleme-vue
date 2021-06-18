@@ -12,11 +12,7 @@
 		</a-layout-sider>
 		<a-layout style="background: white;">
 			<a-layout-header :style="{ background: '#fff', padding: 0 ,textAlign:'center'}">
-				<div class="info">
-					<a-icon type="user" />&nbsp;用户：XXX
-					<a-divider type="vertical" />
-					<a-icon type="team" />&nbsp;团队：XXX团队
-				</div>
+
 			</a-layout-header>
 			<a-layout-content :style="{ margin: '24px 16px 0' }">
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
@@ -26,19 +22,16 @@
 							<a-card>
 								<a-descriptions title="个人信息">
 									<a-descriptions-item label="姓名" span="3">
-										XXX
+										{{User.user_name}}
 									</a-descriptions-item>
 									<a-descriptions-item label="学号" span="3">
-										221801323
+										{{User.uid}}
 									</a-descriptions-item>
 									<a-descriptions-item label="结对状态" span="3">
-										221801305
+										{{User.pair_name}}
 									</a-descriptions-item>
 									<a-descriptions-item label="团队状态" span="3">
-										评了么
-									</a-descriptions-item>
-									<a-descriptions-item label="密码" span="3">
-										XXXXXXXXX
+										{{User.team_id}}
 									</a-descriptions-item>
 								</a-descriptions>
 							</a-card>
@@ -53,7 +46,7 @@
 												<a-input v-decorator="[
 		                       'userName',
 		                       { rules: [{ required: true, message: '请输入有效的学号' }] },
-		                     ]" placeholder="请输入结对队友学号">
+		                     ]" placeholder="请输入结对队友学号" v-model="input_pair">
 													<a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)" />
 												</a-input>
 											</a-form-item>
@@ -69,7 +62,8 @@
 									<a-collapse-panel key="2" header="创建团队" :style="customStyle">
 										<a-form :layout="inline">
 											<a-form-item label="团队名称">
-												<a-input placeholder="创建团队将自动成为组长，非组长学生请勿创建！" />
+												<a-input placeholder="创建团队将自动成为组长，非组长学生请勿创建！" @click="createTeam()"
+													v-model="input_teamname" />
 												<a-button type="primary">
 													确认
 												</a-button>
@@ -78,6 +72,9 @@
 									</a-collapse-panel>
 									<a-collapse-panel key="3" header="修改密码" :style="customStyle">
 										<a-form-model ref="ruleForm" :model="ruleForm" :rules="rules" v-bind="layout">
+											<a-form-model-item  label="输入旧密码" >
+												<a-input v-model="old_password" type="password" autocomplete="off" />
+											</a-form-model-item>
 											<a-form-model-item has-feedback label="输入新密码" prop="pass">
 												<a-input v-model="ruleForm.pass" type="password" autocomplete="off" />
 											</a-form-model-item>
@@ -103,7 +100,7 @@
 				</div>
 			</a-layout-content>
 			<a-layout-footer style="textAlign: center;background:white">
-				Ant Design ©2018 Created by Ant UED
+				PingLeMe ©2021 Created by Ant UED
 			</a-layout-footer>
 		</a-layout>
 	</a-layout>
@@ -142,6 +139,8 @@
 				}
 			};
 			return {
+				userName: '',
+				User: [],
 				customStyle: 'background: white;',
 				hasErrors,
 				form: this.$form.createForm(this, {
@@ -172,12 +171,24 @@
 			};
 		},
 		mounted() {
-			this.$nextTick(() => {
-				// To disabled submit button at the beginning.
-				this.form.validateFields();
-			});
+			this.getUname();
+
+			this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
+				.then(res => {
+					this.User = res.data.data;
+				}),
+
+
+				this.$nextTick(() => {
+					// To disabled submit button at the beginning.
+					this.form.validateFields();
+				});
 		},
 		methods: {
+			getUname() {
+				var routerPname = this.$route.params.uname
+				this.userName = routerPname
+			},
 			onCollapse(collapsed, type) {
 				console.log(collapsed, type);
 			},
@@ -195,17 +206,62 @@
 			},
 			// Only show error after a field is touched.
 			handleSubmit(e) {
+
 				e.preventDefault();
 				this.form.validateFields((err, values) => {
-					if (!err) {
-						console.log('Received values of form: ', values);
-					}
-				});
+						if (!err) {
+							console.log('Received values of form: ', values);
+						}
+					}),
+
+					this.$axios.post("http://pingleme.top:3000/api/v1/user/pair/add", {
+						"Student1UID": this.User.uid,
+						"Student2UID": this.input_pair
+					})
+					.then(res => {
+						if (res.data.code == 40001)
+							this.$message.info(res.data.msg);
+
+					}),
+					this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
+					.then(res => {
+						this.User = res.data.data;
+					})
+
+
 			},
+
+			createTeam() {
+				this.$axios.post('http://pingleme.top:3000/api/v1/team/create', {
+						"name": this.input_teamname,
+						"group_leader_id": this.User.id,
+						"class_id": this.User.class_id
+					})
+					.then(res => {
+						this.$message.info(res.data.msg);
+						if(res.data.code == 0)
+						this.$router.push('/LeaderInfo');
+					})
+
+					
+
+			},
+
+
+
 			submitForm(formName) {
 				this.$refs[formName].validate(valid => {
 					if (valid) {
-						alert('submit!');
+						// alert('submit!');
+						this.$axios.post(this.$store.getters.getUrl + '/api/v1/user/password/change', {
+								"uid": this.User.uid,
+								"old_password": this.old_password,
+								"new_password": this.ruleForm.pass,
+								"new_password_confirm": this.ruleForm.checkPass
+							})
+							.then(res => {
+								alert(res.data.msg);
+							})
 					} else {
 						console.log('error submit!!');
 						return false;

@@ -7,17 +7,27 @@ import store from "./store"
 import { FormModel } from 'ant-design-vue';
 import echarts from "echarts"
 import ElementUI from "element-ui"
-import './mock/mock'
-import axios from 'axios'
+import qs from 'qs';
+
+//import './mock/mock'
+//import './util/util'
+//import './util/http'
+
 import '../config/axios'
+
+import axios from 'axios'
+axios.defaults.withCredentials=true;//让ajax携带cookie
+
 
 
 Vue.use(ElementUI);
 Vue.use(FormModel);
 Vue.use(Antd);
-Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
 Vue.prototype.$echarts = echarts;
+Vue.prototype.$ajax = axios;
+Vue.prototype.$qs=qs;
+Vue.prototype.$axios = axios;
 
 new Vue({
 	el:'#app',

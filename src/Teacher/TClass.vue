@@ -19,24 +19,23 @@
 		
 		<a-layout style="background: white;">
 			<a-layout-header :style="{ background: '#fff', padding: 0,'text-align':'center' }">
-				<div class="info">
-					<a-icon type="user" />&nbsp;用户：XXX
-				</div>
+
 			</a-layout-header>
 			<a-layout-content :style="{ margin: '24px 16px 0',minHeight:'360px' }">
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
 					<a-input-search placeholder="按班级名搜索" style="width: 200px;margin-left:0px;" @search="onSearch" />
 					<hr>
-					<a-table :columns="columns" :data-source="data"  :pagination="myPagination">
+					<a-table  :columns="columns" :dataSource="clsinfo">
 						<a slot="name" slot-scope="text">{{ text }}</a>
-						<span slot="customTitle"><a-icon type="team" /> 班级</span>
-						<span slot="action1" >
-							<a-button type="link" style="margin-left:0px;" @click="goTo('/tclass/mngsl')"><a><a-icon type="edit" /></a></a-button>
+						<span slot="customTitle"><a-icon type='team'/>班级号</span>
+						<span slot="assist" slot-scope="text,record">
+							<a-tag 
+								v-for="item in record.assistant" 
+								:key="item.id" 
+								:color="item.id % 3 == '0' ? 'pink' : item.id % 3 == '1' ? 'geekblue' : 'green'">{{item.name}}</a-tag>
 						</span>
-						<span slot="action2" slot-scope="text, record" >
-							<a-button :type="record.groupcollapsed?'primary':'danger'" ghost style="margin-left:0px;" @click="() => (record.groupcollapsed = !record.groupcollapsed)">
-								<a>{{record.groupcollapsed?'开始':'结束'}}</a>
-							</a-button>
+						<span slot="mngaction" slot-scope="text,record">
+										<a-button type="link" style="margin-left:0px;" @click="goTo('/tclass/mngsl/'+record.name)"><a><a-icon type="edit" /></a></a-button>
 						</span>
 						<span slot="pair_status" slot-scope="text,record" >
 										<a-button :type="record.pair_status?'danger':'primary'" ghost style="margin-left:0px;" @click="changePair(record)">
@@ -101,7 +100,6 @@
 	
 	const clsinfo = [
 	];
-	
 	export default{
 		name:'TClass',
 		data(){
@@ -110,19 +108,24 @@
 				columns,
 				myPagination: {
 				    defaultPageSize: 10
-				}
+				},
 			}
+		},
+		mounted(){
+			this.getClassList();
 		},
 		components:{
 			NormalNav,
 		},
+
 		methods:{
 			goTo(path){
-				this.$router.replace(path);
+				this.$router.push(path);
 			},
 			onSearch(value) {
 			    console.log(value);
 			},
+			//响应式布局的函数
 			onCollapse(collapsed, type) {
 			    console.log(collapsed, type);
 			 },

@@ -12,11 +12,7 @@
 
 		<a-layout style="background: white;">
 			<a-layout-header :style="{ background: '#fff', padding: 0 ,textAlign:'center'}">
-				<div class="info">
-					<a-icon type="user" />&nbsp;用户：XXX
-					<a-divider type="vertical" />
-					<a-icon type="team" />&nbsp;团队：XXX团队
-				</div>
+
 			</a-layout-header>
 			<a-layout-content :style="{ margin: '24px 16px 0' }">
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
@@ -25,20 +21,19 @@
 						<div class="info">
 							<a-card>
 								<a-descriptions title="个人信息">
-									<a-descriptions-item label="用户名" span="3">
-										XXX
-									</a-descriptions-item>
-									<a-descriptions-item label="姓名" span="3">
-										221801323
-									</a-descriptions-item>
-
-									<a-descriptions-item label="密码" span="3">
-										XXXXXXXXX
-									</a-descriptions-item>
+								  <a-descriptions-item label="id" span="3">
+								    {{User.uid}}
+								  </a-descriptions-item>
+								  <a-descriptions-item label="姓名" span="3">
+								    {{User.user_name}}
+								  </a-descriptions-item>
 								</a-descriptions>
 								<a-collapse accordion :bordered="false">
 									<a-collapse-panel key="1" header="修改密码" :style="customStyle">
 										<a-form-model ref="ruleForm" :model="ruleForm" :rules="rules" v-bind="layout">
+											<a-form-model-item label="输入旧密码">
+												<a-input v-model="old_password" type="password" autocomplete="off" />
+											</a-form-model-item>
 											<a-form-model-item has-feedback label="输入新密码" prop="pass">
 												<a-input v-model="ruleForm.pass" type="password" autocomplete="off" />
 											</a-form-model-item>
@@ -64,7 +59,7 @@
 				</div>
 			</a-layout-content>
 			<a-layout-footer style="textAlign: center;background:white">
-				Ant Design ©2018 Created by Ant UED
+				PingLeMe ©2021 Created by Ant UED
 			</a-layout-footer>
 		</a-layout>
 	</a-layout>
@@ -79,7 +74,7 @@
 			NormalNav,
 		},
 		data() {
-
+			
 			let validatePass = (rule, value, callback) => {
 				if (value === '') {
 					callback(new Error('请输入新密码'));
@@ -100,9 +95,9 @@
 				}
 			};
 			return {
+				userName:'',
+				User:[],
 				customStyle: 'background: white;',
-
-
 				ruleForm: {
 					pass: '',
 					checkPass: '',
@@ -127,7 +122,19 @@
 				},
 			};
 		},
+		mounted() {
+			this.getUname();
+			this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
+				.then(res => {
+					this.User = res.data.data;
+				})
+
+		},
 		methods: {
+			getUname(){
+				var routerPname=this.$route.params.uname
+				this.userName=routerPname
+			},
 			onCollapse(collapsed, type) {
 				console.log(collapsed, type);
 			},
@@ -137,7 +144,12 @@
 			submitForm(formName) {
 				this.$refs[formName].validate(valid => {
 					if (valid) {
-						alert('submit!');
+						this.$axios.post(this.$store.getters.getUrl + '/api/v1/user/password/change', {
+								"uid": this.User.uid,
+								"old_password": this.old_password,
+								"new_password": this.ruleForm.pass,
+								"new_password_confirm": this.ruleForm.checkPass
+							})
 					} else {
 						console.log('error submit!!');
 						return false;

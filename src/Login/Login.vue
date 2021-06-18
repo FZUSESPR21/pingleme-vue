@@ -45,7 +45,7 @@
 	    		id="components-form-demo-normal-login"
 	    		:form="form"
 	    		class="login-form"
-	    		@submit="handleSubmit"
+				@submit="handleSubmit"
 	    	>
 	    		<a-form-item>
 	    			<a-input
@@ -55,6 +55,7 @@
 	    				]"
 	    				placeholder="Username"
 	    				style="border-radius: 15px"
+						v-model="user"
 	    			>
 	    			</a-input>
 	    		</a-form-item>
@@ -67,6 +68,7 @@
 	    				type="password"
 	    				placeholder="Password"
 	    				style="border-radius: 15px;"
+						v-model="psd"
 	    			>
 	    			</a-input>
 	    		</a-form-item>
@@ -91,29 +93,6 @@
 	    				LOGIN
 	    			</a-button>
 	    			<br/>
-	    			<a-button 
-	    				type="primary" 
-	    				@click="goTo('/tinfo')" 
-	    				style="border-radius: 15px;background: whitesmoke;color:#2C3E50"
-	    			>
-	    				现在先点这个
-	    			</a-button>
-					<div v-if="hide"><span>&emsp;<a-button type="primary" v-bind:disabled="$store.getters.getStudentButton"
-								@click="$store.commit('studentClick');goTo('/SelfInfo')">学生</a-button>
-							&emsp;<a-button type="primary" v-bind:disabled="$store.getters.getHeadmanButton"
-								@click="$store.commit('headmanClick');goTo('/LeaderInfo')">组长</a-button>
-							<br />
-							<a-button type="primary" v-bind:disabled="$store.getters.getAssistantButton"
-								@click="$store.commit('assistantClick');goTo('/tinfo')">助教</a-button>&emsp;
-							<a-button type="primary" v-bind:disabled="$store.getters.getTeacherButton"
-								@click="$store.commit('teacherClick');goTo('/tinfo')">老师</a-button>
-						</span>
-						<br />
-						<a-button type="primary" v-bind:disabled="$store.getters.getSuperButton"
-							@click="$store.commit('superClick');goTo('/tinfo')">管理员</a-button>&emsp;
-							<a-button type="primary" v-bind:disabled="$store.getters.getSuperButton"
-							@click="hided()">隐藏</a-button>
-					</div>
 	    		</a-form-item>
 	    	</a-form>
 	    </div>
@@ -124,6 +103,7 @@
 </template>
 
 <script>
+//import {setCookie} from '@/util/util'
 export default {
 	name:'Login',
 	beforeCreate() {
@@ -131,11 +111,49 @@ export default {
 	},
 	data(){
 		return {
+			userName:'',
+			userRole:'',
+			user:'',
+			psd:'',
+
 			hide:true,
+
 		};
 	},
 	
 	methods: {
+		getUserInfo(){
+			//this.$axios.post('http://192.168.50.192:3000/debug/ping')
+			this.$axios.post('http://pingleme.top:3000/api/v1/login',
+				this.$qs.stringify({
+					'uid':this.user,
+					'password':this.psd
+				})
+			)
+			.then(res=>{
+				//console.log(res.data)
+				if(res.data.code=='40001'){
+					//console.log();
+					alert('错误代码：'+res.data.code+','+res.data.msg);
+				}
+				else{
+					if(res.data.code==0)
+					{
+						//console.log(res.data.data);	
+
+						this.$store.commit('handleUserid',res.data.data.uid)
+						this.$store.commit('handleUserName',res.data.data.user_name)
+						this.$store.commit('handleUserRole',res.data.data.role)
+						this.$store.commit('handleUserTeam',res.data.data.team_id)
+						this.$store.commit('handleUserclass',res.data.data.class_id)
+					}
+				}				
+
+			})
+			.catch(res=>{
+				console.log(res.data);
+			})
+		},
 		goTo(path){
 			this.$router.replace(path);
 		},
@@ -143,13 +161,38 @@ export default {
 			this.hide=false;
 		},
 		handleSubmit(e) {
-		    e.preventDefault();
-		    this.form.validateFields((err, values) => {
-		        if (!err) {
-		          console.log('Received values of form: ', values);
-		        }
-		    });
+			e.preventDefault();
+			      this.form.validateFields((err, values) => {
+			        if (!err) {
+						this.getUserInfo();
+						console.log(values);
+
+
+						let userRole=this.$store.getters.UserRole
+						console.log(userRole);
+						if(this.userRole=='1'){
+							this.$store.commit('studentClick');
+							this.goTo('/SelfInfo');
+						}
+						else if(userRole=='1'){
+							this.$store.commit('teacherClick');
+							this.goTo('/tinfo');
+						}
+						else if(userRole=='2'){
+							this.$store.commit('teacherClick');
+							this.goTo('/tinfo');
+						}
+						else if(userRole=='0'){
+							this.$store.commit('headmanClick');
+							this.goTo('/LeaderInfo');
+						}
+						else if(userRole=='9'){
+							this.goTo('/test')
+						}
+					}
+				});
 		},
+		
   },
 };
 </script>
