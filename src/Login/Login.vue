@@ -187,7 +187,7 @@ export default {
 							this.goTo('/LeaderInfo');
 						}
 						else if(userRole=='9'){
-							this.goTo('/test')
+							this.goTo('/tinfo')
 						}
 					}
 				});
