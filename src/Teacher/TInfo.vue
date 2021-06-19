@@ -156,6 +156,9 @@
 								"new_password": this.ruleForm.pass,
 								"new_password_confirm": this.ruleForm.checkPass
 							})
+							.then(res => {
+								alert(res.data.msg);
+							})
 					} else {
 						console.log('error submit!!');
 						return false;
