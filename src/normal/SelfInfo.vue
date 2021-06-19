@@ -62,9 +62,9 @@
 									<a-collapse-panel key="2" header="创建团队" :style="customStyle">
 										<a-form :layout="inline">
 											<a-form-item label="团队名称">
-												<a-input placeholder="创建团队将自动成为组长，非组长学生请勿创建！" @click="createTeam()"
+												<a-input placeholder="创建团队将自动成为组长，非组长学生请勿创建！" 
 													v-model="input_teamname" />
-												<a-button type="primary">
+												<a-button type="primary" @click="createTeam()">
 													确认
 												</a-button>
 											</a-form-item>
@@ -219,7 +219,7 @@
 						}
 					}),
 
-					this.$axios.post("http://pingleme.top:3000/api/v1/user/pair/add", {
+					this.$axios.post("http://47.101.54.43/api/v1/user/pair/add", {
 						"Student1UID": this.User.uid,
 						"Student2UID": this.input_pair
 					})
@@ -228,7 +228,7 @@
 							this.$message.info(res.data.msg);
 
 					}),
-					this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
+					this.$axios.get('http://47.101.54.43/api/v1/user/me')
 					.then(res => {
 						this.User = res.data.data;
 					})
@@ -237,7 +237,7 @@
 			},
 
 			createTeam() {
-				this.$axios.post('http://pingleme.top:3000/api/v1/team/create', {
+				this.$axios.post('http://47.101.54.43/api/v1/team/create', {
 						"name": this.input_teamname,
 						"group_leader_id": this.User.id,
 						"class_id": this.User.class_id
