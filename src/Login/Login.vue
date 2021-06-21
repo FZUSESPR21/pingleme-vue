@@ -123,7 +123,7 @@ export default {
 	
 	methods: {
 		getUserInfo(){
-			//this.$axios.post('http://192.168.50.192:3000/debug/ping')
+			//this.$axios.post('http://pingleme.top:3000/api/v1/login',
 			this.$axios.post('http://47.101.54.43/api/v1/login',
 				this.$qs.stringify({
 					'uid':this.user,
@@ -171,7 +171,7 @@ export default {
 
 						let userRole=this.$store.getters.UserRole
 						console.log(userRole);
-						if(this.userRole=='1'){
+						if(this.userRole=='0'){
 							this.$store.commit('studentClick');
 							this.goTo('/SelfInfo');
 						}
@@ -183,7 +183,7 @@ export default {
 							this.$store.commit('teacherClick');
 							this.goTo('/tinfo');
 						}
-						else if(userRole=='0'){
+						else if(userRole=='1'){
 							this.$store.commit('headmanClick');
 							this.goTo('/LeaderInfo');
 						}

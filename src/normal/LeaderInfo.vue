@@ -23,10 +23,10 @@
 							<a-card>
 								<a-descriptions title="个人信息">
 									<a-descriptions-item label="姓名" span="3">
-										{{User.user_name}}
+										{{$store.getters.UserName}}
 									</a-descriptions-item>
 									<a-descriptions-item label="学号" span="3">
-										{{User.uid}}
+										{{$store.getters.Userid}}
 									</a-descriptions-item>
 									<a-descriptions-item label="结对状态" span="3">
 										{{User.pair_name}}
@@ -202,6 +202,7 @@
 			};
 		},
 		mounted() {
+			//this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
 			this.$axios.get('http://47.101.54.43/api/v1/user/me')
 				.then(res => {
 					if(res.data.code=='401'){
@@ -217,7 +218,7 @@
 					}
 					
 				}),
-
+				//this.$axios.get('http://pingleme.top:3000/api/v1/team/member')
 				this.$axios.get('http://47.101.54.43/api/v1/team/member')
 				.then(res => {
 					this.dataSource = res.data.data;
@@ -236,6 +237,7 @@
 			},
 
 			onDelete(value) {
+				//this.$axios.post('http://pingleme.top:3000/api/v1/team/member/remove',{
 				this.$axios.post('http://47.101.54.43/api/v1/team/member/remove',{
 				  "uid":value.id,
 				  "team_id":this.User.team_id
@@ -252,7 +254,8 @@
 				  })
 			},
 			handleAdd() {
-				this.$axios.post('http://47.101.54.43/api/v1/team/member/add',{
+				//this.$axios.post('http://pingleme.top:3000/api/v1/team/member/add',{
+			this.$axios.post('http://47.101.54.43/api/v1/team/member/add',{
 						 "uid": this.input_id,
 						  "team_id":this.User.team_id
 				})
@@ -293,6 +296,7 @@
 							console.log('Received values of form: ', values);
 						}
 					}),
+					//this.$axios.post("http://pingleme.top:3000/api/v1/user/pair/add", {
 					this.$axios.post("http://47.101.54.43/api/v1/user/pair/add", {
 						"Student1UID": this.User.uid,
 						"Student2UID": this.input_pair
@@ -302,6 +306,7 @@
 							this.$message.info(res.data.msg);
 
 					}),
+					//this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
 					this.$axios.get('http://47.101.54.43/api/v1/user/me')
 					.then(res => {
 						this.User = res.data.data;

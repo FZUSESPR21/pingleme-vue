@@ -15,6 +15,7 @@ import TClass from "@/Teacher/TClass.vue"
 
 import mngAddstu from "@/ClassMng/mngAddstu.vue"
 import mngSL from "@/ClassMng/mngScoreList.vue"
+import mngAddhw from "@/ClassMng/mngAddhw.vue"
 import PersonSL from "../score/personscore.vue"
 
 import CrEvaform from "@/normal/CreateEvaluationForm.vue";
@@ -126,6 +127,11 @@ Vue.use(Router)
 			name: 'mngAddstu',
 			component: mngAddstu,
 		},
+		{
+				path: '/tclass/mngaddhw/',
+				name: 'mngAddhw',
+				component: mngAddhw,
+			},
 		{
 			path: '/crclass',
 			name: 'CrClass',

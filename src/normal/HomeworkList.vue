@@ -23,7 +23,6 @@
 			</a-layout-header>
 			<a-layout-content :style="{ margin: '24px 16px 0',minHeight:'360px' }">
 				<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-					<a-input-search placeholder="按作业标题搜索" style="width: 200px;margin-left:0px;" @search="onSearch()" />
 					<hr>
 					<a-table :columns="columns" :data-source="data"  :pagination="myPagination">
 						<a slot="name" slot-scope="text">{{ text }}</a>
@@ -45,7 +44,7 @@
 	import NormalNav from "../components/NormalNav.vue";
 	const columns = [
 	  {
-	    dataIndex: 'name',
+	    dataIndex: 'title',
 	    key: 'name',
 	    slots: { title: 'customTitle' },
 	    scopedSlots: { customRender: 'name' },
@@ -56,91 +55,13 @@
 	    key: 'end_time',
 	  },
 	  {
-	    title: '详情',
-	    dataIndex: 'eva_detail',
-	    key: 'eva_detail',
-	  },
-	  {
 	    title: '操作',
 		'key':'action',
 		scopedSlots: { customRender: 'action' },
 	  },
 	];
 	
-	const data = [
-	  {
-	    key: '1',
-	    name: '团队作业三',
-	    end_time: '2021.3.10',
-		eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '2',
-	    name: '团队作业二',
-	    end_time: '2021.3.10',
-		eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '3',
-	    name: '团队作业一',
-	    end_time: '2021.3.10',
-		eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '4',
-	    name: '团队作业',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '5',
-	    name: '团队作',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '6',
-	    name: '团队',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '7',
-	    name: '团',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '8',
-	    name: '团8',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '9',
-	    name: '团9',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '10',
-	    name: '团10',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '11',
-	    name: '团11',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	  {
-	    key: '12',
-	    name: '团12',
-	    end_time: '2021.3.10',
-	  	eva_detail:'XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	  },
-	];
+
 	export default{
 		name:'HomeworkList',
 		components:{
@@ -149,7 +70,7 @@
 		data() {  
 		    return {
 				collapsed: false,
-				data,
+				data:[],
 				columns,
 				myPagination: {
 				    defaultPageSize: 5
@@ -157,12 +78,29 @@
 				url:"https://edu.cnblogs.com/campus/fzu/FZUSESPR21/homework/11974",
 		    };
 		},
+		mounted(){
+			this.$axios
+				.get('http://47.101.54.43/api/v1/class/homework/list?class_id='+this.$store.getters.Userclass
+				//.get('http://pingleme.top:3000/api/v1/class/homework/list?class_id='+this.$store.getters.Userclass
+					)
+					.then(res => {
+						if(res.data.code=='0'){
+							this.data=res.data.data.list
+						}
+						else{
+							if(res.data.code=='401'){
+								alert("未登录，请登录");
+								this.$router.replace('/');
+							}
+							else{
+								alert('code:'+res.data.code+' msg:'+res.data.msg)
+							}
+						}
+					})
+		},
 		methods:{
 			goTo(path){
 				this.$router.replace(path);
-			},
-			onSearch(value) {
-			    console.log(value);
 			},
 			onCollapse(collapsed, type) {
 			    console.log(collapsed, type);

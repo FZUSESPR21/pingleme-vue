@@ -51,7 +51,12 @@
 								<br/>
 								<a-button type="primary" @click="addstu()">确认导入</a-button>
 							</div>
-							<!--预览-->
+							<!--导入结果-->
+							<div>
+							<a-table bordered :data-source="addstudata" :columns="addstucolumns">
+								<a slot="rowcnt" slot-scope="text">{{ text }}</a>
+							</a-table>
+							</div>
 						</div>
 					</a-drawer>
 					<hr>
@@ -77,7 +82,7 @@
 	//老师-班级信息-班级管理-学生管理
 	import NormalNav from "../components/NormalNav.vue"
 	import ClassHeader from "../components/ClassHeader.vue"
-	import XLSX from "xlsx" //需要下载 cnpm install xlsx
+	//import XLSX from "xlsx" //需要下载 cnpm install xlsx
 	import axios from "axios"
 	
 	export default{
@@ -98,10 +103,10 @@
 				visible:false,//Drawer
 				outdata:[],
 				addData:[],
-				formData:undefined,
-				
+				file:undefined,
 				//当前班级学生
 				dataSource: [],
+				addstudata:[],
 				columns: [
 				    {
 				      title: '学号',
@@ -121,6 +126,33 @@
 				      scopedSlots: { customRender: 'operation' },
 				    },
 				  ],
+				  addstucolumns: [
+				      {
+				        title: '错误行',
+				        dataIndex: 'row_cnt',
+				        scopedSlots: { customRender: 'rowcnt' },
+				      },
+				      {
+				        title: '学号',
+				        dataIndex: 'err_row_uid',
+				  	  key:'uid'
+				      },
+					  {
+					    title: '姓名',
+					    dataIndex: 'err_row_name',
+					  key:'username'
+					  },
+					  {
+					    title: '班级',
+					    dataIndex: 'err_row_class',
+					  key:'userclass'
+					  },
+					  {
+					    title: '密码',
+					    dataIndex: 'err_row_passwd',
+					  key:'userpsw'
+					  },
+				    ],
 			}
 		},
 		mounted(){
@@ -133,6 +165,7 @@
 		methods:{
 			getStuList(){
 				axios
+					//.get('http://pingleme.top:3000/api/v1/class/student/list/'+this.$store.getters.Userclass)
 					.get('http://47.101.54.43/api/v1/class/student/list/'+this.$store.getters.Userclass)
 					.then(res => {
 						if(res.data.code=='401'){
@@ -177,14 +210,15 @@
 			    if(!event.currentTarget.files.length) {
 			        return;
 			    }
-			    const that = this;
+			   // const that = this;
 			        // 拿取文件对象
-					this.formData=event.currentTarget.files[0];
+					//this.formData=event.currentTarget.files[0];
 			    let f = event.currentTarget.files[0];
+				this.file=f;
 			        //这里已经拿到了excel的file文件，若是项目需求，可直接$emit丢出文件
 			        // that.$emit('getMyExcelData',f);
 			        // 用FileReader来读取
-			    let reader = new FileReader();
+/*			    let reader = new FileReader();
 			        // 重写FileReader上的readAsBinaryString方法
 			        // FileReader.prototype.readAsBinaryString = function(f) {
 			        //   let binary = "";
@@ -223,59 +257,41 @@
 			        reader.readAsArrayBuffer(f);
 			        // };
 			        // reader.readAsBinaryString(f);
-			},
-			       // 分页切换
-			CurrentChange(val){
-			    this.currentPage=val;
-			    this.tableData=this.excelData.slice((val-1)*this.pageSize,(val*this.pageSize));
-			},
-					// 每页显示数量改变
-			handleSizeChange(val){
-				this.pageSize=val;
-				this.tableData=this.excelData.slice((this.currentPage-1)*val,(this.currentPage*val));
-			},
+			*/},
+
 			//下载模板
 			downloadExecl() {
 			    window.open(
+					//"http://pingleme.top:3000/api/v1/student/import/template",
 			        "http://47.101.54.43/api/v1/student/import/template",
 			        "_blank"
 			    );
 			},
-			//批量添加学生--1.json数据处理成正确的请求格式；2.获取导入后的结果展示表格
-			getPostdata(){
-				const outd=this.outdata;
-				var adata={}
-				var jsonstr="[]";
-				var jsonarr=eval('('+jsonstr+')');
-				var count=this.total;
-				for (var i=0;i<count;i++){
-					var item=outd[i];
-					//console.log(outd[i]);
-					var arr={
-						"uid":item.学号,
-						"name":item.姓名,
-						"class_id":"123",
-						"password":"12312313212"
-					}
-					jsonarr.push(arr);
-				}
-				adata.student=jsonarr;
-				this.addData=adata;
-			},
-			showResult(){
-				axios.post('/api/v1/user/student/add',this.addData)
-				.then(response => (console.log(response.data.msg)))
-			},
+			//批量添加学生
 			addstu(){
 				//const that = this;
 				    // 拿取文件对象
-				console.log(this.formData);
-				//let formData = event.currentTarget.files[0];
+			
+				let formData=new FormData();
+				formData.append('file',this.file)
+				console.log(formData)
 				let configs = { 
 				    headers:{'Content-Type':'multipart/form-data'}
 				};
-				this.$axios.post("http://pingleme.top:3000/api/v1/user/student/import",this.formData,configs)
-					.then(res=>{console.log(res.data)})
+				this.$axios.post("http:///47.101.54.43/api/v1/user/student/import",formData,configs)
+				//this.$axios.post("http://pingleme.top:3000/api/v1/user/student/import",formData,configs)
+					.then(res=>{
+						if(res.data.code=='0')
+						{	
+							this.addstudata=res.data.data.error_record
+							console.log(this.addstudata)
+							alert('已导入')
+
+						}
+	
+						else
+							alert(res.data.msg)
+					})
 			},
 		}
 	}

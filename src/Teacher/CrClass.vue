@@ -84,6 +84,7 @@
 <script>
 	//创建班级
 	import NormalNav from "../components/NormalNav.vue"
+	import qs from "qs"
 
 const formTailLayout = {
   labelCol: { span: 4 },
@@ -120,14 +121,6 @@ const formTailLayout = {
 			NormalNav,
 		},
 		mounted(){
-		/*	this.$axios.post('http://pingleme.top:3000/debug/user/add',
-				this.$qs.stringify({
-					'uid':"ass18010",
-					'name':'assis10',
-					'password':'789qwerty',
-					'role':2
-				})
-			);*/
 			this.getAssList();
 			this.getTeachList();
 		},
@@ -146,6 +139,7 @@ const formTailLayout = {
 			},
 			getAssList(){
 				this.$axios
+				//.get('http://pingleme.top:3000/api/v1/class/assistant/list/all')
 					.get('http://47.101.54.43/api/v1/class/assistant/list/all')
 					.then(res=>{
 						if(res.data.code==0){
@@ -172,6 +166,7 @@ const formTailLayout = {
 			},
 			getTeachList(){
 				this.$axios
+					//.get('http://pingleme.top:3000/api/v1/class/teacher/list/all')
 					.get('http://47.101.54.43/api/v1/class/teacher/list/all')
 					.then(res=>{
 						if(res.data.code==0){
@@ -208,7 +203,6 @@ const formTailLayout = {
 				});
 			},
 			createca(cn,teaid,sal){
-				/*
 				let json=[];
 				for(let i=0;i<sal.length;i++){
 					let j={}
@@ -219,7 +213,8 @@ const formTailLayout = {
 				console.log(0)
 				console.log(json)
 				let ass=JSON.stringify(json)
-				let asslist=ass.replace(new RegExp('\\"',"gm"), '"' );
+				let asslist=ass.replace(new RegExp('\\"',"gm"), '\'' );
+				let q=qs.stringify(sal)
 				console.log(1)
 				console.log(json)
 				console.log(2)
@@ -227,7 +222,9 @@ const formTailLayout = {
 				console.log(3)
 				console.log(asslist)
 				console.log(4)
-			
+				console.log(q)
+				console.log(5)
+			/*
 				let data=[];
 				let dataj={};
 				dataj.assistant_list=json
@@ -239,11 +236,12 @@ const formTailLayout = {
 				console.log(0)*/
 
 				this.$axios
+				//.post('http://pingleme.top:3000/api/v1/class/create',
 					.post('http://47.101.54.43/api/v1/class/create',
 						this.$qs.stringify({
 							'class_name':cn,
 							'teacher_id':teaid,
-							'assistant_list':sal,
+							'assistant_list':sal
 						})
 					)
 					.then(res=>{
@@ -251,7 +249,7 @@ const formTailLayout = {
 							alert("创建成功");
 						}
 						else{
-							alert("创建失败");
+							alert("创建失败！"+res.data.msg);
 						}
 					})
 				
