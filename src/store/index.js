@@ -17,7 +17,7 @@ export default new Vuex.Store({
         teacherButton:false,
         superButton:false,
 
-		url:"http://pingleme.top:3000",
+		url:"http://47.101.54.43",
 
     },
     getters:{
