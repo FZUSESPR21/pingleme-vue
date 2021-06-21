@@ -27,7 +27,6 @@
 						<a-label style="font-size: 20px;"><a-icon type="team"/>班级：{{$store.getters.Userclass}}</a-label>
 					</div>
 					<div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-						<a-input-search placeholder="按作业名搜索" style="width: 200px;margin-left:0px;" @search="onSearch" />
 						<hr>
 						<a-table :columns="columns" :data-source="data"  :pagination="myPagination">
 							<a slot="name" slot-scope="text">{{ text }}</a>
@@ -107,10 +106,6 @@
 			    console.log(broken);
 			},
 			
-			//搜索的函数
-			onSearch(value) {
-			    console.log(value);
-			},
 			
 			//跳转到成绩
 			goToSList(value){
@@ -127,11 +122,8 @@
 			//连班级作业列表接口的
 			getScorelist(){
 				axios
-					.get('http://47.101.54.43/api/v1/class/homework/list?class_id='+this.$store.getters.Userclass
-						//,this.$qs.stringify({
-						//	'ClassID':this.$store.getters.Userclass
-						//})
-					)
+				//.get('http://pingleme.top:3000/api/v1/class/homework/list?class_id='+this.$store.getters.Userclass)
+					.get('http://47.101.54.43/api/v1/class/homework/list?class_id='+this.$store.getters.Userclass)
 					.then(res => {
 						if(res.data.code=='0'){
 							this.data=res.data.data.list

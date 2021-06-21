@@ -23,16 +23,16 @@
 							<a-card>
 								<a-descriptions title="个人信息">
 									<a-descriptions-item label="姓名" span="3">
-										{{User.user_name}}
+										{{$store.getters.UserName}}
 									</a-descriptions-item>
 									<a-descriptions-item label="学号" span="3">
-										{{User.uid}}
+										{{$store.getters.Userid}}
 									</a-descriptions-item>
 									<a-descriptions-item label="结对状态" span="3">
 										{{User.pair_name}}
 									</a-descriptions-item>
 									<a-descriptions-item label="团队状态" span="3">
-										{{this.team_name}}
+										{{User.team_id}}
 									</a-descriptions-item>
 								</a-descriptions>
 							</a-card>
@@ -160,7 +160,7 @@
 					},
 					{
 						title: '学号',
-						dataIndex: 'uid',
+						dataIndex: 'id',
 					},
 					{
 						title: '操作',
@@ -173,7 +173,6 @@
 
 				User: [],
 				customStyle: 'background: white;',
-				team_name: '',
 				hasErrors,
 				form: this.$form.createForm(this, {
 					name: 'horizontal_login'
@@ -203,6 +202,7 @@
 			};
 		},
 		mounted() {
+			//this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
 			this.$axios.get('http://47.101.54.43/api/v1/user/me')
 				.then(res => {
 					if(res.data.code=='401'){
@@ -218,19 +218,15 @@
 					}
 					
 				}),
-
-				
+				//this.$axios.get('http://pingleme.top:3000/api/v1/team/member')
+				this.$axios.get('http://47.101.54.43/api/v1/team/member')
+				.then(res => {
+					this.dataSource = res.data.data;
+				}),
 				this.$nextTick(() => {
 					// To disabled submit button at the beginning.
 					this.form.validateFields();
 				});
-				setTimeout(() => {
-				this.$axios.get('http://47.101.54.43/api/v1/team/detail/' + this.User.team_id)
-					.then(res => {
-						this.team_name = res.data.data.team_name;
-						this.dataSource = res.data.data.teammates;
-					})
-			}, 1000);
 		},
 		methods: {
 			onCollapse(collapsed, type) {
@@ -241,51 +237,47 @@
 			},
 
 			onDelete(value) {
-			
-				  
-				  this.$axios.post('http://47.101.54.43/api/v1/team/member/remove', {
-						"uid": value.uid,
-						"team_id": this.User.team_id
-					})
-					.then(res => {
-						this.$message.info(res.data.msg);
-					}),
-					/* const dataSource = [...this.dataSource];
-					this.dataSource = dataSource.filter(item => item.key !== key); */
-					setTimeout(() =>{
-					    this.$axios.get('http://47.101.54.43/api/v1/team/detail/' + this.User.team_id)
-					    .then(res => {					  
-					    	this.dataSource = res.data.data.teammates;					
-					    })
-					},);
+				//this.$axios.post('http://pingleme.top:3000/api/v1/team/member/remove',{
+				this.$axios.post('http://47.101.54.43/api/v1/team/member/remove',{
+				  "uid":value.id,
+				  "team_id":this.User.team_id
+				})
+				  .then(res => {
+				   console.log(res.data)
+				  }),
+				/* const dataSource = [...this.dataSource];
+				this.dataSource = dataSource.filter(item => item.key !== key); */
+				this.$axios.get('memeber/info')
+				  .then(res => {
+				    this.dataSource = res.data.data.dataSource;
+				    // this.count=res.data.data.count;
+				  })
 			},
 			handleAdd() {
-				  
-				  this.$axios.post('http://47.101.54.43/api/v1/team/member/add', {
-						"uid": this.input_id,
-						"team_id": this.User.team_id
-					})
-					.then(res => {
-						this.$message.info(res.data.msg);
-					}),
-					/* const {
-						count,
-						dataSource
-					} = this;
-					const newData = {
-						key: count,
-						name: this.input_name,
-						id: this.input_id,
-					};
-					this.dataSource = [...dataSource, newData];
-					this.count = count + 1; */
-					setTimeout(() => {
-						this.$axios.get('http://47.101.54.43/api/v1/team/detail/' + this.User.team_id)
-							.then(res => {
-								this.dataSource = res.data.data.teammates;
-							})
-					}, 1000);
-
+				//this.$axios.post('http://pingleme.top:3000/api/v1/team/member/add',{
+			this.$axios.post('http://47.101.54.43/api/v1/team/member/add',{
+						 "uid": this.input_id,
+						  "team_id":this.User.team_id
+				})
+				  .then(res => {
+				   this.$message.info(res.data.msg);
+				  }),
+				/* const {
+					count,
+					dataSource
+				} = this;
+				const newData = {
+					key: count,
+					name: this.input_name,
+					id: this.input_id,
+				};
+				this.dataSource = [...dataSource, newData];
+				this.count = count + 1; */
+				this.$axios.get('memeber/add')
+				  .then(res => {
+				    this.dataSource = res.data.data.dataSource;
+				    // this.count=res.data.data.count;
+				  })
 			},
 
 			// Only show error after a field is touched.
@@ -304,6 +296,7 @@
 							console.log('Received values of form: ', values);
 						}
 					}),
+					//this.$axios.post("http://pingleme.top:3000/api/v1/user/pair/add", {
 					this.$axios.post("http://47.101.54.43/api/v1/user/pair/add", {
 						"Student1UID": this.User.uid,
 						"Student2UID": this.input_pair
@@ -313,6 +306,7 @@
 							this.$message.info(res.data.msg);
 
 					}),
+					//this.$axios.get('http://pingleme.top:3000/api/v1/user/me')
 					this.$axios.get('http://47.101.54.43/api/v1/user/me')
 					.then(res => {
 						this.User = res.data.data;
